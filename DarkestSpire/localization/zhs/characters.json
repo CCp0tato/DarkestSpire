@@ -1,0 +1,17 @@
+{
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.aromaPrinciple": "[sine][blue]混沌香气事件中的内心独白[/blue][/sine]",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.banter.alive.endTurnPing": "多人模式：存活时回合结束对白",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.banter.dead.endTurnPing": "多人模式：死亡后回合结束对白",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.cardsModifierDescription": "自定义模式文本 - **的卡牌现在会出现在奖励和商店中。",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.cardsModifierTitle": "卡池名字 - **卡牌",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.description": "角色选择界面描述\n[gold]角色选择界面描述[/gold]",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.eventDeathPrevention": "死亡时事件对话",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.goldMonologue": "[sine]沉没宝库事件中对金币的独白[/sine]",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.possessiveAdjective": "他的(物主代词)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.pronounObject": "他(宾语)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.pronounPossessive": "他的(所有格)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.pronounSubject": "他(主语)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.title": "角色名(标题用)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.titleObject": "角色名(宾语)",
+  "DARKEST_SPIRE_CHARACTER_EXAMPLE_CHARACTER.unlockText": "解锁条件文案 - 用[pink]{Prerequisite}[/pink]进行一局游戏来解锁这个角色。"
+}

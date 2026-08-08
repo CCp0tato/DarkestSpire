@@ -4,13 +4,14 @@ using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 
-namespace Test.Scripts;
+namespace DarkestSpire;
 
 [ModInitializer(nameof(Init))]
 public class Entry
 {
     // 你的modid
     public const string ModId = "DarkestSpire";
+    public const string ResPath = $"res://{ModId}";
     private const string BuildMarker = "DarkestSpire loaded vision 0.0.0";
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
     
@@ -24,5 +25,6 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        Logger.Info(BuildMarker);
     }
 }

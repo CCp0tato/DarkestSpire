@@ -2,3 +2,4 @@
 .godot/
 /android/
 Local.props
+export_presets.cfg

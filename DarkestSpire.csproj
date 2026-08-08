@@ -1,5 +1,5 @@
 <Project Sdk="Godot.NET.Sdk/4.5.1">
-  <!-- 导入本地配置文件（如果存在） -->
+  <!-- 导入本地配置文件 -->
   <Import Project="Local.props" Condition="Exists('Local.props')" />
 
   <PropertyGroup>
@@ -10,8 +10,8 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <!-- 改成你的杀戮尖塔2目录 -->
-    <Sts2Dir Condition="'$(Sts2Dir)' == ''">$(STS2_DIR)</Sts2Dir>
+    <!-- 如果 Local.props 未设置路径，报错 -->
+    <Sts2Dir Condition="'$(Sts2Dir)' == ''">ERROR_MISSING_STS2_DIR</Sts2Dir>
     <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
 
@@ -23,6 +23,16 @@
 
     <Reference Include="0Harmony">
       <HintPath>$(Sts2DataDir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- NuGet获取，备用 -->
+    <!-- <PackageReference Include="STS2.RitsuLib" Version="*" /> -->
+
+    <!-- 本地引用 Local.props -->
+    <Reference Include="STS2-RitsuLib">
+      <RitsuLibDllPath Condition="'$(RitsuLibDllPath)' == ''">ERROR_MISSING_RITSU</RitsuLibDllPath>
+      <HintPath>$(RitsuLibDllPath)</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

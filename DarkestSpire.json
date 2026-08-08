@@ -1,0 +1,15 @@
+{
+  "id": "DarkestSpire",
+  "name": "DarkestSpire",
+  "author": "CCpotato",
+  "description": "Darkest Dungeon characters for STS2",
+  "version": "0.0.0",
+  "min_game_version": "0.107.1",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": [
+    { "id": "BaseLib", "min_version": "3.4.1" },
+    { "id": "STS2-RitsuLib", "min_version": "0.2.27" }
+  ],
+  "affects_gameplay": true
+}

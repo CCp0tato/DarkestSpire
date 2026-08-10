@@ -32,8 +32,8 @@ public class TestPotion : ModPotionTemplate
 
     // 药水图片。不一定非得是png，只要最终能被Godot当成Texture读取即可。
     public override PotionAssetProfile AssetProfile => new(
-        ImagePath: "res://DarkestSpire/images/potions/{GetType().Name}.png",
-        OutlinePath: "res://DarkestSpire/images/potions/{GetType().Name}.png"
+        ImagePath: $"{Entry.ResPath}/images/potions/{GetType().Name}.png",
+        OutlinePath: $"{Entry.ResPath}/images/potions/{GetType().Name}.png"
     );
 
     // 使用时的效果逻辑，这里是创造3张灵魂到手牌中。

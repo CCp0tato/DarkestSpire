@@ -15,7 +15,7 @@ namespace DarkestSpire.Characters.Example.Relics;
 // 注册遗物。如果要写自定义池看添加人物的开头
 [RegisterRelic(typeof(SharedRelicPool))]
 // [RegisterCharacterStarterRelic(typeof(TestCharacter))] // 注册起始遗物
-public class TestRelic : ModRelicTemplate
+public class ExampleRelic : ModRelicTemplate
 {
     // 稀有度
     public override RelicRarity Rarity => RelicRarity.Common;
@@ -25,11 +25,11 @@ public class TestRelic : ModRelicTemplate
 
     public override RelicAssetProfile AssetProfile => new(
         // 小图标（原版85x85）
-        IconPath: $"res://DarkestSpire/images/relics/{GetType().Name}.png",
+        IconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         // 轮廓图标（原版85x85）
-        IconOutlinePath: $"res://DarkestSpire/images/relics/{GetType().Name}.png",
+        IconOutlinePath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png",
         // 大图标（原版256x256）
-        BigIconPath: $"res://DarkestSpire/images/relics/{GetType().Name}.png"
+        BigIconPath: $"{Entry.ResPath}/images/relics/{GetType().Name}.png"
     );
 
     // 每回合开始时，抽一张牌

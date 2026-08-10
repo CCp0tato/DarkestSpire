@@ -31,7 +31,7 @@ public class TestCard : ModCardTemplate
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"res://DarkestSpire/images/cards/{GetType().Name}.png"
+        PortraitPath: $"{Entry.ResPath}/images/cards/{GetType().Name}.png"
         // 卡框等，有需求自己添加。需要自行判断卡牌类型（攻击、技能、能力等）设置，建议写在基类里。
         // 如果使用自定义卡池，需要改下material，看添加人物章节的添加卡池部分
         // FramePath: "", // 卡牌背景

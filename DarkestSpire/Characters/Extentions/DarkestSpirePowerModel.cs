@@ -14,12 +14,5 @@ namespace DarkestSpire.Extensions
             IconPath: $"res://DarkestSpire/DarkestSpire/images/powers/{GetType().Name}.png",
             BigIconPath: $"res://DarkestSpire/DarkestSpire/images/powers/{GetType().Name}.png"
         );
-        public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
-        {
-            if (power.Amount < 0 && !power.AllowNegative)
-            {
-                power.RemoveInternal();
-            }
-        }
     }
 }

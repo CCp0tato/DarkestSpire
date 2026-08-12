@@ -20,7 +20,7 @@ namespace DarkestSpire.Characters.Example.Events;
 
 public class ExampleRestSiteOption(Player owner) : RestSiteOption(owner)
 {
-  public override string OptionId => "ECOPTION";
+  public override string OptionId => "EXAMPLEOPTION";
 
   public override LocString Description
   {

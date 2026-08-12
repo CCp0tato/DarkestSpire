@@ -32,7 +32,7 @@ public class ExampleCharacter : ModCharacterTemplate<ExampleCardPool, ExampleRel
     public override int StartingGold => 99;
 
     public override CharacterAssetProfile AssetProfile => CharacterAssetProfiles.Merge(
-        CharacterAssetProfiles.Ironclad(),
+        CharacterAssetProfiles.Defect(),
         new(
             Scenes: new(
                 // 人物模型tscn路径。
@@ -57,7 +57,7 @@ public class ExampleCharacter : ModCharacterTemplate<ExampleCardPool, ExampleRel
                 // 人物选择图标-锁定状态。
                 CharacterSelectLockedIconPath: $"{ImageRoot}/char_select_example_locked.png",
                 // 人物选择过渡动画。
-                // CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
+                CharacterSelectTransitionPath: "res://materials/transitions/ironclad_transition_mat.tres",
                 // 地图上的角色标记图标、表情轮盘上的角色头像。
                 MapMarkerPath: $"{ImageRoot}/map_marker_example.png"
             ),
@@ -100,7 +100,7 @@ public class ExampleCharacter : ModCharacterTemplate<ExampleCardPool, ExampleRel
         ));
 
     // 某个字段没写时，RitsuLib 会从占位角色配置里补齐。
-    public override string? PlaceholderCharacterId => "Example";
+    // public override string? PlaceholderCharacterId => "Silent";
 
     // 攻击和施法动画延迟，以对齐动画
     public override float AttackAnimDelay => 0f;

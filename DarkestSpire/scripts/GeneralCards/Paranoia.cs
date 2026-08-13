@@ -1,6 +1,7 @@
 ﻿using DarkestSpire.Characters.Example;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Platform.Null;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
@@ -19,13 +21,13 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.GeneralCards;
 
 [RegisterCard(typeof(GeneralCardPool))]
-public class Fear : ModCardTemplate
+public class Paranoia : ModCardTemplate
 {
-    public Fear() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    public Paranoia() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
     }
-
-    protected override bool HasEnergyCostX => true;
+    
+    protected override bool ShouldGlowGoldInternal => this.WasLastPlayedSkill;
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
@@ -37,19 +39,28 @@ public class Fear : ModCardTemplate
 
     // 卡牌基础数值
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(7, BlockProps.card)
+        new DamageVar(20, ValueProp.Move),
+        new PowerVar<VulnerablePower>(2)
     ];
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        for (int ii =0; ii < this.ResolveEnergyXValue(); ii++)
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, true);
-        await PowerCmd.Apply<FearPower>(choiceContext, Owner.Creature, 1M, Owner.Creature, cardPlay.Card);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target!)
+            .Execute(choiceContext);
+        IReadOnlyList<CardModel> currentPlayTile = Owner.PlayerCombatState.PlayPile.Cards;
+        if (currentPlayTile[^1].Type == CardType.Skill)
+        {
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target!, DynamicVars["VulnerablePower"].IntValue, Owner.Creature, cardPlay.Card);
+        }
+        await PowerCmd.Apply<ParanoiaPower>(choiceContext, Owner.Creature, 1, Owner.Creature,  cardPlay.Card);
     }
+    
+    private bool WasLastPlayedSkill => Owner.PlayerCombatState.PlayPile.Cards[^1].Type == CardType.Skill;
 
-    // 升级后的效果逻辑
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(10);
     }
 }

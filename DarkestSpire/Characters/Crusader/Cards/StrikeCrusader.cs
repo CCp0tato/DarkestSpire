@@ -19,6 +19,7 @@ public class StrikeCrusader : DarkestSpireCardModel
 {
     private const int energyCost = 1;
     private const CardType type = CardType.Attack;
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Strike };
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.AnyEnemy;
     private const bool shouldShowInCardLibrary = true;

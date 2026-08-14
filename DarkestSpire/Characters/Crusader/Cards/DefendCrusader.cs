@@ -18,6 +18,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 public class DefendCrusader : DarkestSpireCardModel
 {
     private const int energyCost = 1;
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> { CardTag.Defend };
     private const CardType type = CardType.Skill;
     private const CardRarity rarity = CardRarity.Basic;
     private const TargetType targetType = TargetType.Self;

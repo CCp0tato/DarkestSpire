@@ -49,16 +49,14 @@ public class Paranoia : ModCardTemplate
             .FromCard(this)
             .Targeting(cardPlay.Target!)
             .Execute(choiceContext);
-        IReadOnlyList<CardModel> currentPlayTile = Owner.PlayerCombatState.PlayPile.Cards;
-        if (currentPlayTile[^1].Type == CardType.Skill)
+        if (WasLastPlayedSkill)
         {
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target!, DynamicVars["VulnerablePower"].IntValue, Owner.Creature, cardPlay.Card);
         }
         await PowerCmd.Apply<ParanoiaPower>(choiceContext, Owner.Creature, 1, Owner.Creature,  cardPlay.Card);
     }
+    private bool WasLastPlayedSkill => CombatManager.Instance.History.CardPlaysFinished.Last().CardPlay.Card.Type == CardType.Skill;
     
-    private bool WasLastPlayedSkill => Owner.PlayerCombatState.PlayPile.Cards[^1].Type == CardType.Skill;
-
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(10);

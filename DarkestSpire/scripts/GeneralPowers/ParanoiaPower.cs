@@ -1,14 +1,11 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Afflictions;
-using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using DarkestSpire.Afflictions;
 
 namespace DarkestSpire.GeneralPowers;
 
@@ -38,11 +35,11 @@ public class ParanoiaPower : ModPowerTemplate
         {
             if (allCard.Type == _currentCardType && allCard.Affliction == null)
             {
-                Smog smog = await CardCmd.Afflict<Smog>(allCard, 1M);
+                ParanoriaAfflicted para = await CardCmd.Afflict<ParanoriaAfflicted>(allCard, 1M);
             }
             else
             {
-                if (allCard.Affliction is Smog)
+                if (allCard.Affliction is ParanoriaAfflicted)
                     CardCmd.ClearAffliction(allCard);
             }
         }
@@ -50,6 +47,6 @@ public class ParanoiaPower : ModPowerTemplate
     
     public override bool ShouldPlay(CardModel card, AutoPlayType _)
     {
-        return card.Owner != this.Owner.Player || !(card.Affliction is Smog);
+        return card.Owner != this.Owner.Player || !(card.Affliction is ParanoriaAfflicted);
     }
 }

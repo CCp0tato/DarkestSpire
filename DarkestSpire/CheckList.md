@@ -40,11 +40,11 @@
  - [x] Fear
  - [x] Paranoia
  - [x] Selfish
- - [ ] Masochism
- - [ ] Tyranny
- - [ ] Despair
- - [ ] Frenzy
- - [ ] Ethereal
+ - [x] Masochism
+ - [x] Tyranny
+ - [x] Despair
+ - [x] Frenzy
+ - [x] Ethereal Dust
  - [ ] Nomad Wagon
  - [ ] Elite Recruitment
  - [ ] Herbs

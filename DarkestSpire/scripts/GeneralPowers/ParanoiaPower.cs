@@ -10,11 +10,12 @@ using DarkestSpire.Afflictions;
 namespace DarkestSpire.GeneralPowers;
 
 [RegisterPower]
-public class ParanoiaPower : ModPowerTemplate
+public class ParanoiaPower : UniquePowerModel
 {
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
-    
+    public override bool IsUniquePower => true;
+
     private CardType _currentCardType = CardType.None;
     
     // public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;

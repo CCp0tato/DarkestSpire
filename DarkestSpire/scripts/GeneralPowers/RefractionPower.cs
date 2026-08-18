@@ -3,36 +3,59 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Random;
-using MegaCrit.Sts2.Core.Unlocks;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using Void = MegaCrit.Sts2.Core.Models.Cards.Void;
 
 namespace DarkestSpire.GeneralPowers;
 
 [RegisterPower]
-public class RefractionPower : ModPowerTemplate
+public class RefractionPower : UniquePowerModel
 {
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
-    
+    public override bool IsUniquePower => true;
+
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
-
-    private IEnumerable<CardModel> allStatusCards => new StatusCardPool().GetUnlockedCards(UnlockState.all, CardMultiplayerConstraint.None);
+    
+    private IEnumerable<CardModel> availableStatusCards
+    {
+        get
+        {
+            return new CardModel[11]
+            {
+                (CardModel)ModelDb.Card<Beckon>(),
+                (CardModel)ModelDb.Card<Burn>(),
+                (CardModel)ModelDb.Card<Dazed>(),
+                (CardModel)ModelDb.Card<Debris>(),
+                (CardModel)ModelDb.Card<Infection>(),
+                (CardModel)ModelDb.Card<Wither>(),
+                (CardModel)ModelDb.Card<Slimed>(),
+                (CardModel)ModelDb.Card<Soot>(),
+                (CardModel)ModelDb.Card<Toxic>(),
+                (CardModel)ModelDb.Card<Void>(),
+                (CardModel)ModelDb.Card<Wound>()
+            };
+        }
+    } 
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         await CardPileCmd.AutoPlayFromDrawPile(choiceContext, Owner.Player, 2, CardPilePosition.Top, false);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat((CardModel) CombatState.CreateCard<Dazed>(Owner.Player), PileType.Draw, Owner.Player));
-        
+        for (int i = 0; i < 2; i++)
+        {
+            CardModel randomStatusCard = availableStatusCards
+                .TakeRandom(1, this.Owner.Player.RunState.Rng.CombatCardGeneration).ElementAt(0);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
+                (CardModel)CombatState.CreateCard(randomStatusCard, this.Owner.Player), PileType.Discard, Owner.Player));
+        }
     }
 }

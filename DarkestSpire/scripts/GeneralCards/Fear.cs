@@ -36,7 +36,7 @@ public class Fear : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         for (int ii =0; ii < this.ResolveEnergyXValue(); ii++)
-            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, true);
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay, false);
         await PowerCmd.Apply<FearPower>(choiceContext, Owner.Creature, 1M, Owner.Creature, cardPlay.Card);
     }
 

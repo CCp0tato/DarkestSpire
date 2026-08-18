@@ -5,11 +5,12 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.GeneralPowers;
 
 [RegisterPower]
-public class FrenzyPower : ModPowerTemplate
+public class FrenzyPower : UniquePowerModel
 {
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
-    
+    public override bool IsUniquePower => true;
+
     // 自定义图标路径。1:1即可。原版游戏大图256x256，小图64x64。
     public override PowerAssetProfile AssetProfile => new(
         IconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png",

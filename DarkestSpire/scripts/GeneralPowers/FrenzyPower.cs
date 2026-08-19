@@ -1,4 +1,10 @@
-﻿using MegaCrit.Sts2.Core.Entities.Powers;
+﻿using System.Reflection;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Extensions;
+using MegaCrit.Sts2.Core.Random;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -16,4 +22,26 @@ public class FrenzyPower : UniquePowerModel
         IconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png",
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
+
+    public override Task BeforeAttack(AttackCommand command)
+    {
+        if (command.IsRandomlyTargeted || command.IsMultiTargeted)
+        {
+            return Task.CompletedTask;
+        }
+        Type targetType = typeof(AttackCommand);
+        FieldInfo? field = targetType.GetField(
+            "_singleTarget",
+            BindingFlags.NonPublic | 
+            BindingFlags.Instance | 
+            BindingFlags.FlattenHierarchy 
+        );
+        if (field == null)
+        {
+            return Task.CompletedTask;
+        }
+        field.SetValue(command, null);
+        command.TargetingRandomOpponents(Owner.CombatState);
+        return Task.CompletedTask;
+    }
 }

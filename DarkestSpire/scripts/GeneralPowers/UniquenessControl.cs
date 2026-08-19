@@ -77,10 +77,12 @@ public abstract class UniquePowerModel : ModPowerTemplate
         if (Type == PowerType.Buff)
         { 
             UniquenessControl.ClearDSBuffs(target);
+            UniquenessControl.ClearDSDebuffs(target);
             return Task.CompletedTask;
         }
         if (Type == PowerType.Debuff)
         {
+            UniquenessControl.ClearDSBuffs(target);
             UniquenessControl.ClearDSDebuffs(target);
         }
         return Task.CompletedTask;

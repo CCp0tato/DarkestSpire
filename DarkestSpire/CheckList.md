@@ -6,9 +6,9 @@
  - [x] Paranoia
  - [x] Selfish
  - [x] Masochism
- - [ ] Tyranny
+ - [x] Tyranny
  - [x] Despair
- - [ ] Frenzy
+ - [x] Frenzy
  - [x] Refraction
  - [x] Rapture
  - [x] Spite

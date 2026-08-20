@@ -43,7 +43,6 @@ public class Drink : ModCardTemplate
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat((CardModel) this.CombatState.CreateCard<Dazed>(this.Owner), PileType.Draw, this.Owner));
     }
 
-    // 升级后的效果逻辑
     protected override void OnUpgrade()
     {
         DynamicVars.Energy.UpgradeValueBy(1);

@@ -25,7 +25,7 @@ public class FrenzyPower : UniquePowerModel
 
     public override Task BeforeAttack(AttackCommand command)
     {
-        if (command.IsRandomlyTargeted || command.IsMultiTargeted)
+        if (command.IsRandomlyTargeted || command.IsMultiTargeted || command.Attacker != Owner)
         {
             return Task.CompletedTask;
         }

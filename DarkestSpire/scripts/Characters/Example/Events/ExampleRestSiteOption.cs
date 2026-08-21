@@ -4,14 +4,9 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using DarkestSpire.Characters.Example.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
 

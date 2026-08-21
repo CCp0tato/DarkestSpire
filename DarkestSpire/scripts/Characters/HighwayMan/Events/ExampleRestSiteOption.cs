@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using DarkestSpire.Characters.Example.Relics;
 using DarkestSpire.Characters.HighwayMan.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
 

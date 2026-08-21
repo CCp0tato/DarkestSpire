@@ -45,24 +45,24 @@
  - [x] Despair
  - [x] Frenzy
  - [x] Ethereal Dust
- - [ ] Nomad Wagon
- - [ ] Elite Recruitment
- - [ ] Herbs
- - [ ] Blood Brew
- - [ ] Confession
- - [ ] Infighting
+ - [x] Nomad Wagon
+ - [x] Elite Recruitment
+ - [x] Herbs
+ - [x] Blood Brew
+ - [x] Confession
+ - [x] Infighting
 
 ## Rare
 
- - [ ] Resolve
- - [ ] Fearlessness
- - [ ] Valor
- - [ ] Rally
- - [ ] Holy Water
- - [ ] Sanatorium
- - [ ] Mood Swings
- - [ ] Bank
- - [ ] Limit Reaction
+ - [x] Resolve
+ - [x] Fearlessness
+ - [x] Valor
+ - [x] Rally
+ - [x] Holy Water
+ - [x] Sanatorium
+ - [x] Mood Swings
+ - [x] Bank
+ - [x] Limit Reaction
 
 ## Token
 

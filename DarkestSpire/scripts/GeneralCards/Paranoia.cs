@@ -1,4 +1,5 @@
-﻿using DarkestSpire.GeneralPowers;
+﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -33,7 +34,11 @@ public class Paranoia : ModCardTemplate
         new DamageVar(20, ValueProp.Move),
         new PowerVar<VulnerablePower>(2)
     ];
-    
+    protected override HashSet<CardTag> CanonicalTags => 
+    [
+        DSCardTag.Torture,
+        DSCardTag.Unique,
+    ];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

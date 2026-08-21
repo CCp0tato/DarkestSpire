@@ -1,4 +1,5 @@
-﻿using DarkestSpire.GeneralPowers;
+﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -19,6 +20,13 @@ public class Fear : ModCardTemplate
     protected override bool HasEnergyCostX => true;
 
     public override bool GainsBlock => true;
+    
+    protected override HashSet<CardTag> CanonicalTags => 
+    [
+        CardTag.Defend,
+        DSCardTag.Torture,
+        DSCardTag.Unique,
+    ];
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(

@@ -1,4 +1,5 @@
-﻿using DarkestSpire.GeneralPowers;
+﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -30,6 +31,12 @@ public class Despair : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new IntVar("NextTurnEnergyAndDraw", 2)
+    ];
+    
+    protected override HashSet<CardTag> CanonicalTags => 
+    [
+        DSCardTag.Torture,
+        DSCardTag.Unique,
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -32,30 +32,30 @@ public class RefractionPower : UniquePowerModel
         {
             return new CardModel[11]
             {
-                (CardModel)ModelDb.Card<Beckon>(),
-                (CardModel)ModelDb.Card<Burn>(),
-                (CardModel)ModelDb.Card<Dazed>(),
-                (CardModel)ModelDb.Card<Debris>(),
-                (CardModel)ModelDb.Card<Infection>(),
-                (CardModel)ModelDb.Card<Wither>(),
-                (CardModel)ModelDb.Card<Slimed>(),
-                (CardModel)ModelDb.Card<Soot>(),
-                (CardModel)ModelDb.Card<Toxic>(),
-                (CardModel)ModelDb.Card<Void>(),
-                (CardModel)ModelDb.Card<Wound>()
+                ModelDb.Card<Beckon>(),
+                ModelDb.Card<Burn>(),
+                ModelDb.Card<Dazed>(),
+                ModelDb.Card<Debris>(),
+                ModelDb.Card<Infection>(),
+                ModelDb.Card<Wither>(),
+                ModelDb.Card<Slimed>(),
+                ModelDb.Card<Soot>(),
+                ModelDb.Card<Toxic>(),
+                ModelDb.Card<Void>(),
+                ModelDb.Card<Wound>()
             };
         }
     } 
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
-        await CardPileCmd.AutoPlayFromDrawPile(choiceContext, Owner.Player, 2, CardPilePosition.Top, false);
+        await CardPileCmd.AutoPlayFromDrawPile(choiceContext, Owner.Player!, 2, CardPilePosition.Top, false);
         for (int i = 0; i < 2; i++)
         {
             CardModel randomStatusCard = availableStatusCards
-                .TakeRandom(1, this.Owner.Player.RunState.Rng.CombatCardGeneration).ElementAt(0);
+                .TakeRandom(1, Owner.Player!.RunState.Rng.CombatCardGeneration).FirstOrDefault()!;
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(
-                (CardModel)CombatState.CreateCard(randomStatusCard, this.Owner.Player), PileType.Discard, Owner.Player));
+                CombatState.CreateCard(randomStatusCard, this.Owner.Player), PileType.Discard, Owner.Player));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace DarkestSpire.GeneralPowers;
 
 public class UniquenessControl
 {
-    public IEnumerable<PowerModel> DSUniqueDebuff
+    public static IEnumerable<PowerModel> DSUniqueDebuff
     {
         get
         {
@@ -28,7 +28,7 @@ public class UniquenessControl
         }
     }
     
-    public IEnumerable<PowerModel> DSUniqueBuff
+    public static IEnumerable<PowerModel> DSUniqueBuff
     {
         get
         {

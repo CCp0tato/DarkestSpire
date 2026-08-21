@@ -1,4 +1,5 @@
-﻿using DarkestSpire.EventCards;
+﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.EventCards;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -27,6 +28,12 @@ public class Refraction : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Exhaust
+    ];
+    
+    protected override HashSet<CardTag> CanonicalTags => 
+    [
+        DSCardTag.Torture,
+        DSCardTag.Unique,
     ];
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

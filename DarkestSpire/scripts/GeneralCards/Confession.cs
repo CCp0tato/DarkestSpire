@@ -1,25 +1,23 @@
-﻿using DarkestSpire.DarkestSpire.CardTags;
-using DarkestSpire.GeneralPowers;
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
-using TyrannyPower = DarkestSpire.GeneralPowers.TyrannyPower;
 
 namespace DarkestSpire.GeneralCards;
 
 [RegisterCard(typeof(GeneralCardPool))]
-public class Frenzy : ModCardTemplate
+public class Confession : ModCardTemplate
 {
-    public Frenzy() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy, true)
+    public Confession() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies, true)
     {
     }
-    
+
+
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{GeneralCardPool.getImageRoot()}/{GetType().Name}.png"
@@ -28,33 +26,29 @@ public class Frenzy : ModCardTemplate
         // BannerTexturePath: "" // 横幅（不同类型）
     );
 
+    // 卡牌基础数值
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8, ValueProp.Move)
+        new DamageVar(10M, ValueProp.Move),
+        new PowerVar<ShrinkPower>(1)
     ];
-    
-    protected override HashSet<CardTag> CanonicalTags => 
-    [
-        DSCardTag.Torture,
-        DSCardTag.Unique,
-    ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Innate];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd
-            .Attack(DynamicVars.Damage.IntValue)
-            .FromCard(cardPlay.Card)
-            .WithHitCount(2)
-            .Targeting(cardPlay.Target!)
+        Creature target = cardPlay.Target!;
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(target)
             .Execute(choiceContext);
-        await PowerCmd.Apply<FrenzyPower>(choiceContext, Owner.Creature,
-            1, Owner.Creature, cardPlay.Card);
-        
+        await PowerCmd.Apply<ShrinkPower>(choiceContext, target, DynamicVars["ShrinkPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     // 升级后的效果逻辑
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars["ShrinkPower"].UpgradeValueBy(1);
     }
 }

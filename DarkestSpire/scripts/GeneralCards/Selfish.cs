@@ -1,4 +1,5 @@
-﻿using DarkestSpire.GeneralPowers;
+﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -30,6 +31,11 @@ public class Selfish : ModCardTemplate
     
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
         CardKeyword.Exhaust
+    ];
+    protected override HashSet<CardTag> CanonicalTags => 
+    [
+        DSCardTag.Torture,
+        DSCardTag.Unique,
     ];
     
     // 打出时的效果逻辑

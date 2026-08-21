@@ -2,9 +2,9 @@
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -13,47 +13,48 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.GeneralCards;
 
 [RegisterCard(typeof(GeneralCardPool))]
-public class Masochism : ModCardTemplate
+public class Valor : ModCardTemplate
 {
-    public Masochism() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    public Valor() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy, true)
     {
     }
 
-
-    // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{GeneralCardPool.getImageRoot()}/{GetType().Name}.png"
         // FramePath: "", // 卡牌背景
         // PortraitBorderPath: "", // 边框（状态牌感染使用的）
         // BannerTexturePath: "" // 横幅（不同类型）
     );
-
-    // 卡牌基础数值
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<MasochismBlockPower>(5)
-    ];
     
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Exhaust
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Innate];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new DamageVar(10M, ValueProp.Move),
+        new PowerVar<VulnerablePower>(1)
     ];
     
     protected override HashSet<CardTag> CanonicalTags => 
     [
-        DSCardTag.Torture,
+        DSCardTag.Virtue,
         DSCardTag.Unique,
     ];
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<MasochismBlockPower>(choiceContext, Owner.Creature,
-            DynamicVars["MasochismBlockPower"].IntValue, this.Owner.Creature, cardPlay.Card);
-        await PowerCmd.Apply<MasochismPower>(choiceContext, Owner.Creature,
-            1, this.Owner.Creature, cardPlay.Card);
+        Creature target = cardPlay.Target!;
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(target)
+            .Execute(choiceContext);
+        await PowerCmd.Apply<ShrinkPower>(choiceContext, target, DynamicVars["VulnerablePower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<ValorPower>(choiceContext, Owner.Creature, 1, Owner.Creature, cardPlay.Card);
     }
 
     // 升级后的效果逻辑
     protected override void OnUpgrade()
     {
-        DynamicVars["MasochismBlockPower"].UpgradeValueBy(2);
+        DynamicVars.Damage.UpgradeValueBy(5);
+        DynamicVars["VulnerablePower"].UpgradeValueBy(1);
     }
 }

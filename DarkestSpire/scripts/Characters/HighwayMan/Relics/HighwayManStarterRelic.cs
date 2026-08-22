@@ -1,5 +1,4 @@
-﻿using DarkestSpire.Characters.Example;
-using DarkestSpire.Characters.Example.Events;
+﻿using DarkestSpire.Characters.Example.Events;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;

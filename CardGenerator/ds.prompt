@@ -54,7 +54,7 @@ _ ⚠️ 无效的参数值会被自动设置为 `'None'`
 - `Innate` - 固有
 - `Unplayable` - 无法打出
 - `Retain` - 保留
-- `Sly` - 狡诈
+- `Sly` - 奇巧
 - `Eternal` - 永恒
 
 ```python

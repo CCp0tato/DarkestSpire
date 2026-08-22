@@ -39,8 +39,6 @@
 
   <ItemGroup>
     <Content Include="DarkestSpire\CheckList.md" />
-    <Content Include="草稿1-1 关于十字军卡组.md" />
-    <Content Include="草稿1-2 关于强盗的卡组.md" />
   </ItemGroup>
 
   <!-- 自动复制dll和json -->

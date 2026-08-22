@@ -1,8 +1,8 @@
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace DarkestSpire.Characters.HighwayMan;
+namespace DarkestSpire.Characters.Crusader;
 
-public class HighwayManRelicPool : TypeListRelicPoolModel
+public class CrusaderRelicPool : TypeListRelicPoolModel
 {
     private const string ImageRoot = $"{Entry.ResPath}/images/characters/Example";
     

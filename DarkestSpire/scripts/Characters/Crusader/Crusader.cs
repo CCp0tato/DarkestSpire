@@ -5,15 +5,15 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Characters;
 using STS2RitsuLib.Scaffolding.Godot;
 
-namespace DarkestSpire.Characters.HighwayMan;
+namespace DarkestSpire.Characters.Crusader;
 
 [RegisterCharacter]
-public class HighwayManCharacter : ModCharacterTemplate<HighwayManCardPool, HighwayManRelicPool, HighwayManPotionPool>
+public class HighwayManCharacter : ModCharacterTemplate<CrusaderCardPool, CrusaderRelicPool, CrusaderPotionPool>
 {
     // public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
 
-    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/Example";
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Example";
+    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/Crusader";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Crusader";
 
     // 角色名称颜色
     public override Color NameColor => new(0.5f, 0.5f, 1f);

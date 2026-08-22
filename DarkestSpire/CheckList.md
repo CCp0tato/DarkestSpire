@@ -72,3 +72,65 @@
  - [x] Timoris
  - [x] Mortis
 
+# Crusader Cards
+
+## 初始卡牌
+- [x] FaithBarrier
+- [x] Radiance
+- [ ] HolyFire
+
+## 普通卡牌
+- [x] DevoutHit
+- [x] DazingBlow
+- [x] Accusation
+- [x] BattleHeal
+- [ ] Kleptomania
+- [ ] HarvestWheat
+- [ ] FuckTheAssAssIn
+- [ ] DampSickle
+- [ ] StashedCurio
+
+## 罕见卡牌
+- [ ] HolyLance
+- [ ] CrusaderBanner
+- [ ] EstusFlask
+- [ ] HonorResonance
+- [ ] Marathon
+- [ ] Mercy
+- [x] HolyShield
+- [ ] RingedKnightStraightSword
+- [ ] Fanatic
+- [ ] MilitaryOath
+- [ ] ZealousStand
+- [ ] LightWarrior
+- [ ] PraiseTheSun
+- [ ] Baptism
+- [ ] GuidingLight
+- [ ] SaintHand
+- [ ] Cross
+- [ ] Snack
+- [ ] FinalCrusade
+- [ ] Judgment
+- [ ] Punishment
+- [ ] Piety
+
+## 稀有卡牌
+- [ ] SweepingLegion
+- [ ] Condemnation
+- [ ] DivineWill
+- [ ] UnshoneGlory
+- [ ] CrusaderCreed
+- [ ] HolyLightImpact
+- [ ] DivineBlessing
+- [ ] DegenerationAura
+- [x] PaladinHammer
+- [ ] Chivalry
+- [ ] YourSun
+- [ ] Provocation
+- [ ] DivineSurge
+- [ ] HolyBladeForm
+- [ ] Expedition
+- [ ] FaceTheDarkness
+- [ ] ReynauldOldRoadRedemption
+- [ ] Restraint
+- [ ] Stalemate

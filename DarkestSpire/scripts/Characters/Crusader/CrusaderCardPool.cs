@@ -2,15 +2,15 @@ using Godot;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
 
-namespace DarkestSpire.Characters.HighwayMan;
+namespace DarkestSpire.Characters.Crusader;
 
-public class HighwayManCardPool : TypeListCardPoolModel
+public class CrusaderCardPool : TypeListCardPoolModel
 {
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/HighwayMan";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Crusader";
     
     // 卡池的ID。必须唯一防撞车。
-    public override string Title => "HighwayManCardPool";
-    public override string EnergyColorName => "HighwayManEnergy";
+    public override string Title => "CrusaderCardPool";
+    public override string EnergyColorName => "CrusaderEnergy";
 
     // 描述中使用的能量图标。大小为24x24。
     public override string? TextEnergyIconPath => $"{ImageRoot}/energy_example.png";

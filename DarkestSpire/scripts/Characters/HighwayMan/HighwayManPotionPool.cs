@@ -1,6 +1,6 @@
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace DarkestSpire.Characters.Example;
+namespace DarkestSpire.Characters.HighwayMan;
 
 public class HighwayManPotionPool : TypeListPotionPoolModel
 {

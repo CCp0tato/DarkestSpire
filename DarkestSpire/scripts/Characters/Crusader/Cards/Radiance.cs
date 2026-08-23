@@ -8,13 +8,14 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.Crusader.Cards;
 
 [RegisterCard(typeof(CrusaderCardPool))]
+[RegisterCharacterStarterCard(typeof(CrusaderCardPool), 1)]
+
 public class Radiance : ModCardTemplate
 {
     public Radiance() : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyPlayer, true)
     {
     }
-
-
+    
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{CrusaderCardPool.getImageRoot()}/{GetType().Name}.png"

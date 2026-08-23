@@ -1,4 +1,6 @@
 using System.Reflection;
+using DarkestSpire.Characters.Crusader.Cards;
+using DarkestSpire.Characters.HighwayMan.Cards;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
@@ -12,7 +14,7 @@ public class Entry
     // 你的modid
     public const string ModId = "DarkestSpire";
     public const string ResPath = $"res://{ModId}";
-    private const string BuildMarker = "DarkestSpire loaded vision 0.0.0";
+    private const string BuildMarker = "DarkestSpire loaded vision 0.0.1";
     public static readonly Logger Logger = RitsuLibFramework.CreateLogger(ModId);
     
 
@@ -25,6 +27,8 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<Radiance, HolyFire>();
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<PistolShot, FireSuppression>();
         Logger.Info(BuildMarker);
     }
 }

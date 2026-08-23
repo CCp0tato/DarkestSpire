@@ -10,6 +10,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.Crusader.Cards;
 
 [RegisterCard(typeof(CrusaderCardPool))]
+[RegisterCharacterStarterCard(typeof(CrusaderCardPool), 1)]
 public class FaithBarrier : ModCardTemplate
 {
     public FaithBarrier() : base(2, CardType.Skill, CardRarity.Basic, TargetType.Self, true)

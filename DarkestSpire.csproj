@@ -61,4 +61,11 @@
             EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
             ContinueOnError="WarnAndContinue" />
   </Target>
+
+  <Target Name="ExportPckVSC">
+    <Message Text="Copying PCK to Slay the Spire 2 mods folder..." Importance="high" />
+    <Exec Command="&quot;$(GodotEXEPath)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;$(Sts2Dir)/mods/$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+      ContinueOnError="WarnAndContinue" />
+  </Target>
 </Project>

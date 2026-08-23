@@ -4,4 +4,6 @@
 Local.props
 export_presets.cfg
 
+*.uid
+
 *test*

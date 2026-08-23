@@ -27,10 +27,10 @@ public class ValorPower : UniquePowerModel
     {
         foreach (Creature enemy in CombatState.Enemies)
         {
-            if (enemy.Monster.IntendsToAttack)
+            if (enemy.Monster!.IntendsToAttack)
             {
-                PowerCmd.Apply<DexterityPower>(choiceContext, Owner, 1, (Creature)null, (CardModel) null);
-                PowerCmd.Apply<StrengthPower>(choiceContext, Owner, 1, (Creature)null, (CardModel) null);
+                PowerCmd.Apply<DexterityPower>(choiceContext, Owner, 1, Owner, (CardModel) null!);
+                PowerCmd.Apply<StrengthPower>(choiceContext, Owner, 1, Owner, (CardModel) null!);
             }
         }
         return Task.CompletedTask;

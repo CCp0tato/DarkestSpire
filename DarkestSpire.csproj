@@ -41,6 +41,12 @@
     <Content Include="DarkestSpire\CheckList.md" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DarkestSpire\scripts\Characters\Example\Cards\" />
+    <Folder Include="DarkestSpire\scripts\Characters\HighwayMan\Events\" />
+    <Folder Include="DarkestSpire\scripts\Characters\HighwayMan\Potions\" />
+  </ItemGroup>
+
   <!-- 自动复制dll和json -->
   <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />

@@ -14,6 +14,26 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DarkestSpire.GeneralPowers;
 
+public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
+{
+    public PowerVarFB(Decimal powerAmount, TargetType targetType)
+        : base(typeof (T).Name, powerAmount)
+    {
+        this.targetType = targetType;
+    }
+
+    public PowerVarFB(string name, Decimal powerAmount)
+        : base(name, powerAmount)
+    {
+    }
+
+    public T powerType => Activator.CreateInstance<T>();
+
+    public TargetType targetType { get; private set; }
+}
+
+
+
 public abstract class FightBackBasePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
@@ -51,12 +71,11 @@ public abstract class FightBackBasePower : ModPowerTemplate
             {
                 await PlayerCmd.GainGold(dynamicVar.IntValue, Owner.Player!);
             }
-            else if (dynamicVar is PowerVar<PowerModel> powerVar)
+            else if (dynamicVar is PowerVarFB<PowerModel> powerVar)
             {
-                
+                Creature powerTargets = (powerVar.targetType == TargetType.Self) ? Owner : dealer! ; 
+                await PowerCmd.Apply(choiceContext, powerVar.powerType, powerTargets, powerVar.IntValue, Owner, (CardModel) null!);
             }
-                
-                
         }
     }
 

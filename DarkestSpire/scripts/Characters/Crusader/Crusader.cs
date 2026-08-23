@@ -8,7 +8,7 @@ using STS2RitsuLib.Scaffolding.Godot;
 namespace DarkestSpire.Characters.Crusader;
 
 [RegisterCharacter]
-public class HighwayManCharacter : ModCharacterTemplate<CrusaderCardPool, CrusaderRelicPool, CrusaderPotionPool>
+public class CrusaderCharacter : ModCharacterTemplate<CrusaderCardPool, CrusaderRelicPool, CrusaderPotionPool>
 {
     // public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
 

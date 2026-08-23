@@ -108,7 +108,7 @@ public class {card_name} : ModCardTemplate
         self.card_string += f'''
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {{
-        {'    '.join(connneced_onplay)}
+        {'\n        '.join(connneced_onplay)}
     }}
 '''
         return self
@@ -135,7 +135,7 @@ public class {card_name} : ModCardTemplate
         self.card_string += f'''
     protected override void OnUpgrade()
     {{
-        {'    '.join(connneced_onplay)}
+        {'\n        '.join(connneced_onplay)}
     }}
 '''
         return self
@@ -149,9 +149,9 @@ public class {card_name} : ModCardTemplate
 if __name__ == '__main__':
     (CardGenerator(character='HighwayMan', card_name='StrikeHighwayMan', card_type='Attack', card_rarity='Basic',
                    target_type='AnyEnemy', card_pool='HighwayManCardPool', cost=1)
-     .addVars(DamageVar=6)
+     .addVars(DamageVar=6, BlockVar=4)
      .addTags('Strike')
-     .addUpgrade(Damage=3)
+     .addUpgrade(Damage=3, Block=2)
      .output())
 
 

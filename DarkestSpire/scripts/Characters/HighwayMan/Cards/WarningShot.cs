@@ -29,11 +29,13 @@ public class WarningShot : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);    await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["Weak"].IntValue, Owner.Creature, cardPlay.Card);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
+        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["Weak"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2);    DynamicVars["Weak"].UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(2);
+        DynamicVars["Weak"].UpgradeValueBy(1);
     }
 }

@@ -66,18 +66,18 @@
 
 ## Token
 
- - [x] Oblivionis
- - [x] Doloris
- - [x] Amoris
- - [x] Timoris
- - [x] Mortis
+ - [ ] Oblivionis
+ - [ ] Doloris
+ - [ ] Amoris
+ - [ ] Timoris
+ - [ ] Mortis
 
 # Crusader Cards
 
 ## 初始卡牌
 - [x] FaithBarrier
 - [x] Radiance
-- [ ] HolyFire
+- [x] HolyFire
 
 ## 普通卡牌
 - [x] DevoutHit

@@ -24,7 +24,7 @@ public class Feint : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(2, BlockProps.card)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar("FightBackBlock", 2, BlockProps.card)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -33,6 +33,6 @@ public class Feint : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(1);
+        DynamicVars["FightBackBlock"].UpgradeValueBy(1);
     }
 }

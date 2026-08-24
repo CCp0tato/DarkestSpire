@@ -1,3 +1,4 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -26,10 +27,7 @@ public class Feint : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar("FightBackBlock", 2, BlockProps.card)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
-    }
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
     protected override void OnUpgrade()
     {

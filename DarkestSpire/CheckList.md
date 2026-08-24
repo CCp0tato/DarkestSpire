@@ -84,8 +84,8 @@
 - [x] DazingBlow
 - [x] Accusation
 - [x] BattleHeal
-- [ ] Kleptomania
-- [ ] HarvestWheat
+- [x] Kleptomania
+- [x] HarvestWheat
 - [ ] FuckTheAssAssIn
 - [ ] DampSickle
 - [ ] StashedCurio

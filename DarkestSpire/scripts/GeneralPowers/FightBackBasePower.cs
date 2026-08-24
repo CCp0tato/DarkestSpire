@@ -29,34 +29,43 @@ public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
 
     public T powerType => Activator.CreateInstance<T>();
 
-    public TargetType targetType { get; private set; }
+    public TargetType targetType { get; }
 }
 
 
 
-public abstract class FightBackBasePower : ModPowerTemplate
+public class FightBackBasePower : ModPowerTemplate
 {
+    public FightBackBasePower(IEnumerable<DynamicVar> fightBackEffects, CardModel fightBackCardSource)
+    {
+        this._fightBackCardSource = fightBackCardSource;
+        this._fightBackEffects = fightBackEffects;
+    }
+    
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public virtual required IEnumerable<DynamicVar> FightBackEffects { get; set; }
-
-    public virtual required CardModel fightBackCardSource { get; set; }
+    private IEnumerable<DynamicVar> _fightBackEffects { get; }
+    private CardModel _fightBackCardSource { get; }
+    
+    public IEnumerable<DynamicVar> FightBackEffects => _fightBackEffects;
+    
+    public CardModel FightBackCardSource => _fightBackCardSource;
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target,
         DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        foreach (DynamicVar dynamicVar in FightBackEffects)
+        foreach (DynamicVar dynamicVar in _fightBackEffects)
         {
             if (dynamicVar is DamageVar)
             {
-                if (fightBackCardSource.TargetType == TargetType.AllEnemies)
-                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(fightBackCardSource)
+                if (_fightBackCardSource.TargetType == TargetType.AllEnemies)
+                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
                         .TargetingAllOpponents(Owner.CombatState!);
                 else
-                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(fightBackCardSource)
+                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
                         .Targeting(dealer!);
             }
             else if (dynamicVar is EnergyVar)
@@ -89,7 +98,7 @@ public abstract class FightBackBasePower : ModPowerTemplate
 
     public DynamicVar AddDynamicVar(DynamicVar dynamicVar)
     {
-        FightBackEffects.AddItem(dynamicVar);
+        _fightBackEffects.AddItem(dynamicVar);
         return dynamicVar;
     }
 }

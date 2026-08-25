@@ -1,5 +1,4 @@
-﻿using DarkestSpire.Characters.Example.Events;
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
@@ -8,12 +7,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace DarkestSpire.Characters.Example.Relics;
+namespace DarkestSpire.Characters.Crusader.Relics;
 
 // 注册遗物。如果要写自定义池看添加人物的开头
-[RegisterRelic(typeof(ExampleRelicPool))]
-[RegisterCharacterStarterRelic(typeof(ExampleCharacter))] 
-public class ExampleStarterRelic : ModRelicTemplate
+[RegisterRelic(typeof(CrusaderRelicPool))]
+[RegisterCharacterStarterRelic(typeof(CrusaderCharacter))] 
+public class CrusaderStarterRelic : ModRelicTemplate
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
     
@@ -32,7 +31,6 @@ public class ExampleStarterRelic : ModRelicTemplate
     {
         if (player != this.Owner)
             return false;
-        options.Add((RestSiteOption) new ExampleRestSiteOption(player));
         return true;
     }
 

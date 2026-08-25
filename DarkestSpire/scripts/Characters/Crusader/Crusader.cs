@@ -12,8 +12,8 @@ public class CrusaderCharacter : ModCharacterTemplate<CrusaderCardPool, Crusader
 {
     // public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
 
-    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/Crusader";
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Crusader";
+    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/Example";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Example";
 
     // 角色名称颜色
     public override Color NameColor => new(0.5f, 0.5f, 1f);

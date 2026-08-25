@@ -28,11 +28,11 @@ public class PreparedCounter : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["Weak"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["WeakPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Weak"].UpgradeValueBy(1);
+        DynamicVars["WeakPower"].UpgradeValueBy(1);
     }
 }

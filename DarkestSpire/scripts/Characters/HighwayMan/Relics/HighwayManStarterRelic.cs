@@ -1,5 +1,4 @@
-﻿using DarkestSpire.Characters.Example.Events;
-using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.RestSite;
@@ -32,7 +31,6 @@ public class HighwayManStarterRelic : ModRelicTemplate
     {
         if (player != this.Owner)
             return false;
-        options.Add((RestSiteOption) new ExampleRestSiteOption(player));
         return true;
     }
 

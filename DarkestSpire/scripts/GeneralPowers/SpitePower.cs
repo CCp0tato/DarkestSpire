@@ -26,6 +26,6 @@ public class SpitePower : UniquePowerModel
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        await PowerCmd.Apply<PoisonPower>(choiceContext, dealer, 4, Owner, (CardModel) null);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, dealer!, 4, Owner, (CardModel) null!);
     }
 }

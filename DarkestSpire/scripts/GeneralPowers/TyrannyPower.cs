@@ -44,10 +44,10 @@ public class TyrannyPower : UniquePowerModel
             return;
         }
         
-        Creature creature = Owner.CombatState.Allies.TakeRandom(1, Owner.Player.RunState.Rng.CombatTargets).FirstOrDefault();
+        Creature creature = Owner.CombatState!.Allies.TakeRandom(1, Owner.Player!.RunState.Rng.CombatTargets).FirstOrDefault()!;
         if  (creature == null)
             return;
-        CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), creature, new DamageVar((Decimal) field.GetValue(command), ValueProp.Move), Owner);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), creature, new DamageVar((Decimal) field.GetValue(command)!, ValueProp.Move), Owner);
         await PlayerCmd.GainEnergy(2, Owner.Player);
         await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), 2, Owner.Player);
     }

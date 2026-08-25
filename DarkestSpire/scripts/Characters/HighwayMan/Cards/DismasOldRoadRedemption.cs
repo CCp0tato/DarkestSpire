@@ -15,7 +15,6 @@ public class DismasOldRoadRedemption : ModCardTemplate
     {
     }
 
-
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{HighwayManCardPool.getImageRoot()}/{GetType().Name}.png"

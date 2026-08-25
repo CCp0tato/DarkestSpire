@@ -28,11 +28,11 @@ public class SerratedBlade : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<BleedingPower>(choiceContext, Owner.Creature, DynamicVars["Bleeding"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<BleedingPower>(choiceContext, Owner.Creature, DynamicVars["BleedingPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Bleeding"].UpgradeValueBy(3);
+        DynamicVars["BleedingPower"].UpgradeValueBy(3);
     }
 }

@@ -36,6 +36,10 @@ public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
 
 public class FightBackBasePower : ModPowerTemplate
 {
+    public FightBackBasePower()
+    {
+    }
+    
     public FightBackBasePower(IEnumerable<DynamicVar> fightBackEffects, CardModel fightBackCardSource)
     {
         this._fightBackCardSource = fightBackCardSource;

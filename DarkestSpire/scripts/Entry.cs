@@ -1,9 +1,11 @@
 using System.Reflection;
 using DarkestSpire.Characters.Crusader.Cards;
 using DarkestSpire.Characters.HighwayMan.Cards;
+using DarkestSpire.GeneralCards;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
+using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop;
 
 namespace DarkestSpire;
@@ -27,8 +29,15 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<Radiance, HolyFire>();
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<PistolShot, FireSuppression>();
+        ModContentRegistry.For(ModId)
+            .RegisterCardLibraryCompendiumSharedPoolFilter<GeneralCardPool>(
+                "reme_multiclass_shared_pool", // ID
+                "res://DarkestSpire/images/characters/Example/character_icon_example.png" // 图标位置
+                // null // 放置顺序（可选）
+            );
         Logger.Info(BuildMarker);
     }
 }

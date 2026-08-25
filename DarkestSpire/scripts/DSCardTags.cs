@@ -10,5 +10,6 @@ public class DSCardTag
     public static CardTag Virtue;
     public static CardTag Unique;
     public static CardTag FightBack;
+    public static CardTag Shot;
 }
 

@@ -86,14 +86,14 @@
 - [x] BattleHeal
 - [x] Kleptomania
 - [x] HarvestWheat
-- [ ] FuckTheAssAssIn
-- [ ] DampSickle
-- [ ] StashedCurio
+- [x] FuckTheAssAssIn
+- [x] DampSickle
+- [x] StashedCurio
 
 ## 罕见卡牌
-- [ ] HolyLance
-- [ ] CrusaderBanner
-- [ ] EstusFlask
+- [x] HolyLance
+- [x] CrusaderBanner
+- [x] EstusFlask
 - [ ] HonorResonance
 - [ ] Marathon
 - [ ] Mercy

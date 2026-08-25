@@ -1,4 +1,6 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -11,6 +13,7 @@ public class ZealousStand : ModCardTemplate
     {
     }
 
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(4, BlockProps.card)];
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(

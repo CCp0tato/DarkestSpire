@@ -30,11 +30,11 @@ public class HighwaymanFaceTheDarkness : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ThornsPower>(choiceContext, Owner.Creature, DynamicVars["Thorns"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<ThornsPower>(choiceContext, Owner.Creature, DynamicVars["ThornsPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Thorns"].UpgradeValueBy(2);
+        DynamicVars["ThornsPower"].UpgradeValueBy(2);
     }
 }

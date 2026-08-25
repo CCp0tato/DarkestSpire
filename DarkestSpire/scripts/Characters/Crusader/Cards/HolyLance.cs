@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -31,6 +32,13 @@ public class HolyLance : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
+        IEnumerable<CardModel> targetCards =
+            PileType.Draw.GetPile(Owner).Cards.Where(c => (c.EnergyCost.GetResolved() >= 2));
+        foreach (CardModel targetCard in targetCards)
+        {
+            targetCard.EnergyCost.AddUntilPlayed(-2);
+            await CardPileCmd.Add(targetCard, PileType.Hand);
+        }
     }
 
     protected override void OnUpgrade()

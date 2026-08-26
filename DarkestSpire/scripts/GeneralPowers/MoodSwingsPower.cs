@@ -22,8 +22,8 @@ public class MoodSwingsPower : ModPowerTemplate
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner != Owner.Player || !cardPlay.Card.Tags.Contains(DSCardTag.Virtue) ||
-            !cardPlay.Card.Tags.Contains(DSCardTag.Torture))
+        if (cardPlay.Card.Owner != Owner.Player || (!cardPlay.Card.Tags.Contains(DSCardTag.Virtue) &&
+                                                    !cardPlay.Card.Tags.Contains(DSCardTag.Torture)))
         {
             return;
         }

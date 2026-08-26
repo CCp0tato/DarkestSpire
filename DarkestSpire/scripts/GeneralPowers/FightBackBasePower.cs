@@ -1,15 +1,14 @@
-﻿using HarmonyLib;
+﻿using DarkestSpire.Characters.HighwayMan.Cards;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DarkestSpire.GeneralPowers;
@@ -17,14 +16,15 @@ namespace DarkestSpire.GeneralPowers;
 public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
 {
     public PowerVarFB(Decimal powerAmount, TargetType targetType)
-        : base(typeof (T).Name, powerAmount)
+        : base("FightBackPower", powerAmount)
     {
         this.targetType = targetType;
     }
 
-    public PowerVarFB(string name, Decimal powerAmount)
+    public PowerVarFB(string name, Decimal powerAmount, TargetType targetType)
         : base(name, powerAmount)
     {
+        this.targetType = targetType;
     }
 
     public T powerType => Activator.CreateInstance<T>();
@@ -68,7 +68,7 @@ public class FightBackBasePower : ModPowerTemplate
                 if (_fightBackCardSource.TargetType == TargetType.AllEnemies)
                     await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
                         .TargetingAllOpponents(Owner.CombatState!).Execute(choiceContext);
-                else
+                else if (_fightBackCardSource.TargetType == TargetType.AnyEnemy)
                     await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
                         .Targeting(dealer!).Execute(choiceContext);
             }
@@ -86,9 +86,21 @@ public class FightBackBasePower : ModPowerTemplate
             }
             else if (dynamicVar is PowerVarFB<PowerModel> powerVar)
             {
+                if (powerVar.targetType == TargetType.AllEnemies)
+                {
+                    foreach (Creature creature in CombatState.Enemies)
+                    {
+                        await PowerCmd.Apply(choiceContext, powerVar.powerType, creature, powerVar.IntValue, Owner,
+                            (CardModel)null!);
+                    }
+                    return;
+                }
                 Creature powerTargets = (powerVar.targetType == TargetType.Self) ? Owner : dealer! ; 
                 await PowerCmd.Apply(choiceContext, powerVar.powerType, powerTargets, powerVar.IntValue, Owner, (CardModel) null!);
+                
             }
+            if (Owner.HasPower<PocketGunPower>())
+                await QuickShot.CreateInHand(Owner.Player, 1, CombatState);
         }
     }
 

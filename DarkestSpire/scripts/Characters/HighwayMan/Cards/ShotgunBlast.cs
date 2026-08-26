@@ -1,7 +1,10 @@
+using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -24,7 +27,8 @@ public class ShotgunBlast : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move), new PowerVarFB<StrengthPower>("ShotPower",-2, TargetType.AllEnemies), new CardsVar("Shot", 3)];
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -34,5 +38,6 @@ public class ShotgunBlast : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars["ShotPower"].UpgradeValueBy(-1);
     }
 }

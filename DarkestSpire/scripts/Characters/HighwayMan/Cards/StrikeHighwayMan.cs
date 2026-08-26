@@ -9,9 +9,9 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.HighwayMan.Cards;
 
 [RegisterCard(typeof(HighwayManCardPool))]
-public class Defend : ModCardTemplate
+public class StrikeHighwayMan : ModCardTemplate
 {
-    public Defend() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self, true)
+    public StrikeHighwayMan() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy, true)
     {
     }
 
@@ -24,17 +24,17 @@ public class Defend : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override HashSet<CardTag> CanonicalTags => [CardTag.Defend];
+    protected override HashSet<CardTag> CanonicalTags => [CardTag.Strike];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(5, BlockProps.card)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(3);
     }
 }

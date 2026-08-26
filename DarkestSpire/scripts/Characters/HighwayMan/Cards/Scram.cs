@@ -1,7 +1,9 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -28,7 +30,13 @@ public class Scram : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
+        IEnumerable<CardModel> cards = PileType.Hand.GetPile(Owner).Cards.Where(c => c.Tags.Contains(DSCardTag.Shot));
+        foreach (CardModel cardModel in cards)
+        {
+            await CardCmd.Discard(choiceContext, cardModel);
+            await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
+            
+        }
     }
 
     protected override void OnUpgrade()

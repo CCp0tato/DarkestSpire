@@ -1,3 +1,4 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -26,7 +27,9 @@ public class Pickpocket : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3, ValueProp.Move), new GoldVar("FightBackGold", 5)];
+
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

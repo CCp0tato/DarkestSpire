@@ -2,6 +2,8 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -27,7 +29,10 @@ public class DesperateMove : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
+        IEnumerable<CardModel> cards = (await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner)).Where(c => c.Type == CardType.Attack);
+        if (cards.Count() > 0)
+            return;
+        await CardPileCmd.Add(CombatState!.CreateCard<Dazed>(Owner), PileType.Draw);
     }
 
     protected override void OnUpgrade()

@@ -1,4 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,4 +22,11 @@ public class QuickReaction : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await QuickShot.CreateInHand(Owner, DynamicVars.Cards.IntValue, CombatState!);
+    }
 }

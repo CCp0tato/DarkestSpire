@@ -1,3 +1,4 @@
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -25,17 +26,16 @@ public class BideTime : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, BlockProps.card), new PowerVar<VigorPower>(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, BlockProps.card), new PowerVarFB<VigorPower>("FighrBackPower", 1, this.TargetType)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature, DynamicVars["VigorPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2);
-        DynamicVars["VigorPower"].UpgradeValueBy(1);
+        DynamicVars["FightBackPower"].UpgradeValueBy(1);
     }
 }

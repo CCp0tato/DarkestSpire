@@ -30,7 +30,7 @@ public class VeinSlash : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
-        await PowerCmd.Apply<BleedingPower>(choiceContext, Owner.Creature, DynamicVars["BleedingPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<BleedingPower>(choiceContext, cardPlay.Target!, DynamicVars["BleedingPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

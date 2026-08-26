@@ -66,11 +66,12 @@
 
 ## Token
 
- - [ ] Oblivionis
- - [ ] Doloris
- - [ ] Amoris
- - [ ] Timoris
- - [ ] Mortis
+ - [x] Oblivionis
+ - [x] Doloris
+ - [x] Amoris
+ - [x] Timoris
+ - [x] Mortis
+ - [x] Ave Mujica
 
 # Crusader Cards
 

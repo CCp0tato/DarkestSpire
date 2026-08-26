@@ -1,7 +1,6 @@
 // | 马拉松 | Marathon | 能力 | 2/1 | 回合结束时，若本回合未打出攻击牌，则下回合开始时抽 2 张牌并获得 2 点能量；你特别擅长逃跑（彩蛋：狂乱逃离可免费打出） |
 
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;

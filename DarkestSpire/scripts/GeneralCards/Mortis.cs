@@ -1,27 +1,36 @@
-﻿using DarkestSpire.TokenCards;
+﻿// | 死亡 | Mortis | 状态 | 1 | 你受到致死伤害时免疫该次伤害并获得等量的[灾厄]；[消耗]。 |
+
+using DarkestSpire.TokenCards;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using DarkestSpire.GeneralPowers;
 
 namespace DarkestSpire.GeneralCards;
 
 [RegisterCard(typeof(DSTokenCardPool))]
 public class Mortis : ModCardTemplate
 {
-    public Mortis() : base(-1, CardType.Skill, CardRarity.Token, TargetType.None, true)
+    public Mortis() : base(1, CardType.Status, CardRarity.Token, TargetType.None, true)
     {
     }
 
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{DSTokenCardPool.getImageRoot()}/{GetType().Name}.png"
-        // 卡框等，有需求自己添加。需要自行判断卡牌类型（攻击、技能、能力等）设置，建议写在基类里。
-        // 如果使用自定义卡池，需要改下material，看添加人物章节的添加卡池部分
         // FramePath: "", // 卡牌背景
         // PortraitBorderPath: "", // 边框（状态牌感染使用的）
         // BannerTexturePath: "" // 横幅（不同类型）
     );
     
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [
-        CardKeyword.Unplayable
-    ];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<MortisPower>(1)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PowerCmd.Apply<MortisPower>(choiceContext, Owner.Creature, DynamicVars["MortisPower"].IntValue, Owner.Creature, this);
+    }
 }

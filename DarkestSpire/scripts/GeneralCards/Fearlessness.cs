@@ -1,4 +1,6 @@
-﻿using DarkestSpire.DarkestSpire.CardTags;
+﻿// | 无畏 | Fearlessness | 能力 | 2/1 | [固有]；将 5 张特定状态牌加入你的[抽牌堆]；获得[无畏]。 |
+
+using DarkestSpire.DarkestSpire.CardTags;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;

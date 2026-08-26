@@ -29,7 +29,7 @@ public class Sanction : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!cardPlay.Target!.IsMonster || cardPlay.Target is null) { return; }
+        if (cardPlay.Target is null) { return; }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
         if (cardPlay.Target.Monster!.IntendsToAttack)
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);

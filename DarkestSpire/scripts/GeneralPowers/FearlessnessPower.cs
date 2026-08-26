@@ -1,4 +1,8 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿// 无畏：抽到状态牌时，抽 3 张牌。检测消耗堆，出现5张Mujica状态牌后向手牌中加入AveMujica，一场战斗一次
+
+using DarkestSpire.Characters.Crusader.Cards;
+using DarkestSpire.GeneralCards;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,6 +15,8 @@ namespace DarkestSpire.GeneralPowers;
 [RegisterPower]
 public class FearlessnessPower : UniquePowerModel
 {
+    private bool _hasCreatedAveMujica;
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override bool IsUniquePower => true;
@@ -26,9 +32,31 @@ public class FearlessnessPower : UniquePowerModel
         CardModel card,
         bool fromHandDraw)
     {
-        if (card.Owner.Creature != this.Owner || card.Type != CardType.Status)
+        if (card.Owner.Creature != Owner || card.Type != CardType.Status)
             return;
-        this.Flash();
-        IEnumerable<CardModel> cardModels = await CardPileCmd.Draw(choiceContext, (Decimal) 3, this.Owner.Player);
+        Flash();
+        await CardPileCmd.Draw(choiceContext, (Decimal) 3, Owner.Player!);
+    }
+
+    public override async Task AfterCardExhausted(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        bool causedByEthereal)
+    {
+        if (_hasCreatedAveMujica || card.Owner.Creature != Owner)
+            return;
+
+        IReadOnlyList<CardModel> exhaustPile = PileType.Exhaust.GetPile(Owner.Player!).Cards;
+        if (!exhaustPile.Any(exhaustedCard => exhaustedCard is Amoris) ||
+            !exhaustPile.Any(exhaustedCard => exhaustedCard is Mortis) ||
+            !exhaustPile.Any(exhaustedCard => exhaustedCard is Timoris) ||
+            !exhaustPile.Any(exhaustedCard => exhaustedCard is Doloris) ||
+            !exhaustPile.Any(exhaustedCard => exhaustedCard is Oblivionis))
+            return;
+
+        _hasCreatedAveMujica = true;
+        Flash();
+        CardModel aveMujica = CombatState.CreateCard<AveMujica>(Owner.Player!);
+        await CardPileCmd.AddGeneratedCardToCombat(aveMujica, PileType.Hand, Owner.Player);
     }
 }

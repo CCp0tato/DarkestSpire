@@ -54,8 +54,8 @@ public class DespairPower : UniquePowerModel
     {
         if (side != CombatSide.Player)
             return Task.CompletedTask;
-        _energyLeftTurn = Owner.Player.GetEnergy();
-        IReadOnlyList<CardModel> cards = PileType.Hand.GetPile(Owner.Player).Cards;
+        _energyLeftTurn = Owner.Player!.GetEnergy();
+        IReadOnlyList<CardModel> cards = PileType.Hand.GetPile(Owner.Player!).Cards;
         _cardsLeftTurn = cards.Count;
         return Task.CompletedTask;
     }

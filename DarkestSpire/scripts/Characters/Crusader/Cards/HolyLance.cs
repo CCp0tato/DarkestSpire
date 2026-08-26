@@ -33,7 +33,7 @@ public class HolyLance : ModCardTemplate
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
         IEnumerable<CardModel> targetCards =
-            PileType.Draw.GetPile(Owner).Cards.Where(c => (c.EnergyCost.GetResolved() >= 2));
+            PileType.Draw.GetPile(Owner).Cards.Where(c => c.EnergyCost.GetResolved() >= 2);
         foreach (CardModel targetCard in targetCards)
         {
             targetCard.EnergyCost.AddUntilPlayed(-2);

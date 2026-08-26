@@ -1,7 +1,10 @@
+// | 小零食 | Snack | 攻击 | 0 | 造成 1 点伤害，目标失去 2 点力量，给予 3 层中毒，消耗/- |
+
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -31,5 +34,12 @@ public class Snack : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target!, -2, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target!, 3, Owner.Creature, cardPlay.Card);
+    }
+
+    protected override void OnUpgrade()
+    {
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

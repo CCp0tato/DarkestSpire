@@ -106,15 +106,15 @@
 - [x] ZealousStand
 - [x] LightWarrior
 - [x] PraiseTheSun
-- [ ] Baptism
-- [ ] GuidingLight
-- [ ] SaintHand
-- [ ] Cross
-- [ ] Snack
-- [ ] FinalCrusade
-- [ ] Judgment
-- [ ] Punishment
-- [ ] Piety
+- [x] Baptism
+- [x] GuidingLight
+- [x] SaintHand
+- [x] Cross
+- [x] Snack
+- [x] FinalCrusade
+- [x] Judgment
+- [x] Punishment
+- [x] Piety
 
 ## 稀有卡牌
 - [ ] SweepingLegion

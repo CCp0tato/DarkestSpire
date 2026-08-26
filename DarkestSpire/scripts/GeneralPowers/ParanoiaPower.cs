@@ -28,11 +28,11 @@ public class ParanoiaPower : UniquePowerModel
 
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {   
-        if (cardPlay.Card.Owner.Creature != this.Owner)
+        if (cardPlay.Card.Owner.Creature != Owner)
             return;
         _currentCardType = cardPlay.Card.Type;
-        this.Flash();
-        foreach (CardModel allCard in this.Owner.Player.PlayerCombatState.AllCards)
+        Flash();
+        foreach (CardModel allCard in Owner.Player!.PlayerCombatState!.AllCards)
         {
             if (allCard.Type == _currentCardType && allCard.Affliction == null)
             {
@@ -48,6 +48,6 @@ public class ParanoiaPower : UniquePowerModel
     
     public override bool ShouldPlay(CardModel card, AutoPlayType _)
     {
-        return card.Owner != this.Owner.Player || !(card.Affliction is ParanoriaAfflicted);
+        return card.Owner != Owner.Player || !(card.Affliction is ParanoriaAfflicted);
     }
 }

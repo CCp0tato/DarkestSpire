@@ -97,15 +97,15 @@
 - [x] CrusaderBanner
 - [x] EstusFlask
 - [x] HonorResonance
-- [ ] Marathon
-- [ ] Mercy
+- [x] Marathon
+- [x] Mercy
 - [x] HolyShield
-- [ ] RingedKnightStraightSword
-- [ ] Fanatic
-- [ ] MilitaryOath
-- [ ] ZealousStand
-- [ ] LightWarrior
-- [ ] PraiseTheSun
+- [x] RingedKnightStraightSword
+- [x] Fanatic
+- [x] MilitaryOath
+- [x] ZealousStand
+- [x] LightWarrior
+- [x] PraiseTheSun
 - [ ] Baptism
 - [ ] GuidingLight
 - [ ] SaintHand

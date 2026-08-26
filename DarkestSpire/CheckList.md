@@ -89,12 +89,14 @@
 - [x] FuckTheAssAssIn
 - [x] DampSickle
 - [x] StashedCurio
+- [x] BlindFaith
+- [x] Sanction
 
 ## 罕见卡牌
 - [x] HolyLance
 - [x] CrusaderBanner
 - [x] EstusFlask
-- [ ] HonorResonance
+- [x] HonorResonance
 - [ ] Marathon
 - [ ] Mercy
 - [x] HolyShield

@@ -1,8 +1,10 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -14,8 +16,7 @@ public class PreparedCounter : ModCardTemplate
     public PreparedCounter() : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy, true)
     {
     }
-
-
+    
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{HighwayManCardPool.getImageRoot()}/{GetType().Name}.png"
@@ -24,15 +25,18 @@ public class PreparedCounter : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(1), new DamageVar("FightBackDamage", 3, ValueProp.Move)];
+
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars["WeakPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target!, DynamicVars["WeakPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["WeakPower"].UpgradeValueBy(1);
+        DynamicVars["FightBackDamage"].UpgradeValueBy(1);
     }
 }

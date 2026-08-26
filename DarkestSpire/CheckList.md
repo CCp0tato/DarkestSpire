@@ -141,35 +141,35 @@
 
 - [x] Strike - 打击
 - [x] Defend - 防御
-- [ ] PreparedCounter - 预备反击
-- [ ] PistolShot - 手枪射击
-- [ ] FireSuppression - 火力压制
+- [x] PreparedCounter - 预备反击
+- [x] PistolShot - 手枪射击
+- [x] FireSuppression - 火力压制
 
 ## 普通卡牌
 
-- [ ] EvilSlash - 邪恶挥砍
+- [x] EvilSlash - 邪恶挥砍
 - [x] VeinSlash - 割开血管
-- [ ] Feint - 假动作
-- [ ] WarningShot - 警告射击
-- [ ] QuickReaction - 反应快速
-- [ ] BideTime - 等待时机
-- [ ] Ricochet - 跳弹
-- [ ] Ambush - 伏击
-- [ ] Scram - 风紧扯呼
-- [ ] DesperateMove - 铤而走险
-- [ ] Pickpocket - 三只手
+- [x] Feint - 假动作
+- [x] WarningShot - 警告射击
+- [x] QuickReaction - 反应快速
+- [x] BideTime - 等待时机
+- [x] Ricochet - 跳弹
+- [x] Ambush - 伏击
+- [x] Scram - 风紧扯呼
+- [x] DesperateMove - 铤而走险
+- [x] Pickpocket - 三只手
 
 ## 罕见卡牌
 
-- [ ] TrackingShot - 追踪射击
-- [ ] Aim - 瞄准
-- [ ] PocketGun - 袖珍枪
-- [ ] DoubleBarrel - 双管齐下
-- [ ] Deadeye - 神枪在手
-- [ ] DuelThrust - 决斗突刺
-- [ ] ShotgunBlast - 霰弹射击
-- [ ] CaliberUpgrade - 口径升级
-- [ ] SpareMagazine - 预备弹匣
+- [x] TrackingShot - 追踪射击
+- [x] Aim - 瞄准
+- [x] PocketGun - 袖珍枪
+- [x] DoubleBarrel - 双管齐下
+- [x] Deadeye - 神枪在手
+- [x] DuelThrust - 决斗突刺
+- [x] ShotgunBlast - 霰弹射击
+- [x] CaliberUpgrade - 口径升级
+- [x] SpareMagazine - 预备弹匣
 - [ ] Hustler - 知名老千
 - [ ] DeepBreath - 深呼吸
 - [ ] DoubleTap - 双弹连射
@@ -210,3 +210,9 @@
 
 - [x] LogicalBullet - 充满逻辑的子弹
 - [ ] QuickShot - 速射
+
+
+
+
+
+

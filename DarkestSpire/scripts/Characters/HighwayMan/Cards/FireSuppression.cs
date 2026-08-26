@@ -1,8 +1,10 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -24,7 +26,9 @@ public class FireSuppression : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(2), new DamageVar("ShotDamage", 10, ValueProp.Move), new CardsVar("Shot", -1)];
+
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -34,5 +38,6 @@ public class FireSuppression : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars["VulnerablePower"].UpgradeValueBy(1);
+        DynamicVars["ShotDamage"].UpgradeValueBy(5);
     }
 }

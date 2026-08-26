@@ -1,3 +1,5 @@
+using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,12 +26,12 @@ public class DuelThrust : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), new PowerVar<DexterityPower>(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), IsUpgraded ? new PowerVarFB<DexterityPower>(1, TargetType.Self) : new PowerVarFB<TemporaryDexterityPower>(1, TargetType.Self)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
-        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 }

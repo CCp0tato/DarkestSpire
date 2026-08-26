@@ -1,4 +1,8 @@
+// | 洗礼 | Baptism | 技能 | 1/0 | 使所有手牌在本回合费用 -1 |
+
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,6 +23,16 @@ public class Baptism : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+
+    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        foreach (CardModel card in PileType.Hand.GetPile(Owner).Cards)
+        {
+            card.EnergyCost.AddThisTurnOrUntilPlayed(-1);
+        }
+
+        return Task.CompletedTask;
+    }
 
     protected override void OnUpgrade()
     {

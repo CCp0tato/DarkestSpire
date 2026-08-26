@@ -172,7 +172,7 @@
 - [x] ShotgunBlast - 霰弹射击
 - [x] CaliberUpgrade - 口径升级
 - [x] SpareMagazine - 预备弹匣
-- [ ] Hustler - 知名老千
+- [x] Hustler - 知名老千
 - [ ] DeepBreath - 深呼吸
 - [ ] DoubleTap - 双弹连射
 - [ ] FullBarrage - 全弹发射

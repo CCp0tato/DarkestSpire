@@ -1,3 +1,4 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -25,8 +26,9 @@ public class BideTime : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, BlockProps.card), new PowerVarFB<VigorPower>("FighrBackPower", 1, this.TargetType)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8, BlockProps.card), new PowerVarFB<VigorPower>(1, TargetType.Self)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

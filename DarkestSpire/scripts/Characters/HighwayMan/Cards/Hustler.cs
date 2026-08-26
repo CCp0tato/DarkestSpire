@@ -27,10 +27,35 @@ public class Hustler : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(4)];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(
+        PlayerChoiceContext choiceContext,
+        CardPlay cardPlay)
     {
-        List<CardModel> selection = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(this.Owner).Cards.Take(DynamicVars.Cards.IntValue).ToList(), this.Owner, new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, this.DynamicVars.Cards.IntValue))).ToList<CardModel>();
+        CardPile drawPile = PileType.Draw.GetPile(Owner);
 
+        List<CardModel> topCards = drawPile.Cards
+            .Take(DynamicVars.Cards.IntValue)
+            .ToList();
+
+        if (topCards.Count == 0)
+            return;
+
+        int freeHandSlots = Math.Max(
+            0,
+            CardPile.MaxCardsInHand -
+            PileType.Hand.GetPile(Owner).Cards.Count);
+
+        int selectCount = Math.Min(
+            DynamicVars.Cards.IntValue / 2,
+            Math.Min(topCards.Count, freeHandSlots));
+
+        if (selectCount == 0)
+            return;
+
+        List<CardModel> selectedCards = (await CardSelectCmd.FromCombatPile( choiceContext, drawPile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, selectCount), card => topCards.Contains(card))).ToList();
+
+        if (selectedCards.Count > 0)
+            await CardPileCmd.Add(selectedCards, PileType.Hand);
     }
 
     protected override void OnUpgrade()

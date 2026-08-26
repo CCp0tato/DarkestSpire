@@ -125,9 +125,67 @@
 
   "THE_ARCHITECT.talk.CRUSADER.0-0r.char": "这座尖塔邪恶的源头，我要审判你！",
   "THE_ARCHITECT.talk.CRUSADER.0-0r.next": "继续",
-  "THE_ARCHITECT.talk.CRUSADER.0-0r.ancient": "我只是在做我应该做的事情。",
+  "THE_ARCHITECT.talk.CRUSADER.0-1r.ancient": "我只是在做我应该做的事情。",
+  "THE_ARCHITECT.talk.CRUSADER.0r-attack": "Both",
 
   "THE_ARCHITECT.talk.HIGHWAYMAN.0-0r.char": "不愧是这个尖塔的领头。",
   "THE_ARCHITECT.talk.HIGHWAYMAN.0-0r.next": "继续",
-  "THE_ARCHITECT.talk.HIGHWAYMAN.0-0r.ancient": "不自量力。"
+  "THE_ARCHITECT.talk.HIGHWAYMAN.0-1r.ancient": "不自量力。",
+  "THE_ARCHITECT.talk.HIGHWAYMAN.0r-attack": "Both",
+
+  "NEOW.talk.CRUSADER.0-visit": "1",
+  "NEOW.talk.CRUSADER.1-visit": "2",
+  "NEOW.talk.CRUSADER.2-visit": "5",
+  "NEOW.talk.HIGHWAYMAN.0-visit": "1",
+  "NEOW.talk.HIGHWAYMAN.1-visit": "2",
+  "NEOW.talk.HIGHWAYMAN.2-visit": "5",
+
+  "OROBAS.talk.CRUSADER.0-visit": "1",
+  "OROBAS.talk.CRUSADER.1-visit": "2",
+  "OROBAS.talk.CRUSADER.2-visit": "5",
+  "OROBAS.talk.HIGHWAYMAN.0-visit": "1",
+  "OROBAS.talk.HIGHWAYMAN.1-visit": "2",
+  "OROBAS.talk.HIGHWAYMAN.2-visit": "5",
+
+  "PAEL.talk.CRUSADER.0-visit": "1",
+  "PAEL.talk.CRUSADER.1-visit": "2",
+  "PAEL.talk.CRUSADER.2-visit": "5",
+  "PAEL.talk.HIGHWAYMAN.0-visit": "1",
+  "PAEL.talk.HIGHWAYMAN.1-visit": "2",
+  "PAEL.talk.HIGHWAYMAN.2-visit": "5",
+
+  "TEZCATARA.talk.CRUSADER.0-visit": "1",
+  "TEZCATARA.talk.CRUSADER.1-visit": "2",
+  "TEZCATARA.talk.CRUSADER.2-visit": "5",
+  "TEZCATARA.talk.HIGHWAYMAN.0-visit": "1",
+  "TEZCATARA.talk.HIGHWAYMAN.1-visit": "2",
+  "TEZCATARA.talk.HIGHWAYMAN.2-visit": "5",
+
+  "DARV.talk.CRUSADER.0-visit": "1",
+  "DARV.talk.CRUSADER.1-visit": "2",
+  "DARV.talk.CRUSADER.2-visit": "5",
+  "DARV.talk.HIGHWAYMAN.0-visit": "1",
+  "DARV.talk.HIGHWAYMAN.1-visit": "2",
+  "DARV.talk.HIGHWAYMAN.2-visit": "5",
+
+  "NONUPEIPE.talk.CRUSADER.0-visit": "1",
+  "NONUPEIPE.talk.CRUSADER.1-visit": "2",
+  "NONUPEIPE.talk.CRUSADER.2-visit": "5",
+  "NONUPEIPE.talk.HIGHWAYMAN.0-visit": "1",
+  "NONUPEIPE.talk.HIGHWAYMAN.1-visit": "2",
+  "NONUPEIPE.talk.HIGHWAYMAN.2-visit": "5",
+
+  "TANX.talk.CRUSADER.0-visit": "1",
+  "TANX.talk.CRUSADER.1-visit": "2",
+  "TANX.talk.CRUSADER.2-visit": "5",
+  "TANX.talk.HIGHWAYMAN.0-visit": "1",
+  "TANX.talk.HIGHWAYMAN.1-visit": "2",
+  "TANX.talk.HIGHWAYMAN.2-visit": "5",
+
+  "VAKUU.talk.CRUSADER.0-visit": "1",
+  "VAKUU.talk.CRUSADER.1-visit": "2",
+  "VAKUU.talk.CRUSADER.2-visit": "5",
+  "VAKUU.talk.HIGHWAYMAN.0-visit": "1",
+  "VAKUU.talk.HIGHWAYMAN.1-visit": "2",
+  "VAKUU.talk.HIGHWAYMAN.2-visit": "5"
 }

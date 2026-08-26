@@ -13,7 +13,7 @@ public class DeepBreath : ModCardTemplate
     public DeepBreath() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
     {
     }
-
+ 
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
@@ -27,11 +27,12 @@ public class DeepBreath : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CardPileCmd.Shuffle(choiceContext, Owner);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

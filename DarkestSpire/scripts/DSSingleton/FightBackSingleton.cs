@@ -25,7 +25,12 @@ public class FightBackSingleton : HookedSingletonModel
         if (!card.Tags.Contains(DSCardTag.FightBack))
             return;
         IEnumerable<DynamicVar> cardVars = card.DynamicVars.Values.Where((c) => c.Name.Contains("FightBack"));
-        await PowerCmd.Apply(choiceContext, new FightBackBasePower(cardVars, card), card.Owner.Creature, 1,
+        FightBackBasePower fbp = ModelDb.Power<FightBackBasePower>();
+        fbp = (FightBackBasePower) fbp.ToMutable();
+        fbp.FightBackCardSource = card;
+        fbp.FightBackEffects = cardVars;
+        
+        await PowerCmd.Apply(choiceContext, fbp, card.Owner.Creature, 1,
             card.Owner.Creature, card);
     }
 }

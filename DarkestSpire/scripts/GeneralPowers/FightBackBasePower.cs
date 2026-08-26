@@ -1,4 +1,5 @@
 ﻿using DarkestSpire.Characters.HighwayMan.Cards;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -27,7 +28,7 @@ public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
         this.targetType = targetType;
     }
 
-    public T powerType => Activator.CreateInstance<T>();
+    public T powerType => ModelDb.Power<T>();
 
     public TargetType targetType { get; }
 }
@@ -50,12 +51,20 @@ public class FightBackBasePower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    private IEnumerable<DynamicVar> _fightBackEffects { get; }
-    private CardModel _fightBackCardSource { get; }
-    
-    public IEnumerable<DynamicVar> FightBackEffects => _fightBackEffects;
-    
-    public CardModel FightBackCardSource => _fightBackCardSource;
+    private IEnumerable<DynamicVar> _fightBackEffects { get; set; }
+    private CardModel _fightBackCardSource { get; set; }
+
+    public IEnumerable<DynamicVar> FightBackEffects
+    {
+        get => _fightBackEffects;
+        set => _fightBackEffects = value;
+    }
+
+    public CardModel FightBackCardSource
+    {
+        get => _fightBackCardSource;
+        set => _fightBackCardSource = value;
+    }
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target,
         DamageResult result, ValueProp props,
@@ -84,19 +93,19 @@ public class FightBackBasePower : ModPowerTemplate
             {
                 await PlayerCmd.GainGold(dynamicVar.IntValue, Owner.Player!);
             }
-            else if (dynamicVar is PowerVarFB<PowerModel> powerVar)
+            else if (dynamicVar.Name == "FightBackPower")
             {
+                PowerVarFB<PowerModel> powerVar = (PowerVarFB<PowerModel>)dynamicVar;
                 if (powerVar.targetType == TargetType.AllEnemies)
                 {
                     foreach (Creature creature in CombatState.Enemies)
                     {
-                        await PowerCmd.Apply(choiceContext, powerVar.powerType, creature, powerVar.IntValue, Owner,
-                            (CardModel)null!);
+                        await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), creature, powerVar.IntValue, Owner, _fightBackCardSource);
                     }
                     return;
                 }
                 Creature powerTargets = (powerVar.targetType == TargetType.Self) ? Owner : dealer! ; 
-                await PowerCmd.Apply(choiceContext, powerVar.powerType, powerTargets, powerVar.IntValue, Owner, (CardModel) null!);
+                await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), powerTargets, powerVar.IntValue, Owner, _fightBackCardSource);
                 
             }
             if (Owner.HasPower<PocketGunPower>())
@@ -106,7 +115,7 @@ public class FightBackBasePower : ModPowerTemplate
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side == CombatSide.Player)
+        if (side != CombatSide.Player)
         {
             await PowerCmd.Remove(this);
         }

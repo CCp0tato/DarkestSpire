@@ -39,5 +39,8 @@ public class Entry
                 // null // 放置顺序（可选）
             );
         Logger.Info(BuildMarker);
+        
+        var cardTags = RitsuLibFramework.GetCardTagRegistry(Entry.ModId);
+        cardTags.RegisterOwned("heavy");
     }
 }

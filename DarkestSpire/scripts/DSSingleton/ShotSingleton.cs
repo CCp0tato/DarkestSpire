@@ -10,10 +10,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Models;
 
 namespace DarkestSpire.DSSingleton;
 
+[RegisterSingleton]
 public class ShotSingleton : HookedSingletonModel
 {
     public ShotSingleton() : base(HookType.Combat)
@@ -39,6 +41,7 @@ public class ShotSingleton : HookedSingletonModel
             IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
                 card);
+            await CardCmd.Discard(choiceContext, discardCards);
             await ShotEvent(cardPlay, choiceContext, discardCards.Count(), maxDropValue);
         }
         else
@@ -46,6 +49,7 @@ public class ShotSingleton : HookedSingletonModel
             IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 9999999), null,
                 card);
+            await CardCmd.Discard(choiceContext, discardCards);
             await ShotEvent(cardPlay, choiceContext, 99999999, 0, discardCards.Count() + (-1 - maxDropValue));
         }
     }
@@ -83,20 +87,23 @@ public class ShotSingleton : HookedSingletonModel
                     int damageValue = dynamicVar.IntValue;
                     if (shotCard.Owner.Creature.HasPower<CaliberUpgradePower>())
                         damageValue += shotCard.Owner.Creature.GetPower<CaliberUpgradePower>().Amount;
-                    if (shotCard.Owner.Creature.HasPower<AimShotPower>())
+                    bool hasAimShotPower = shotCard.Owner.Creature.HasPower<AimShotPower>();
+                    if (hasAimShotPower)
                         damageValue *= 2;
                     if (shotCard.TargetType == TargetType.AllEnemies)
                     {
                         await DamageCmd.Attack(damageValue).FromCard(shotCard)
                             .TargetingAllOpponents(shotCard.Owner.Creature.CombatState!).Execute(choiceContext);
-                        await PowerCmd.Decrement(shotCard.Owner.Creature.GetPower<AimShotPower>());
+                        if (hasAimShotPower)
+                            await PowerCmd.Decrement(shotCard.Owner.Creature.GetPower<AimShotPower>()!);
                     }
                     
                     else
                     {
                         await DamageCmd.Attack(damageValue).FromCard(shotCard)
                             .Targeting(shotCardPlay.Target!).Execute(choiceContext);
-                        await PowerCmd.Decrement(shotCard.Owner.Creature.GetPower<AimShotPower>());
+                        if (hasAimShotPower)
+                            await PowerCmd.Decrement(shotCard.Owner.Creature.GetPower<AimShotPower>()!);
                         
                     }
                 }
@@ -118,15 +125,13 @@ public class ShotSingleton : HookedSingletonModel
                     {
                         foreach (Creature creature in shotCard.Owner.Creature.CombatState.Enemies)
                         {
-                            await PowerCmd.Apply(choiceContext, powerVar.powerType, creature, powerVar.IntValue, shotCard.Owner.Creature,
+                            await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), creature, powerVar.IntValue, shotCard.Owner.Creature,
                                 (CardModel)null!);
                         }
                         return;
                     }
-                    Creature powerTargets = (powerVar.targetType == TargetType.Self)
-                        ? shotCard.Owner.Creature
-                        : shotCardPlay.Target!;
-                    await PowerCmd.Apply(choiceContext, powerVar.powerType, powerTargets,
+                    Creature powerTargets = (powerVar.targetType == TargetType.Self) ? shotCard.Owner.Creature : shotCardPlay.Target!;
+                    await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), powerTargets,
                         powerVar.IntValue, shotCard.Owner.Creature, (CardModel)null!);
                 }
             }

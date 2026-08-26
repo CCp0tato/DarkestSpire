@@ -15,7 +15,6 @@ public class DismasOldRoadRedemption : ModCardTemplate
     {
     }
 
-
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{HighwayManCardPool.getImageRoot()}/{GetType().Name}.png"
@@ -28,11 +27,11 @@ public class DismasOldRoadRedemption : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["Strength"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Strength"].UpgradeValueBy(1);
+        DynamicVars["StrengthPower"].UpgradeValueBy(1);
     }
 }

@@ -10,7 +10,7 @@ public class CrusaderCardPool : TypeListCardPoolModel
     
     // 卡池的ID。必须唯一防撞车。
     public override string Title => "CrusaderCardPool";
-    public override string EnergyColorName => "CrusaderEnergy";
+    public override string EnergyColorName => "CrusaderEnergyColor";
 
     // 描述中使用的能量图标。大小为24x24。
     public override string? TextEnergyIconPath => $"{ImageRoot}/energy_example.png";

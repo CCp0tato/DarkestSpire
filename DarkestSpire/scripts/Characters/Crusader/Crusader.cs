@@ -98,7 +98,7 @@ public class CrusaderCharacter : ModCharacterTemplate<CrusaderCardPool, Crusader
         ));
 
     // 某个字段没写时，RitsuLib 会从占位角色配置里补齐。
-    // public override string? PlaceholderCharacterId => "Silent";
+    public override string? PlaceholderCharacterId => "Defect";
 
     // 攻击和施法动画延迟，以对齐动画
     public override float AttackAnimDelay => 0f;

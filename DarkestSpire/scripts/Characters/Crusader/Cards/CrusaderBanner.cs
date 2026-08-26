@@ -11,7 +11,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 [RegisterCard(typeof(CrusaderCardPool))]
 public class CrusaderBanner : ModCardTemplate
 {
-    public CrusaderBanner() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyPlayer, true)
+    public CrusaderBanner() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AllAllies, true)
     {
     }
 
@@ -30,7 +30,7 @@ public class CrusaderBanner : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target!, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

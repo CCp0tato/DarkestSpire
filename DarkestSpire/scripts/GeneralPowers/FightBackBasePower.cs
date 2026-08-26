@@ -66,11 +66,11 @@ public class FightBackBasePower : ModPowerTemplate
             if (dynamicVar is DamageVar)
             {
                 if (_fightBackCardSource.TargetType == TargetType.AllEnemies)
-                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
-                        .TargetingAllOpponents(Owner.CombatState!);
+                    await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
+                        .TargetingAllOpponents(Owner.CombatState!).Execute(choiceContext);
                 else
-                    DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
-                        .Targeting(dealer!);
+                    await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
+                        .Targeting(dealer!).Execute(choiceContext);
             }
             else if (dynamicVar is EnergyVar)
             {

@@ -30,7 +30,7 @@ public class ShotSingleton : HookedSingletonModel
         
         if (maxDropValue == 0)
         {
-            await ShotEvent(cardPlay, 0, 0);
+            await ShotEvent(cardPlay, choiceContext, 0, 0);
             return;
         }
         if (maxDropValue != -1)
@@ -38,18 +38,18 @@ public class ShotSingleton : HookedSingletonModel
             IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
                 card);
-            await ShotEvent(cardPlay, discardCards.Count(), maxDropValue);
+            await ShotEvent(cardPlay, choiceContext, discardCards.Count(), maxDropValue);
         }
         else
         {
             IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 9999999), null,
                 card);
-            await ShotEvent(cardPlay, 99999999, 0, discardCards.Count());
+            await ShotEvent(cardPlay, choiceContext, 99999999, 0, discardCards.Count());
         }
     }
 
-    private async Task ShotEvent(CardPlay shotCardPlay, int discardCount, int shotCount, int shotTimes = 1)
+    private async Task ShotEvent(CardPlay shotCardPlay, PlayerChoiceContext choiceContext, int discardCount, int shotCount, int shotTimes = 1)
     {
         CardModel shotCard = shotCardPlay.Card;
         int gapCount = shotCount - discardCount;
@@ -75,11 +75,11 @@ public class ShotSingleton : HookedSingletonModel
                 if (dynamicVar is DamageVar)
                 {
                     if (shotCard.TargetType == TargetType.AllEnemies)
-                        DamageCmd.Attack(dynamicVar.IntValue).FromCard(shotCard)
-                            .TargetingAllOpponents(shotCard.Owner.Creature.CombatState!);
+                        await DamageCmd.Attack(dynamicVar.IntValue).FromCard(shotCard)
+                            .TargetingAllOpponents(shotCard.Owner.Creature.CombatState!).Execute(choiceContext);
                     else
-                        DamageCmd.Attack(dynamicVar.IntValue).FromCard(shotCard)
-                            .Targeting(shotCardPlay.Target!);
+                        await DamageCmd.Attack(dynamicVar.IntValue).FromCard(shotCard)
+                            .Targeting(shotCardPlay.Target!).Execute(choiceContext);
                 }
                 else if (dynamicVar is EnergyVar)
                 {
@@ -98,7 +98,7 @@ public class ShotSingleton : HookedSingletonModel
                     Creature powerTargets = (powerVar.targetType == TargetType.Self)
                         ? shotCard.Owner.Creature
                         : shotCardPlay.Target!;
-                    await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), powerVar.powerType, powerTargets,
+                    await PowerCmd.Apply(choiceContext, powerVar.powerType, powerTargets,
                         powerVar.IntValue, shotCard.Owner.Creature, (CardModel)null!);
                 }
             }

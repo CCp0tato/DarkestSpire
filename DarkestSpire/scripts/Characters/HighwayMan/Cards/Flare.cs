@@ -30,11 +30,11 @@ public class Flare : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["Dexterity"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Dexterity"].UpgradeValueBy(1);
+        DynamicVars["DexterityPower"].UpgradeValueBy(1);
     }
 }

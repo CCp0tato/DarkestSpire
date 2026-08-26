@@ -10,7 +10,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 [RegisterCard(typeof(CrusaderCardPool))]
 public class BattleHeal : ModCardTemplate
 {
-    public BattleHeal() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyAlly, true)
+    public BattleHeal() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyPlayer, true)
     {
     }
 
@@ -27,7 +27,7 @@ public class BattleHeal : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Heal(Owner.Creature, this.DynamicVars.Heal.IntValue);
+        await CreatureCmd.Heal(cardPlay.Target!, this.DynamicVars.Heal.IntValue);
     }
 
     protected override void OnUpgrade()

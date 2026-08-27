@@ -4,7 +4,8 @@ namespace DarkestSpire.Characters.Crusader;
 
 public class CrusaderRelicPool : TypeListRelicPoolModel
 {
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Example";
+    private const string CharacterName = "Crusader";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/{CharacterName}";
     
     // 描述中使用的能量图标。大小为24x24。
     public override string? TextEnergyIconPath => $"{ImageRoot}/energy_example.png";

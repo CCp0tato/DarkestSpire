@@ -118,13 +118,13 @@
 - [x] Piety
 
 ## 稀有卡牌
-- [ ] SweepingLegion
-- [ ] Condemnation
-- [ ] DivineWill
-- [ ] UnshoneGlory
-- [ ] CrusaderCreed
-- [ ] HolyLightImpact
-- [ ] DivineBlessing
+- [x] SweepingLegion
+- [x] Condemnation
+- [x] DivineWill
+- [x] UnshoneGlory
+- [x] CrusaderCreed
+- [x] HolyLightImpact
+- [x] DivineBlessing
 - [ ] DegenerationAura
 - [x] PaladinHammer
 - [ ] Chivalry
@@ -212,7 +212,7 @@
 ## 衍生卡牌
 
 - [x] LogicalBullet - 充满逻辑的子弹
-- [ ] QuickShot - 速射
+- [x] QuickShot - 速射
 
 
 

@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace DarkestSpire.Script.Characters.Crusader.Potions;
+namespace DarkestSpire.Scripts.Characters.Crusader.Potions;
 
 [RegisterPotion(typeof(CrusaderPotionPool))]
 public class BottledDarkSouls : ModPotionTemplate

@@ -1,4 +1,7 @@
+using DarkestSpire.GeneralPowers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -11,6 +14,7 @@ public class BackToBack : ModCardTemplate
     {
     }
 
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
@@ -19,6 +23,13 @@ public class BackToBack : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PowerCmd.Apply<BackToBackPower>(choiceContext, cardPlay.Target!, 1M, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<BackToBackPower>(choiceContext, Owner.Creature, 1M, Owner.Creature, cardPlay.Card);
+        
+    }
 
     protected override void OnUpgrade()
     {

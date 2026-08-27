@@ -1,3 +1,4 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -29,6 +30,7 @@ public class FullBarrage : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
+        await CardCmd.Discard(choiceContext, PileType.Hand.GetPile(Owner).Cards.Where(c => !(c.Tags.Contains(DSCardTag.Shot))));
     }
 
     protected override void OnUpgrade()

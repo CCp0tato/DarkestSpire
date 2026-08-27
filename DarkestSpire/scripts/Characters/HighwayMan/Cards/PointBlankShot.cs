@@ -24,15 +24,15 @@ public class PointBlankShot : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DexterityPower>(5)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TemporaryDexterityPower>(5)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<TemporaryDexterityPower>(choiceContext, Owner.Creature, DynamicVars["TemporaryDexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["DexterityPower"].UpgradeValueBy(2);
+        DynamicVars["TemporaryDexterityPower"].UpgradeValueBy(2);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DarkestSpire.Characters.HighwayMan.Cards;
-using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -10,7 +9,6 @@ using STS2RitsuLib.Scaffolding.Content;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DarkestSpire.GeneralPowers;
@@ -60,6 +58,16 @@ public class FightBackBasePower : ModPowerTemplate
         this._fightBackEffects = fightBackEffects;
     }
     
+    public FightBackBasePower(CardModel card)
+    {
+        this._fightBackCardSource = card;
+        this._fightBackEffects = card.DynamicVars.Values.Where(c => c.Name.Contains("FightBack"));
+    }
+
+    public FightBackBasePower(CardPlay cardPlay) : this(cardPlay.Card)
+    {
+    }
+
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;

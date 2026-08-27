@@ -2,7 +2,6 @@
 using DarkestSpire.DarkestSpire.CardTags;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -10,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.Relics;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Models;
 
@@ -41,7 +41,14 @@ public class ShotSingleton : HookedSingletonModel
             IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
                 card);
-            await CardCmd.Discard(choiceContext, discardCards);
+            if (card is DoubleTap)
+            {
+                await CardCmd.AutoPlay(choiceContext, discardCards.FirstOrDefault(), null);
+            }
+            else
+            {
+                await CardCmd.Discard(choiceContext, discardCards);
+            }
             await ShotEvent(cardPlay, choiceContext, discardCards.Count(), maxDropValue);
         }
         else
@@ -50,7 +57,8 @@ public class ShotSingleton : HookedSingletonModel
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 9999999), null,
                 card);
             await CardCmd.Discard(choiceContext, discardCards);
-            await ShotEvent(cardPlay, choiceContext, 99999999, 0, discardCards.Count() + (-1 - maxDropValue));
+            int shotCountAddtives = (-1 - maxDropValue) + (2 * card.Owner.Relics.Count(c => c is ChemicalX));
+            await ShotEvent(cardPlay, choiceContext, 99999999, 0, discardCards.Count() + shotCountAddtives);
         }
     }
 

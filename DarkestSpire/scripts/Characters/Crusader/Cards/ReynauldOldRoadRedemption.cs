@@ -1,3 +1,5 @@
+// | 老路的救赎 | ReynauldOldRoadRedemption | 能力 | 0 | 多人模式，目标玩家获得 3/4 点敏捷，自身获得 3/4 点力量 |
+
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,7 +13,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 [RegisterCard(typeof(CrusaderCardPool))]
 public class ReynauldOldRoadRedemption : ModCardTemplate
 {
-    public ReynauldOldRoadRedemption() : base(0, CardType.Power, CardRarity.Rare, TargetType.AnyPlayer, true)
+    public ReynauldOldRoadRedemption() : base(0, CardType.Power, CardRarity.Rare, TargetType.AnyAlly, true)
     {
     }
 
@@ -24,15 +26,19 @@ public class ReynauldOldRoadRedemption : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(3), new PowerVar<DexterityPower>(3)];
+
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, cardPlay.Target!, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["StrengthPower"].UpgradeValueBy(1);
+        DynamicVars["DexterityPower"].UpgradeValueBy(1);
     }
 }

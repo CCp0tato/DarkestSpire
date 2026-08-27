@@ -3,12 +3,8 @@
     "FIGHT_BACK.description": "打出后，在本回合受到攻击时触发效果。",
     "SHO.title": "枪击",
     "SHOT.description": "打出时最多可以丢弃等同于数值的手牌，丢弃数到达上限时触发效果。若数值为X则可以丢弃任意数量的手牌，每丢弃1张触发效果。",
-    "FAITH.title": "信仰",
-    "FAITH.description": "受到的伤害减少等同于层数的数值；敌方回合结束时层数-1。",
     "VIRTUE.title": "美德",
-    "VIRTUE.description": "强大的正面效果，源自最坚定的心灵。",
+    "VIRTUE.description": "强大的正面效果，源自最坚定的心灵，你只能持有一个美德/折磨效果。",
     "TORTURE.title": "折磨",
-    "TORTURE.description": "以一定的代价换取正面效果，疯狂也可以是力量的源泉。",
-    "UNIQUEMOOD.title": "心智稳定",
-    "UNIQUEMODD.description": "你只能持有一个美德/折磨效果，新获得的美德/折磨会覆盖之前的效果。"
+    "TORTURE.description": "以一定的代价换取正面效果，疯狂也可以是力量的源泉，你只能持有一个美德/折磨效果。"
 }

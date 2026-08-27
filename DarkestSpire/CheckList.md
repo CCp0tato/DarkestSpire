@@ -212,7 +212,7 @@
 ## 衍生卡牌
 
 - [x] LogicalBullet - 充满逻辑的子弹
-- [ ] QuickShot - 速射
+- [x] QuickShot - 速射
 
 
 

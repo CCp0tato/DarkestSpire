@@ -179,10 +179,10 @@
 - [x] FullBarrage - 全弹发射
 - [x] SeizeMoment - 把握时机
 - [ ] PointBlankShot - 抵近射击
-- [ ] BackToBack - 背靠背
+- [x] BackToBack - 背靠背
 - [x] Flare - 照明弹
 - [x] Shrapnel - 破片弹
-- [ ] Incite - 激怒
+- [x] Incite - 激怒
 - [ ] SmoothMove - 游刃有余
 - [ ] DirtyDiseaseThatAreAllCheap - 恶行易施
 - [ ] StreetBrawl - 街头混战

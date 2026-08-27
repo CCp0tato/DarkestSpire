@@ -1,6 +1,7 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -22,6 +23,11 @@ public class HolyWater : ModCardTemplate
         // BannerTexturePath: "" // 横幅（不同类型）
     );
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
+    [
+        HoverTipFactory.FromPower<ArtifactPower>(DynamicVars["ArtifactPower"].IntValue)
+    ];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<ArtifactPower>(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -29,7 +35,6 @@ public class HolyWater : ModCardTemplate
         await PowerCmd.Apply<ArtifactPower>(choiceContext, Owner.Creature, DynamicVars["ArtifactPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
-    // 升级后的效果逻辑
     protected override void OnUpgrade()
     {
         DynamicVars["ArtifactPower"].UpgradeValueBy(1);

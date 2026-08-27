@@ -11,6 +11,7 @@ public class StreetBrawl : ModCardTemplate
     {
     }
 
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(

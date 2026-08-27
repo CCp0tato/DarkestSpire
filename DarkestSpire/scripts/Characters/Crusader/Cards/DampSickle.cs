@@ -33,12 +33,9 @@ public class DampSickle : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
         await PowerCmd.Apply<TemporaryStrengthPower>(choiceContext, Owner.Creature, DynamicVars["TemporaryStrengthPower"].IntValue, Owner.Creature, this);
 
-        foreach (CardModel card in PileType.Discard.GetPile(Owner).Cards)
+        foreach (CardModel card in PileType.Discard.GetPile(Owner).Cards.Where(c => c is DampSickle))
         {
-            if (card is DampSickle)
-            {
-                await CardPileCmd.Add(card, PileType.Hand);
-            }
+            await CardPileCmd.Add(card, PileType.Hand);
         }
     }
 }

@@ -183,7 +183,7 @@
 - [x] Flare - 照明弹
 - [x] Shrapnel - 破片弹
 - [x] Incite - 激怒
-- [ ] SmoothMove - 游刃有余
+- [x] SmoothMove - 游刃有余
 - [ ] DirtyDiseaseThatAreAllCheap - 恶行易施
 - [ ] StreetBrawl - 街头混战
 

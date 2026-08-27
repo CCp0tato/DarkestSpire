@@ -9,6 +9,7 @@ namespace DarkestSpire.DarkestSpire.CardTags;
 [RegisterOwnedCardTag(nameof(Virtue))]
 [RegisterOwnedCardTag(nameof(Unique))]
 [RegisterOwnedCardTag(nameof(FightBack))]
+[RegisterOwnedCardTag(nameof(FightBackSkip))]
 [RegisterOwnedCardTag(nameof(Shot))]
 public static class DSCardTag
 {
@@ -35,5 +36,10 @@ public static class DSCardTag
     public static readonly CardTag Shot =
         ModContentRegistry
             .GetQualifiedCardTagId(Entry.ModId, nameof(Shot))
+            .GetModCardTag();
+    
+    public static readonly CardTag FightBackSkip =
+        ModContentRegistry
+            .GetQualifiedCardTagId(Entry.ModId, nameof(FightBackSkip))
             .GetModCardTag();
 }

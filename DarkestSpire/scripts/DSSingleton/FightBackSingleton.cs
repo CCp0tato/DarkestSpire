@@ -22,7 +22,7 @@ public class FightBackSingleton : HookedSingletonModel
         CardModel card = cardPlay.Card;
         if (card is null)
             return;
-        if (!card.Tags.Contains(DSCardTag.FightBack))
+        if (!card.Tags.Contains(DSCardTag.FightBack) || card.Tags.Contains(DSCardTag.FightBackSkip))
             return;
         IEnumerable<DynamicVar> cardVars = card.DynamicVars.Values.Where((c) => c.Name.Contains("FightBack"));
         FightBackBasePower fbp = ModelDb.Power<FightBackBasePower>();

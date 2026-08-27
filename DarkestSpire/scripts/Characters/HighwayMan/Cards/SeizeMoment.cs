@@ -2,6 +2,7 @@ using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -29,6 +30,7 @@ public class SeizeMoment : ModCardTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6, ValueProp.Move)];
 
+    private int _extraHitThis = 0;
     private int _extraHit = 0;
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
@@ -38,7 +40,7 @@ public class SeizeMoment : ModCardTemplate
             return;
         if (!Owner.Creature.HasPower<FightBackBasePower>())
             return;
-        _extraHit += Owner.Creature.Powers.Count(c => c is FightBackBasePower);
+        _extraHitThis += Owner.Creature.Powers.Count(c => c is FightBackBasePower);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -49,5 +51,11 @@ public class SeizeMoment : ModCardTemplate
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2);
+    }
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        _extraHit = _extraHitThis;
+        _extraHitThis = 0;
     }
 }

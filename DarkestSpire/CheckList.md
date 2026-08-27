@@ -79,6 +79,7 @@
 - [x] FaithBarrier
 - [x] Radiance
 - [x] HolyFire
+- [x] InspireCry
 
 ## 普通卡牌
 - [x] DevoutHit

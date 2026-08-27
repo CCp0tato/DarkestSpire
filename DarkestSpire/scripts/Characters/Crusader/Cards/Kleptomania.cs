@@ -35,7 +35,7 @@ public class Kleptomania : ModCardTemplate
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
-        foreach (CardModel card in PileType.Discard.GetPile(this.Owner).Cards.ToList<CardModel>().UnstableShuffle<CardModel>(Owner.RunState.Rng.CombatCardSelection).Take<CardModel>(DynamicVars.Cards.IntValue))
+        foreach (CardModel card in PileType.Discard.GetPile(Owner).Cards.ToList<CardModel>().UnstableShuffle<CardModel>(Owner.RunState.Rng.CombatCardSelection).Take<CardModel>(DynamicVars.Cards.IntValue))
         {
             CardPileAddResult cardPileAddResult = await CardPileCmd.Add(card, PileType.Hand);
         }

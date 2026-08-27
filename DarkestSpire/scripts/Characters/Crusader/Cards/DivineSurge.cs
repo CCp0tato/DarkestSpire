@@ -1,3 +1,5 @@
+// | 神力涌动 | DivineSurge | 技能 | 0 | 抽 3/4 张牌，选择一张手牌使其本场战斗内可以免费打出，消耗 |
+
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;

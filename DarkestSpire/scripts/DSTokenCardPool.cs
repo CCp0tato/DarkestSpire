@@ -1,9 +1,11 @@
 ﻿using Godot;
+using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
 
 namespace DarkestSpire.TokenCards;
 
+[RegisterSharedCardPool]
 public class DSTokenCardPool : TypeListCardPoolModel
 {
     private const string ImageRoot = $"{Entry.ResPath}/images/dstokencards";

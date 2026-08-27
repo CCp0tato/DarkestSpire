@@ -27,13 +27,13 @@ public class SaintHand : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move), new PowerVar<SaintHandPower>(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (!cardPlay.Target!.IsMonster || cardPlay.Target is null) { return; }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
-        await PowerCmd.Apply<SaintHandPower>(choiceContext, cardPlay.Target!, 1, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<SaintHandPower>(choiceContext, cardPlay.Target!, DynamicVars["SaintHandPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

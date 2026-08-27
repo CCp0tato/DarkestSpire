@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.GeneralPowers;
@@ -21,10 +22,17 @@ public class AveMujicaPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
 
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (!participants.Contains(Owner))
-            return Task.CompletedTask;
-        return DamageCmd.Attack(Amount).TargetingAllOpponents(Owner.CombatState!).Execute(choiceContext);
+            return;
+
+        await CreatureCmd.Damage(
+            choiceContext,
+            Owner.CombatState!.HittableEnemies,
+            Amount,
+            ValueProp.Unpowered,
+            Owner,
+            null);
     }
 }

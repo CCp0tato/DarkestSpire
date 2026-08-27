@@ -11,7 +11,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 [RegisterCard(typeof(CrusaderCardPool))]
 public class HolyFire : ModCardTemplate
 {
-    public HolyFire() : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyPlayer, true)
+    public HolyFire() : base(1, CardType.Skill, CardRarity.Basic, TargetType.AnyPlayer, true)
     {
     }
 
@@ -31,5 +31,10 @@ public class HolyFire : ModCardTemplate
             await CreatureCmd.Heal(creature,
                 creature.HasPower<FaithPower>() ? creature.GetPower<FaithPower>()!.Amount : 0M);
         }
+    }
+
+    protected override void OnUpgrade()
+    {
+        EnergyCost.UpgradeBy(-1);
     }
 }

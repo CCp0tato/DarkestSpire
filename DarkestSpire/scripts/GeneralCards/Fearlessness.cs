@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using DarkestSpire.GeneralCards;
 
 namespace DarkestSpire.GeneralCards;
 
@@ -33,19 +34,45 @@ public class Fearlessness : ModCardTemplate
         DSCardTag.Unique,
     ];
 
-    public IEnumerable<CardModel> I_DO_NOT_FEAR => new CardModel[]
-    {
-        ModelDb.Card<Amoris>(),
-        ModelDb.Card<Timoris>(),
-        ModelDb.Card<Oblivionis>(),
-        ModelDb.Card<Mortis>(),
-        ModelDb.Card<Doloris>()
-    };
+    // public IList<CardModel> I_DO_NOT_FEAR => new CardModel[]
+    // {
+    //     ModelDb.Card<Amoris>().ToMutable(),
+    //     ModelDb.Card<Timoris>().ToMutable(),
+    //     ModelDb.Card<Oblivionis>().ToMutable(),
+    //     ModelDb.Card<Mortis>().ToMutable(),
+    //     ModelDb.Card<Doloris>().ToMutable()
+    // };
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<FearlessnessPower>(choiceContext, Owner.Creature, 1, Owner.Creature, cardPlay.Card);
-        await CardPileCmd.AddGeneratedCardsToCombat(I_DO_NOT_FEAR, PileType.Draw, Owner, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Amoris>(Owner.Creature, PileType.Draw, 1, Owner, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Timoris>(Owner.Creature, PileType.Draw, 1, Owner, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Oblivionis>(Owner.Creature, PileType.Draw, 1, Owner, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Mortis>(Owner.Creature, PileType.Draw, 1, Owner, CardPilePosition.Random);
+        await CardPileCmd.AddToCombatAndPreview<Doloris>(Owner.Creature, PileType.Draw, 1, Owner, CardPilePosition.Random);
+        // CardPileAddResult[] addedCards = new CardPileAddResult[5];
+        // CardModel[] cards = new CardModel[]
+        // {
+        //     CombatState!.CreateCard<Amoris>(Owner),
+        //     CombatState!.CreateCard<Timoris>(Owner),
+        //     CombatState!.CreateCard<Oblivionis>(Owner),
+        //     CombatState!.CreateCard<Mortis>(Owner),
+        //     CombatState!.CreateCard<Doloris>(Owner)
+        // };
+        // for (int i = 0; i < 5; i++)
+        // {
+        //     // var card = I_DO_NOT_FEAR[i];
+        //     // CardModel addCard = CombatState!.CreateCard(card, Owner);
+        //     addedCards[i] = await CardPileCmd.AddGeneratedCardToCombat(
+        //         cards[i],
+        //         PileType.Draw,
+        //         Owner,
+        //         CardPilePosition.Random);
+        // }
+
+        // CardCmd.PreviewCardPileAdd(addedCards);
+        // await CardPileCmd.AddGeneratedCardsToCombat(I_DO_NOT_FEAR, PileType.Draw, Owner, CardPilePosition.Random);
     }
 
     // 升级后的效果逻辑

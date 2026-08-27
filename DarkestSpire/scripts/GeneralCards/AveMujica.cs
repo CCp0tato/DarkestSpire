@@ -1,5 +1,6 @@
 // | Ave Mujica | 能力 | 0 | 回合结束时对所有敌人造成 60/70 点伤害。（通过无畏buff检测消耗堆，出现上面5张状态牌后塞入，一场战斗一次） |
 
+using DarkestSpire.TokenCards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,12 +9,12 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 using DarkestSpire.GeneralPowers;
 
-namespace DarkestSpire.Characters.Crusader.Cards;
+namespace DarkestSpire.GeneralCards;
 
-[RegisterCard(typeof(CrusaderCardPool))]
+[RegisterCard(typeof(DSTokenCardPool))]
 public class AveMujica : ModCardTemplate
 {
-    public AveMujica() : base(0, CardType.Power, CardRarity.Common, TargetType.Self, true)
+    public AveMujica() : base(0, CardType.Power, CardRarity.Token, TargetType.Self, true)
     {
     }
 
@@ -21,7 +22,7 @@ public class AveMujica : ModCardTemplate
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{CrusaderCardPool.getImageRoot()}/{GetType().Name}.png"
+        PortraitPath: $"{DSTokenCardPool.getImageRoot()}/{GetType().Name}.png"
         // FramePath: "",
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 

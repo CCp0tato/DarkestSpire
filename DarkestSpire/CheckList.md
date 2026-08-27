@@ -125,12 +125,12 @@
 - [x] CrusaderCreed
 - [x] HolyLightImpact
 - [x] DivineBlessing
-- [ ] DegenerationAura
+- [x] DegenerationAura
 - [x] PaladinHammer
-- [ ] Chivalry
-- [ ] YourSun
-- [ ] Provocation
-- [ ] DivineSurge
+- [x] Chivalry
+- [x] YourSun
+- [x] Provocation
+- [x] DivineSurge
 - [ ] HolyBladeForm
 - [ ] Expedition
 - [ ] FaceTheDarkness

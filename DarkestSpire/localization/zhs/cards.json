@@ -72,5 +72,5 @@
   "DARKEST_SPIRE_CARD_TIMORIS.title": "恐惧",
   "DARKEST_SPIRE_CARD_TIMORIS.description": "丢弃你的所有[gold]手牌[/gold]然后抽等量的牌。\n丢弃状态牌时将其打出并[gold]消耗[/gold]。",
   "DARKEST_SPIRE_CARD_MORTIS.title": "死亡",
-  "DARKEST_SPIRE_CARD_MORTIS.description": "你受到致死伤害时免疫该次伤害并获得等量的[gold]灾厄[/gold]。"
+  "DARKEST_SPIRE_CARD_MORTIS.description": "本场战斗内，你受到致死伤害时免疫该次伤害并获得等量的[gold]灾厄[/gold]。"
 }

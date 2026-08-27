@@ -28,7 +28,6 @@ public class BottledDarkSouls : ModPotionTemplate
         if (Owner == null) return;
         CardModel particleWall = Owner.RunState.CreateCard<ParticleWall>(Owner);
         CardCmd.ApplyKeyword(particleWall, CardKeyword.Ethereal);
-        //没找到把辉星费用设置为0的方法，或者你们去看一下干手之类的“免费”是怎么生效的
         await CardPileCmd.AddGeneratedCardToCombat(particleWall, PileType.Hand, Owner);
     }
 }

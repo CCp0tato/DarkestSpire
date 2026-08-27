@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,6 +20,9 @@ public class SmoothMove : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
-    
-    
+ 
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        
+    }
 }

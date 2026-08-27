@@ -130,7 +130,7 @@
 - [x] Chivalry
 - [x] YourSun
 - [x] Provocation
-- [ ] DivineSurge
+- [x] DivineSurge
 - [ ] HolyBladeForm
 - [ ] Expedition
 - [ ] FaceTheDarkness

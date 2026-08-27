@@ -119,19 +119,23 @@ public class ShotSingleton : HookedSingletonModel
                 {
                     await PlayerCmd.GainGold(dynamicVar.IntValue, shotCard.Owner);
                 }
-                else if (dynamicVar is PowerVarFB<PowerModel> powerVar)
+                else if (dynamicVar.Name == "ShotPower")
                 {
-                    if (powerVar.targetType == TargetType.AllEnemies)
+                    IPowerVarFBBase powerVar = (IPowerVarFBBase)dynamicVar;
+                    TargetType targetType = powerVar.TargetType;
+                    PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
+                    
+                    if (targetType == TargetType.AllEnemies)
                     {
                         foreach (Creature creature in shotCard.Owner.Creature.CombatState.Enemies)
                         {
-                            await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), creature, powerVar.IntValue, shotCard.Owner.Creature,
+                            await PowerCmd.Apply(choiceContext, powerInstance, creature, powerVar.IntValue, shotCard.Owner.Creature,
                                 (CardModel)null!);
                         }
                         return;
                     }
-                    Creature powerTargets = (powerVar.targetType == TargetType.Self) ? shotCard.Owner.Creature : shotCardPlay.Target!;
-                    await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), powerTargets,
+                    Creature powerTargets = (targetType == TargetType.Self) ? shotCard.Owner.Creature : shotCardPlay.Target!;
+                    await PowerCmd.Apply(choiceContext, powerInstance, powerTargets,
                         powerVar.IntValue, shotCard.Owner.Creature, (CardModel)null!);
                 }
             }

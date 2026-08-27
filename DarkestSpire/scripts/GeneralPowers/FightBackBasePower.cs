@@ -10,27 +10,40 @@ using STS2RitsuLib.Scaffolding.Content;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DarkestSpire.GeneralPowers;
 
-public class PowerVarFB<T> : PowerVar<T> where T : PowerModel
+public interface IPowerVarFBBase
+{
+    public abstract TargetType TargetType { get; }
+    public abstract PowerModel GetPowerInstance();
+
+    public abstract int IntValue { get; }
+}
+
+
+public class PowerVarFB<T> : PowerVar<T>, IPowerVarFBBase where T : PowerModel
 {
     public PowerVarFB(Decimal powerAmount, TargetType targetType)
         : base("FightBackPower", powerAmount)
     {
-        this.targetType = targetType;
+        this.TargetType = targetType;
     }
 
     public PowerVarFB(string name, Decimal powerAmount, TargetType targetType)
         : base(name, powerAmount)
     {
-        this.targetType = targetType;
+        this.TargetType = targetType;
     }
+    
+    public TargetType TargetType { get; }
 
-    public T powerType => ModelDb.Power<T>();
-
-    public TargetType targetType { get; }
+    public PowerModel GetPowerInstance()
+    {
+        return ModelDb.Power<T>();
+    }
 }
 
 
@@ -70,6 +83,8 @@ public class FightBackBasePower : ModPowerTemplate
         DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
+        if (target != Owner)
+            return;
         foreach (DynamicVar dynamicVar in _fightBackEffects)
         {
             if (dynamicVar is DamageVar)
@@ -95,17 +110,20 @@ public class FightBackBasePower : ModPowerTemplate
             }
             else if (dynamicVar.Name == "FightBackPower")
             {
-                PowerVarFB<PowerModel> powerVar = (PowerVarFB<PowerModel>)dynamicVar;
-                if (powerVar.targetType == TargetType.AllEnemies)
+                IPowerVarFBBase powerVar = (IPowerVarFBBase)dynamicVar;
+                TargetType targetType = powerVar.TargetType;
+                PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
+                
+                if (targetType == TargetType.AllEnemies)
                 {
                     foreach (Creature creature in CombatState.Enemies)
                     {
-                        await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), creature, powerVar.IntValue, Owner, _fightBackCardSource);
+                        await PowerCmd.Apply(choiceContext, powerInstance, creature, powerVar.IntValue, Owner, _fightBackCardSource);
                     }
                     return;
                 }
-                Creature powerTargets = (powerVar.targetType == TargetType.Self) ? Owner : dealer! ; 
-                await PowerCmd.Apply(choiceContext, powerVar.powerType.ToMutable(), powerTargets, powerVar.IntValue, Owner, _fightBackCardSource);
+                Creature powerTargets = (targetType == TargetType.Self) ? Owner : dealer! ; 
+                await PowerCmd.Apply(choiceContext, powerInstance, powerTargets, powerVar.IntValue, Owner, _fightBackCardSource);
                 
             }
             if (Owner.HasPower<PocketGunPower>())

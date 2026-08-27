@@ -23,9 +23,9 @@ public class DoubleTap : ModCardTemplate
         // FramePath: "",
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
-    );
+    ); 
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14, ValueProp.Move), new CardsVar("Shot", 1)];
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

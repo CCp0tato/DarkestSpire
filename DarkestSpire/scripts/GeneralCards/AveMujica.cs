@@ -1,7 +1,6 @@
 // | Ave Mujica | 能力 | 0 | 回合结束时对所有敌人造成 60/70 点伤害。（通过无畏buff检测消耗堆，出现上面5张状态牌后塞入，一场战斗一次） |
 
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;

@@ -174,10 +174,10 @@
 - [x] CaliberUpgrade - 口径升级
 - [x] SpareMagazine - 预备弹匣
 - [x] Hustler - 知名老千
-- [ ] DeepBreath - 深呼吸
-- [ ] DoubleTap - 双弹连射
-- [ ] FullBarrage - 全弹发射
-- [ ] SeizeMoment - 把握时机
+- [x] DeepBreath - 深呼吸
+- [x] DoubleTap - 双弹连射
+- [x] FullBarrage - 全弹发射
+- [x] SeizeMoment - 把握时机
 - [ ] PointBlankShot - 抵近射击
 - [ ] BackToBack - 背靠背
 - [x] Flare - 照明弹

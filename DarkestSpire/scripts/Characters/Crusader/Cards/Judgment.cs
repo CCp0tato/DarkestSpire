@@ -25,12 +25,12 @@ public class Judgment : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Judgement", 30)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new IntVar("HpPercentage", 30)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Target is null) { return; }
-        if (cardPlay.Target.CurrentHp * 100 <= cardPlay.Target.MaxHp * DynamicVars["Judgment"].BaseValue)
+        if (cardPlay.Target.CurrentHp * 100 <= cardPlay.Target.MaxHp * DynamicVars["HpPercentage"].BaseValue)
         {
             await CreatureCmd.Kill(cardPlay.Target, false);
         }
@@ -38,6 +38,6 @@ public class Judgment : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Judgment"].UpgradeValueBy(10);
+        DynamicVars["HpPercentage"].UpgradeValueBy(10);
     }
 }

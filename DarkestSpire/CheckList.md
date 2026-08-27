@@ -118,13 +118,13 @@
 - [x] Piety
 
 ## 稀有卡牌
-- [ ] SweepingLegion
-- [ ] Condemnation
-- [ ] DivineWill
-- [ ] UnshoneGlory
-- [ ] CrusaderCreed
-- [ ] HolyLightImpact
-- [ ] DivineBlessing
+- [x] SweepingLegion
+- [x] Condemnation
+- [x] DivineWill
+- [x] UnshoneGlory
+- [x] CrusaderCreed
+- [x] HolyLightImpact
+- [x] DivineBlessing
 - [ ] DegenerationAura
 - [x] PaladinHammer
 - [ ] Chivalry

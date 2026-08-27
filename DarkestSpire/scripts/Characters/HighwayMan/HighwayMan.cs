@@ -12,8 +12,9 @@ public class HighwayManCharacter : ModCharacterTemplate<HighwayManCardPool, High
 {
     // public static readonly Color ThemeColor = new(0.42f, 0.65f, 0.72f);
 
-    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/HighwayMan";
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/HighwayMan";
+    private const string CharacterName = "HighwayMan";
+    private const string SceneRoot = $"{Entry.ResPath}/scenes/characters/{CharacterName}";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/{CharacterName}";
 
     // 角色名称颜色
     public override Color NameColor => new(0.5f, 0.5f, 1f);

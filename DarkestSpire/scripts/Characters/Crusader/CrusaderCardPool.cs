@@ -6,8 +6,9 @@ namespace DarkestSpire.Characters.Crusader;
 
 public class CrusaderCardPool : TypeListCardPoolModel
 {
-    private const string ImageRoot = $"{Entry.ResPath}/images/characters/Crusader";
-    
+    private const string CharacterName = "Crusader";
+    private const string ImageRoot = $"{Entry.ResPath}/images/characters/{CharacterName}";
+
     // 卡池的ID。必须唯一防撞车。
     public override string Title => "CrusaderCardPool";
     public override string EnergyColorName => "CrusaderEnergyColor";

@@ -131,12 +131,12 @@
 - [x] YourSun
 - [x] Provocation
 - [x] DivineSurge
-- [ ] HolyBladeForm
-- [ ] Expedition
-- [ ] FaceTheDarkness
-- [ ] ReynauldOldRoadRedemption
-- [ ] Restraint
-- [ ] Stalemate
+- [x] HolyBladeForm
+- [x] Expedition
+- [x] FaceTheDarkness
+- [x] ReynauldOldRoadRedemption
+- [x] Restraint
+- [x] Stalemate
 
 # Highwayman
 

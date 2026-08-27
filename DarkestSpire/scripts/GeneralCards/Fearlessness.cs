@@ -32,11 +32,6 @@ public class Fearlessness : ModCardTemplate
         DSCardTag.Virtue,
         DSCardTag.Unique,
     ];
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromCard<AveMujica>(),
-        HoverTipFactory.FromPower<FearlessnessPower>(),
-        HoverTipFactory.FromKeyword(DSKeywords.Virtue),
-    ];
 
     public IEnumerable<CardModel> I_DO_NOT_FEAR => new CardModel[]
     {

@@ -161,16 +161,19 @@ public class ShotSingleton : HookedSingletonModel
         Creature target, IPowerVarFBBase powerVar)
     {
         PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
-        if (powerInstance is FightBackBasePower fightBackPower)
+        if (powerInstance is FightBackBasePower)
         {
+            FightBackBasePower fightBackPower = (FightBackBasePower) ModelDb.Power<FightBackBasePower>().ToMutable();
             fightBackPower.FightBackEffects = shotCard.DynamicVars.Values
                 .Where(c => c.Name.Contains("FightBack"))
                 .ToList();
             fightBackPower.FightBackCardSource = shotCard;
             fightBackPower.FightBackTargetType = powerVar.TargetType;
             target = shotCard.Owner.Creature;
+            await PowerCmd.Apply(choiceContext, fightBackPower, target, powerVar.IntValue,
+                shotCard.Owner.Creature, shotCard);
+            return;
         }
-
         await PowerCmd.Apply(choiceContext, powerInstance, target, powerVar.IntValue,
             shotCard.Owner.Creature, shotCard);
     }

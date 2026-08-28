@@ -179,7 +179,7 @@
 - [x] DoubleTap - 双弹连射
 - [x] FullBarrage - 全弹发射
 - [x] SeizeMoment - 把握时机
-- [ ] PointBlankShot - 抵近射击
+- [x] PointBlankShot - 抵近射击
 - [x] BackToBack - 背靠背
 - [x] Flare - 照明弹
 - [x] Shrapnel - 破片弹
@@ -190,7 +190,7 @@
 
 ## 稀有卡牌
 
-- [ ] Robbery - 抢劫
+- [x] Robbery - 抢劫
 - [ ] OutlawForm - 悍匪形态
 - [ ] Etched - 刻骨铭心
 - [ ] Jackpot - jackpot!
@@ -199,8 +199,8 @@
 - [ ] DeathBladeDance - 剑圣·死亡之舞
 - [ ] CantHitMe - 怎么，打不中吗？
 - [x] HighwaymanFaceTheDarkness - 直面黑暗
-- [ ] DismasOldRoadRedemption - 老路的救赎
-- [ ] IronLiver - 千杯不醉
+- [x] DismasOldRoadRedemption - 老路的救赎
+- [x] IronLiver - 千杯不醉
 - [ ] SerratedBlade - 锯齿刀刃
 - [ ] OutlawLogic - 强盗逻辑
 - [ ] Brazen - 明目张胆

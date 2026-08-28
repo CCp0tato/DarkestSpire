@@ -29,10 +29,11 @@ public class TrackingShot : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move), new CardsVar("Shot", -1), new PowerVarFB<DexterityPower>("ShotPower",1, TargetType.Self)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4, ValueProp.Move), new IntVar("Shot", -1), new PowerVarFB<DexterityPower>("ShotPower",1, TargetType.Self)];
 
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 
+    
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);

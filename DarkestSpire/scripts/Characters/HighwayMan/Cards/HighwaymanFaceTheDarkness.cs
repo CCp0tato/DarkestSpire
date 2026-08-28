@@ -15,13 +15,14 @@ public class HighwaymanFaceTheDarkness : ModCardTemplate
     {
     }
 
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{HighwayManCardPool.getImageRoot()}/{GetType().Name}.png"
         // FramePath: "",
         // PortraitBorderPath: "",
-        // BannerTexturePath: "" 
+        // BannerTexturePath: ""  
     );
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -30,7 +31,7 @@ public class HighwaymanFaceTheDarkness : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ThornsPower>(choiceContext, Owner.Creature, DynamicVars["ThornsPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<ThornsPower>(choiceContext, CombatState.PlayerCreatures, DynamicVars["ThornsPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

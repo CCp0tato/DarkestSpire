@@ -15,7 +15,7 @@ public class DismasOldRoadRedemption : ModCardTemplate
     {
     }
 
-    // 卡图资源
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{HighwayManCardPool.getImageRoot()}/{GetType().Name}.png"
         // FramePath: "",
@@ -27,7 +27,8 @@ public class DismasOldRoadRedemption : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, cardPlay.Target!, cardPlay.Card);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

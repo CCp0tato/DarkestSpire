@@ -32,7 +32,7 @@ public class FireSuppression : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, DynamicVars["VulnerablePower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState!.Enemies, DynamicVars["VulnerablePower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

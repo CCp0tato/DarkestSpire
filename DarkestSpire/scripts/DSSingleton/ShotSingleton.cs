@@ -22,14 +22,14 @@ public class ShotSingleton : HookedSingletonModel
     {
     }
     
-    public int _cardsPlayedThisTurn;
-
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel card = cardPlay.Card;
         if (!card.Tags.Contains(DSCardTag.Shot))
             return;
-        int maxDropValue = card.DynamicVars["Shot"].IntValue;
+        if (!card.DynamicVars.TryGetValue("Shot", out DynamicVar? shotVar))
+            return;
+        int maxDropValue = shotVar.IntValue;
         
         if (maxDropValue == 0)
         {
@@ -38,27 +38,29 @@ public class ShotSingleton : HookedSingletonModel
         }
         if (maxDropValue > -1)
         {
-            IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
+            List<CardModel> discardCards = (await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
-                card);
+                card)).ToList();
             if (card is DoubleTap)
             {
-                await CardCmd.AutoPlay(choiceContext, discardCards.FirstOrDefault(), null);
+                CardModel? selectedCard = discardCards.FirstOrDefault();
+                if (selectedCard is not null)
+                    await CardCmd.AutoPlay(choiceContext, selectedCard, null);
             }
             else
             {
                 await CardCmd.Discard(choiceContext, discardCards);
             }
-            await ShotEvent(cardPlay, choiceContext, discardCards.Count(), maxDropValue);
+            await ShotEvent(cardPlay, choiceContext, discardCards.Count, maxDropValue);
         }
         else
         {
-            IEnumerable<CardModel> discardCards = await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
+            List<CardModel> discardCards = (await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
                 new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 9999999), null,
-                card);
+                card)).ToList();
             await CardCmd.Discard(choiceContext, discardCards);
             int shotCountAddtives = (-1 - maxDropValue) + (2 * card.Owner.Relics.Count(c => c is ChemicalX));
-            await ShotEvent(cardPlay, choiceContext, 99999999, 0, discardCards.Count() + shotCountAddtives);
+            await ShotEvent(cardPlay, choiceContext, 0, 0, discardCards.Count + shotCountAddtives);
         }
     }
 
@@ -66,8 +68,8 @@ public class ShotSingleton : HookedSingletonModel
     {
         CardModel shotCard = shotCardPlay.Card;
 
-        if (shotCard.Owner.Creature.HasPower<SpareMagazinePower>())
-            await CardPileCmd.Draw(choiceContext, shotCard.Owner.Creature.GetPower<SpareMagazinePower>().Amount,
+        if (shotCard.Owner.Creature.GetPower<SpareMagazinePower>() is { } spareMagazine)
+            await CardPileCmd.Draw(choiceContext, spareMagazine.Amount,
                 shotCard.Owner);
         
         int gapCount = shotCount - discardCount;
@@ -85,7 +87,9 @@ public class ShotSingleton : HookedSingletonModel
                 await CardPileCmd.Add(card, PileType.Hand);
         }
         
-        IEnumerable<DynamicVar> cardVars = shotCard.DynamicVars.Values.Where((c) => c.Name.Contains("Shot"));
+        List<DynamicVar> cardVars = shotCard.DynamicVars.Values
+            .Where(c => c.Name.Contains("Shot"))
+            .ToList();
         for (int i = 0; i < shotTimes; i++)
         {
             foreach (DynamicVar dynamicVar in cardVars)
@@ -93,8 +97,8 @@ public class ShotSingleton : HookedSingletonModel
                 if (dynamicVar is DamageVar)
                 {
                     int damageValue = dynamicVar.IntValue;
-                    if (shotCard.Owner.Creature.HasPower<CaliberUpgradePower>())
-                        damageValue += shotCard.Owner.Creature.GetPower<CaliberUpgradePower>().Amount;
+                    if (shotCard.Owner.Creature.GetPower<CaliberUpgradePower>() is { } caliberUpgrade)
+                        damageValue += caliberUpgrade.Amount;
                     bool hasAimShotPower = shotCard.Owner.Creature.HasPower<AimShotPower>();
                     if (hasAimShotPower)
                         damageValue *= 2;
@@ -127,34 +131,47 @@ public class ShotSingleton : HookedSingletonModel
                 {
                     await PlayerCmd.GainGold(dynamicVar.IntValue, shotCard.Owner);
                 }
-                else if (dynamicVar.Name == "ShotPower")
+                else if (dynamicVar.Name == "ShotPower" && dynamicVar is IPowerVarFBBase powerVar)
                 {
-                    IPowerVarFBBase powerVar = (IPowerVarFBBase)dynamicVar;
                     TargetType targetType = powerVar.TargetType;
-                    PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
-                    FightBackBasePower fbpowerInstance = null;
-                    
-                    if (powerInstance is FightBackBasePower)
+                    if (powerVar.GetPowerInstance() is FightBackBasePower)
                     {
-                        fbpowerInstance = (FightBackBasePower) powerInstance;
-                        fbpowerInstance.FightBackEffects = shotCard.DynamicVars.Values.ToList().Where(c => c.Name.Contains("FightBack"));
-                        fbpowerInstance.FightBackCardSource = shotCard;
+                        await ApplyShotPower(choiceContext, shotCard, shotCard.Owner.Creature, powerVar);
+                        continue;
                     }
-                    
                     if (targetType == TargetType.AllEnemies)
                     {
-                        foreach (Creature creature in shotCard.Owner.Creature.CombatState.Enemies)
+                        foreach (Creature creature in shotCard.Owner.Creature.CombatState!.Enemies.ToList())
                         {
-                            await PowerCmd.Apply(choiceContext, fbpowerInstance is null ? powerInstance : fbpowerInstance, creature, powerVar.IntValue, shotCard.Owner.Creature,
-                                (CardModel)null!);
+                            await ApplyShotPower(choiceContext, shotCard, creature, powerVar);
                         }
-                        return;
+                        continue;
                     }
-                    Creature powerTargets = (targetType == TargetType.Self) ? shotCard.Owner.Creature : shotCardPlay.Target!;
-                    await PowerCmd.Apply(choiceContext, fbpowerInstance is null ? powerInstance : fbpowerInstance, powerTargets,
-                        powerVar.IntValue, shotCard.Owner.Creature, (CardModel)null!);
+                    Creature? powerTarget = targetType == TargetType.Self
+                        ? shotCard.Owner.Creature
+                        : shotCardPlay.Target;
+                    if (powerTarget is not null)
+                        await ApplyShotPower(choiceContext, shotCard, powerTarget, powerVar);
                 }
             }
         }
+    }
+
+    private static async Task ApplyShotPower(PlayerChoiceContext choiceContext, CardModel shotCard,
+        Creature target, IPowerVarFBBase powerVar)
+    {
+        PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
+        if (powerInstance is FightBackBasePower fightBackPower)
+        {
+            fightBackPower.FightBackEffects = shotCard.DynamicVars.Values
+                .Where(c => c.Name.Contains("FightBack"))
+                .ToList();
+            fightBackPower.FightBackCardSource = shotCard;
+            fightBackPower.FightBackTargetType = powerVar.TargetType;
+            target = shotCard.Owner.Creature;
+        }
+
+        await PowerCmd.Apply(choiceContext, powerInstance, target, powerVar.IntValue,
+            shotCard.Owner.Creature, shotCard);
     }
 }

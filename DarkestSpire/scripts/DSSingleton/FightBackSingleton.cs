@@ -20,15 +20,18 @@ public class FightBackSingleton : HookedSingletonModel
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel card = cardPlay.Card;
-        if (card is null)
-            return;
         if (!card.Tags.Contains(DSCardTag.FightBack) || card.Tags.Contains(DSCardTag.FightBackSkip))
             return;
-        IEnumerable<DynamicVar> cardVars = card.DynamicVars.Values.Where((c) => c.Name.Contains("FightBack"));
+        List<DynamicVar> cardVars = card.DynamicVars.Values
+            .Where(c => c.Name.Contains("FightBack"))
+            .ToList();
+        if (cardVars.Count == 0)
+            return;
         FightBackBasePower fbp = ModelDb.Power<FightBackBasePower>();
         fbp = (FightBackBasePower) fbp.ToMutable();
         fbp.FightBackCardSource = card;
         fbp.FightBackEffects = cardVars;
+        fbp.FightBackTargetType = card.TargetType;
         
         await PowerCmd.Apply(choiceContext, fbp, card.Owner.Creature, 1,
             card.Owner.Creature, card);

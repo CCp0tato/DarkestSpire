@@ -1,5 +1,4 @@
 ﻿using DarkestSpire.Characters.HighwayMan.Cards;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -55,13 +54,15 @@ public class FightBackBasePower : ModPowerTemplate
     public FightBackBasePower(IEnumerable<DynamicVar> fightBackEffects, CardModel fightBackCardSource)
     {
         this._fightBackCardSource = fightBackCardSource;
-        this._fightBackEffects = fightBackEffects;
+        this._fightBackEffects = fightBackEffects.ToList();
+        this._fightBackTargetType = fightBackCardSource.TargetType;
     }
     
     public FightBackBasePower(CardModel card)
     {
         this._fightBackCardSource = card;
-        this._fightBackEffects = card.DynamicVars.Values.Where(c => c.Name.Contains("FightBack"));
+        this._fightBackEffects = card.DynamicVars.Values.Where(c => c.Name.Contains("FightBack")).ToList();
+        this._fightBackTargetType = card.TargetType;
     }
 
     public FightBackBasePower(CardPlay cardPlay) : this(cardPlay.Card)
@@ -72,13 +73,14 @@ public class FightBackBasePower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Single;
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    private IEnumerable<DynamicVar> _fightBackEffects { get; set; }
-    private CardModel _fightBackCardSource { get; set; }
+    private List<DynamicVar> _fightBackEffects { get; set; } = [];
+    private CardModel _fightBackCardSource { get; set; } = null!;
+    private TargetType? _fightBackTargetType { get; set; }
 
     public IEnumerable<DynamicVar> FightBackEffects
     {
         get => _fightBackEffects;
-        set => _fightBackEffects = value;
+        set => _fightBackEffects = value.ToList();
     }
 
     public CardModel FightBackCardSource
@@ -87,22 +89,28 @@ public class FightBackBasePower : ModPowerTemplate
         set => _fightBackCardSource = value;
     }
 
+    public TargetType FightBackTargetType
+    {
+        get => _fightBackTargetType ?? _fightBackCardSource.TargetType;
+        set => _fightBackTargetType = value;
+    }
+
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target,
         DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner)
+        if (target != Owner || dealer is null || !props.IsPoweredAttack())
             return;
-        foreach (DynamicVar dynamicVar in _fightBackEffects)
+        foreach (DynamicVar dynamicVar in _fightBackEffects.ToList())
         {
             if (dynamicVar is DamageVar)
             {
-                if (_fightBackCardSource.TargetType == TargetType.AllEnemies)
+                if (FightBackTargetType == TargetType.AllEnemies)
                     await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
                         .TargetingAllOpponents(Owner.CombatState!).Execute(choiceContext);
-                else if (_fightBackCardSource.TargetType == TargetType.AnyEnemy)
+                else if (FightBackTargetType == TargetType.AnyEnemy)
                     await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
-                        .Targeting(dealer!).Execute(choiceContext);
+                        .Targeting(dealer).Execute(choiceContext);
             }
             else if (dynamicVar is EnergyVar)
             {
@@ -116,32 +124,31 @@ public class FightBackBasePower : ModPowerTemplate
             {
                 await PlayerCmd.GainGold(dynamicVar.IntValue, Owner.Player!);
             }
-            else if (dynamicVar.Name == "FightBackPower")
+            else if (dynamicVar.Name == "FightBackPower" && dynamicVar is IPowerVarFBBase powerVar)
             {
-                IPowerVarFBBase powerVar = (IPowerVarFBBase)dynamicVar;
                 TargetType targetType = powerVar.TargetType;
-                PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
-                
                 if (targetType == TargetType.AllEnemies)
                 {
-                    foreach (Creature creature in CombatState.Enemies)
+                    foreach (Creature creature in CombatState.Enemies.ToList())
                     {
-                        await PowerCmd.Apply(choiceContext, powerInstance, creature, powerVar.IntValue, Owner, _fightBackCardSource);
+                        await PowerCmd.Apply(choiceContext, powerVar.GetPowerInstance().ToMutable(), creature,
+                            powerVar.IntValue, Owner, _fightBackCardSource);
                     }
-                    return;
+                    continue;
                 }
-                Creature powerTargets = (targetType == TargetType.Self) ? Owner : dealer! ; 
-                await PowerCmd.Apply(choiceContext, powerInstance, powerTargets, powerVar.IntValue, Owner, _fightBackCardSource);
+                Creature powerTarget = targetType == TargetType.Self ? Owner : dealer;
+                await PowerCmd.Apply(choiceContext, powerVar.GetPowerInstance().ToMutable(), powerTarget,
+                    powerVar.IntValue, Owner, _fightBackCardSource);
                 
             }
-            if (Owner.HasPower<PocketGunPower>())
-                await QuickShot.CreateInHand(Owner.Player, 1, CombatState);
         }
+        if (Owner.HasPower<PocketGunPower>() && Owner.Player is not null)
+            await QuickShot.CreateInHand(Owner.Player, 1, CombatState);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (side != CombatSide.Player)
+        if (side != Owner.Side)
         {
             await PowerCmd.Remove(this);
         }
@@ -149,7 +156,7 @@ public class FightBackBasePower : ModPowerTemplate
 
     public DynamicVar AddDynamicVar(DynamicVar dynamicVar)
     {
-        _fightBackEffects.AddItem(dynamicVar);
+        _fightBackEffects.Add(dynamicVar);
         return dynamicVar;
     }
 }

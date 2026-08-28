@@ -1,7 +1,10 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -29,11 +32,16 @@ public class Brazen : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 999999999);
+        foreach (CardModel original in (await CardSelectCmd.FromHandForDiscard(choiceContext, this.Owner, prefs, (Func<CardModel, bool>) null, (AbstractModel) this)).ToList<CardModel>())
+        {
+            await CardCmd.Discard(choiceContext, original);
+        }
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
     }
 
     protected override void OnUpgrade()
     {
-        
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

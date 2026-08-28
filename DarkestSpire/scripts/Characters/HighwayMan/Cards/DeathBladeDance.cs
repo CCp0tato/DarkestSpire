@@ -28,7 +28,12 @@ public class DeathBladeDance : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingRandomOpponents(CombatState!).WithHitCount(7).Execute(choiceContext);
+    }
+
+    public async Task OnShot()
+    {
+        EnergyCost.AddThisCombat(-1);
     }
 
     protected override void OnUpgrade()

@@ -1,3 +1,4 @@
+using DarkestSpire.DarkestSpire.CardTags;
 using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -24,7 +25,8 @@ public class SerratedBlade : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<BleedingPower>(7)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVarFB<BleedingPower>(7, TargetType.AnyEnemy)];
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

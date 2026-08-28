@@ -27,7 +27,7 @@ public class PointBlankShot : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TempDexterityPower>(5), new CardsVar("Shot", 2), new PowerVarFB<FightBackBasePower>(1, TargetType.AnyEnemy), new DamageVar("FightBackDamage", 16, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TempDexterityPower>(5), new CardsVar("Shot", 2), new PowerVarFB<FightBackBasePower>("ShotPower", 1, TargetType.AnyEnemy), new DamageVar("FightBackDamage", 16, ValueProp.Move)];
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack, DSCardTag.FightBackSkip, DSCardTag.Shot];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

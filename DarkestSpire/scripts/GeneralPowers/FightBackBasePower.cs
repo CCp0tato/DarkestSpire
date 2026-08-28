@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
 
 namespace DarkestSpire.GeneralPowers;
 
@@ -45,6 +46,7 @@ public class PowerVarFB<T> : PowerVar<T>, IPowerVarFBBase where T : PowerModel
 
 
 
+[RegisterPower]
 public class FightBackBasePower : ModPowerTemplate
 {
     public FightBackBasePower()

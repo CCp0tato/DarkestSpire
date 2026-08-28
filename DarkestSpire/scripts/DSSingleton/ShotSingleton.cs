@@ -79,7 +79,7 @@ public class ShotSingleton : HookedSingletonModel
                 0 - gapCount, null, null);
         }
         
-        foreach (CardModel card in PileType.Discard.GetPile(shotCard.Owner).Cards)
+        foreach (CardModel card in PileType.Discard.GetPile(shotCard.Owner).Cards.ToList())
         {
             if (card is DoubleBarrel)
                 await CardPileCmd.Add(card, PileType.Hand);
@@ -132,18 +132,26 @@ public class ShotSingleton : HookedSingletonModel
                     IPowerVarFBBase powerVar = (IPowerVarFBBase)dynamicVar;
                     TargetType targetType = powerVar.TargetType;
                     PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
+                    FightBackBasePower fbpowerInstance = null;
+                    
+                    if (powerInstance is FightBackBasePower)
+                    {
+                        fbpowerInstance = (FightBackBasePower) powerInstance;
+                        fbpowerInstance.FightBackEffects = shotCard.DynamicVars.Values.ToList().Where(c => c.Name.Contains("FightBack"));
+                        fbpowerInstance.FightBackCardSource = shotCard;
+                    }
                     
                     if (targetType == TargetType.AllEnemies)
                     {
                         foreach (Creature creature in shotCard.Owner.Creature.CombatState.Enemies)
                         {
-                            await PowerCmd.Apply(choiceContext, powerInstance, creature, powerVar.IntValue, shotCard.Owner.Creature,
+                            await PowerCmd.Apply(choiceContext, fbpowerInstance is null ? powerInstance : fbpowerInstance, creature, powerVar.IntValue, shotCard.Owner.Creature,
                                 (CardModel)null!);
                         }
                         return;
                     }
                     Creature powerTargets = (targetType == TargetType.Self) ? shotCard.Owner.Creature : shotCardPlay.Target!;
-                    await PowerCmd.Apply(choiceContext, powerInstance, powerTargets,
+                    await PowerCmd.Apply(choiceContext, fbpowerInstance is null ? powerInstance : fbpowerInstance, powerTargets,
                         powerVar.IntValue, shotCard.Owner.Creature, (CardModel)null!);
                 }
             }

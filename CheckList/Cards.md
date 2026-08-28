@@ -185,8 +185,8 @@
 - [x] Shrapnel - 破片弹
 - [x] Incite - 激怒
 - [x] SmoothMove - 游刃有余
-- [ ] DirtyDiseaseThatAreAllCheap - 恶行易施
-- [ ] StreetBrawl - 街头混战
+- [x] DirtyDiseaseThatAreAllCheap - 恶行易施
+- [x] StreetBrawl - 街头混战
 
 ## 稀有卡牌
 

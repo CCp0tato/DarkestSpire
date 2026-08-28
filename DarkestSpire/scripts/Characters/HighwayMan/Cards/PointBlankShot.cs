@@ -1,8 +1,11 @@
+using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -24,15 +27,17 @@ public class PointBlankShot : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TemporaryDexterityPower>(5)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TempDexterityPower>(5), new CardsVar("Shot", 2), new PowerVarFB<FightBackBasePower>(1, TargetType.AnyEnemy), new DamageVar("FightBackDamage", 16, ValueProp.Move)];
+    protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack, DSCardTag.FightBackSkip, DSCardTag.Shot];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TemporaryDexterityPower>(choiceContext, Owner.Creature, DynamicVars["TemporaryDexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<TempDexterityPower>(choiceContext, Owner.Creature, DynamicVars["TempDexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["TemporaryDexterityPower"].UpgradeValueBy(2);
+        DynamicVars["TempDexterityPower"].UpgradeValueBy(2);
+        DynamicVars["FightBackDamage"].UpgradeValueBy(4);
     }
 }

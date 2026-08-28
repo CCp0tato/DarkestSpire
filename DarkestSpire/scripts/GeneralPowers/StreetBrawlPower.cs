@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+﻿using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -28,5 +29,11 @@ public class StreetBrawlPower : ModPowerTemplate
         if (target != Owner)
             return;
         await CreatureCmd.GainBlock(dealer, new BlockVar(Amount, BlockProps.nonCardUnpowered), null);
+    }    
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side != CombatSide.Player)
+            return;
+        await PowerCmd.Remove(this);
     }
 }

@@ -38,10 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="DarkestSpire\CheckList.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="DarkestSpire\scripts\Characters\Crusader\Potions\" />
     <Folder Include="DarkestSpire\scripts\Characters\HighwayMan\Events\" />
     <Folder Include="DarkestSpire\scripts\Characters\HighwayMan\Potions\" />

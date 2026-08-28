@@ -143,6 +143,9 @@ public class {card_name} : ModCardTemplate
     }}
 '''
         return self
+        
+    def setMultiplayer(multi: bool = True):
+        self.card_string += f'''    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.{'Multiplayer' if multi else 'Singleplayer'}Only;'''
 
     def output(self, output_dir: str = '.'):
         self.card_string += '''}'''

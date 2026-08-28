@@ -28,7 +28,7 @@ public class DuelThrust : ModCardTemplate
     );
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), IsUpgraded ? new PowerVarFB<DexterityPower>(1, TargetType.Self) : new PowerVarFB<TemporaryDexterityPower>(1, TargetType.Self)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), IsUpgraded ? new PowerVarFB<DexterityPower>(1, TargetType.Self) : new PowerVarFB<TempDexterityPower>(1, TargetType.Self)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

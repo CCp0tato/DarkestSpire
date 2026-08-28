@@ -1,0 +1,231 @@
+# Cards
+
+## General
+- [x] Amoris
+- [x] Antidote
+- [x] ArmorForge
+- [x] AveMujica
+- [x] Bandage
+- [x] Bank
+- [x] BloodBrew
+- [x] Confession
+- [x] Despair
+- [x] Doloris
+- [x] Drink
+- [x] EliteRecruitment
+- [x] EtherealDust
+- [x] Fear
+- [x] Fearlessness
+- [x] Food
+- [x] Frenzy
+- [x] Herbs
+- [x] HolyWater
+- [x] Infighting
+- [x] Laudanum
+- [x] LimitReaction
+- [x] Masochism
+- [x] MoodSwings
+- [x] Mortis
+- [x] NomadWagon
+- [x] Oblivionis
+- [x] Paranoia
+- [x] Rally
+- [ ] Refraction
+- [x] Resolve
+- [x] Sanatorium
+- [x] Selfish
+- [x] Shovel
+- [x] SkillRefinement
+- [x] Timoris
+- [x] Torch
+- [x] Tyranny
+- [x] Valor
+
+## Crusader
+- [x] Accusation
+- [x] Baptism
+- [x] BattleHeal
+- [x] BlindFaith
+- [x] Chivalry
+- [x] Condemnation
+- [x] Cross
+- [x] CrusaderBanner
+- [x] CrusaderCreed
+- [x] DampSickle
+- [x] DazingBlow
+- [x] DefendCrusader
+- [x] DegenerationAura
+- [x] DevoutHit
+- [x] DivineBlessing
+- [x] DivineSurge
+- [x] DivineWill
+- [x] EstusFlask
+- [x] Expedition
+- [x] FaceTheDarkness
+- [x] FaithBarrier
+- [x] Fanatic
+- [x] FinalCrusade
+- [x] FuckTheAssAssIn
+- [x] GuidingLight
+- [x] HarvestWheat
+- [x] HolyBladeForm
+- [x] HolyFire
+- [x] HolyLance
+- [x] HolyLightImpact
+- [x] HolyShield
+- [x] HonorResonance
+- [x] InspireCry
+- [x] Judgment
+- [x] Kleptomania
+- [x] LightWarrior
+- [x] Marathon
+- [x] Mercy
+- [x] MilitaryOath
+- [x] PaladinHammer
+- [x] Piety
+- [x] PraiseTheSun
+- [x] Provocation
+- [x] Punishment
+- [x] Radiance
+- [x] Restraint
+- [x] ReynauldOldRoadRedemption
+- [x] RingedKnightStraightSword
+- [x] SaintHand
+- [x] Sanction
+- [x] Snack
+- [x] Stalemate
+- [x] StashedCurio
+- [x] StrikeCrusader
+- [x] SweepingLegion
+- [x] UnshoneGlory
+- [x] YourSun
+- [x] ZealousStand
+
+## HighwayMan
+- [ ] Aim
+- [ ] Ambush
+- [ ] BackToBack
+- [ ] BideTime
+- [ ] Brazen
+- [ ] BulletStorm
+- [ ] CaliberUpgrade
+- [ ] CantHitMe
+- [ ] Deadeye
+- [ ] DeathBladeDance
+- [ ] DeepBreath
+- [ ] DefendHighwayMan
+- [ ] DesperateMove
+- [ ] DirtyDiseaseThatAreAllCheap
+- [ ] DismasOldRoadRedemption
+- [ ] DoubleBarrel
+- [ ] DoubleTap
+- [ ] DuelThrust
+- [ ] Etched
+- [ ] EvilSlash
+- [ ] Feint
+- [ ] Finality
+- [ ] FireSuppression
+- [ ] Flare
+- [ ] Flashbang
+- [ ] FullBarrage
+- [ ] GhostBullet
+- [ ] HighwaymanFaceTheDarkness
+- [ ] Hustler
+- [ ] Incite
+- [ ] IronLiver
+- [ ] Jackpot
+- [ ] LetBulletFly
+- [ ] LogicalBullet
+- [ ] OutlawForm
+- [ ] OutlawLogic
+- [ ] Pickpocket
+- [ ] PistolShot
+- [ ] PocketGun
+- [ ] PointBlankShot
+- [ ] PreAim
+- [ ] PreparedCounter
+- [ ] QuickReaction
+- [ ] QuickShot
+- [ ] Renegade
+- [ ] Ricochet
+- [ ] Robbery
+- [ ] Scram
+- [ ] SeizeMoment
+- [ ] SerratedBlade
+- [ ] ShotgunBlast
+- [ ] Shrapnel
+- [ ] SmoothMove
+- [ ] SpareMagazine
+- [ ] StreetBrawl
+- [ ] StrikeHighwayMan
+- [ ] TrackingShot
+- [ ] VeinSlash
+- [ ] WarningShot
+
+# Powers
+
+- [ ] AimShotPower
+- [x] AttentivenessPower
+- [ ] AveMujicaPower
+- [ ] BackToBackPower
+- [x] BankPower
+- [x] BleedingPower
+- [ ] CaliberUpgradePower
+- [ ] CrossPower
+- [ ] CrusaderCreedPower
+- [ ] DeadeyePower
+- [ ] DegenerationAuraPower
+- [x] DespairPower
+- [x] EliteRecruitmentPower
+- [x] FaithPower
+- [ ] FanaticPower
+- [x] FearPower
+- [x] FearlessnessPower
+- [ ] FightBackBasePower
+- [x] FrenzyPower
+- [x] GhostBulletPower
+- [ ] HolyBladeFormPower
+- [ ] InspireCryPower
+- [ ] LightWarriorPower
+- [x] LoseEnergyNextTurnPower
+- [ ] MarathonPower
+- [x] MasochismBlockPower
+- [x] MasochismPower
+- [ ] MilitaryOathPower
+- [x] MoodSwingsPower
+- [ ] MortisPower
+- [x] NomadWagonPower
+- [x] ParanoiaPower
+- [ ] PocketGunPower
+- [x] RallyPower
+- [x] RapturePower
+- [x] RefractionPower
+- [x] ResolvePower
+- [ ] RestraintPower
+- [ ] SaintHandPower
+- [x] SelfishPower
+- [ ] SmoothMovePower
+- [ ] SpareMagazinePower
+- [x] SpitePower
+- [ ] StreetBrawlPower
+- [ ] TempDexterityPower
+- [ ] TempStrengthPower
+- [x] TyrannyPower
+- [ ] UniquenessControl
+- [x] ValorPower
+- [ ] YourSunPower
+- [ ] YourSunUpgradePower
+- [x] YumewaPower
+
+# Potions
+
+## Crusader
+- [x] BottledDarkSouls
+
+# Relics
+
+## Crusader
+- [x] CrusaderStarterRelic
+
+## HighwayMan
+- [ ] HighwayManStarterRelic

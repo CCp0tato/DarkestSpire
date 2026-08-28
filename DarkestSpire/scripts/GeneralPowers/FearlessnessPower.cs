@@ -1,6 +1,5 @@
 ﻿// 无畏：抽到状态牌时，抽 3 张牌。检测消耗堆，出现5张Mujica状态牌后向手牌中加入AveMujica，一场战斗一次
 
-using DarkestSpire.Characters.Crusader.Cards;
 using DarkestSpire.GeneralCards;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;

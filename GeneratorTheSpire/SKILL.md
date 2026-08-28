@@ -1,6 +1,6 @@
 ---
 name: generate-simple-sts2-card
-description: Generate Simple Slay the Spire 2 mod card C# scripts by calling CardGenerator.py, and write outputs into the user-requested directory.
+description: Generate Simple Slay the Spire 2 mod card C# scripts by calling GeneratorTheSpire.py, and write outputs into the user-requested directory.
 ---
 
 # Generate Simple STS2 Card

@@ -9,17 +9,17 @@
 ### 基础用法
 
 ```python
-from CardGenerator import CardGenerator
+from GeneratorTheSpire import GeneratorTheSpire
 
 # 最简示例：生成一张基础攻击牌
-card = CardGenerator(
-    character='Ironclad',          # 角色名称
+card = GeneratorTheSpire(
+    character='Ironclad',  # 角色名称
     card_pool='IroncladCardPool',  # 卡池类名
-    card_name='StrikeIronclad',    # 卡牌类名
-    cost=1,                        # 费用
-    card_type='Attack',            # 卡牌类型
-    card_rarity='Basic',           # 稀有度
-    target_type='AnyEnemy'         # 目标类型
+    card_name='StrikeIronclad',  # 卡牌类名
+    cost=1,  # 费用
+    card_type='Attack',  # 卡牌类型
+    card_rarity='Basic',  # 稀有度
+    target_type='AnyEnemy'  # 目标类型
 )
 card.output()  # 生成 StrikeIronclad.cs 文件
 ```

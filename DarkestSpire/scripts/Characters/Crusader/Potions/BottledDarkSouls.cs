@@ -27,6 +27,8 @@ public class BottledDarkSouls : ModPotionTemplate
     {
         if (Owner == null) return;
         CardModel particleWall = Owner.RunState.CreateCard<ParticleWall>(Owner);
+        particleWall.SetStarCostThisTurn(0);
+        particleWall.EnergyCost.SetThisTurn(0);
         CardCmd.ApplyKeyword(particleWall, CardKeyword.Ethereal);
         await CardPileCmd.AddGeneratedCardToCombat(particleWall, PileType.Hand, Owner);
     }

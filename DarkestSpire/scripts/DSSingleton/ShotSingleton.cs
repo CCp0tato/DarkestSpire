@@ -38,30 +38,41 @@ public class ShotSingleton : HookedSingletonModel
         }
         if (maxDropValue > -1)
         {
-            List<CardModel> discardCards = (await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
-                card)).ToList();
-            if (card is DoubleTap)
+            int discardCardCount = await ShotDiscard(choiceContext, card, maxDropValue);
+                
+            await ShotEvent(cardPlay, choiceContext, discardCardCount, maxDropValue);
+        }
+        else
+        {
+            int discardCardCount = await ShotDiscard(choiceContext, card, 999999999);
+            int shotCountAddtives = (-1 - maxDropValue) + (2 * card.Owner.Relics.Count(c => c is ChemicalX));
+            await ShotEvent(cardPlay, choiceContext, 0, 0, discardCardCount + shotCountAddtives);
+        }
+    }
+
+    private async Task<int> ShotDiscard(PlayerChoiceContext choiceContext, CardModel cardSource, int maxDropValue)
+    {
+        List<CardModel> discardCards = (await CardSelectCmd.FromHandForDiscard(choiceContext, cardSource.Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, maxDropValue), null,
+            cardSource)).ToList();
+        foreach (CardModel discardCard in discardCards)
+        {
+            if (cardSource is DoubleTap)
             {
                 CardModel? selectedCard = discardCards.FirstOrDefault();
                 if (selectedCard is not null)
                     await CardCmd.AutoPlay(choiceContext, selectedCard, null);
+                continue;
             }
-            else
+            
+            await CardCmd.Discard(choiceContext, discardCard);
+            
+            if (discardCard is LetBulletFly)
             {
-                await CardCmd.Discard(choiceContext, discardCards);
+                await ((LetBulletFly) discardCard).AfterDiscardedByShot(discardCard);
             }
-            await ShotEvent(cardPlay, choiceContext, discardCards.Count, maxDropValue);
         }
-        else
-        {
-            List<CardModel> discardCards = (await CardSelectCmd.FromHandForDiscard(choiceContext, card.Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 9999999), null,
-                card)).ToList();
-            await CardCmd.Discard(choiceContext, discardCards);
-            int shotCountAddtives = (-1 - maxDropValue) + (2 * card.Owner.Relics.Count(c => c is ChemicalX));
-            await ShotEvent(cardPlay, choiceContext, 0, 0, discardCards.Count + shotCountAddtives);
-        }
+        return discardCards.Count;
     }
 
     private async Task ShotEvent(CardPlay shotCardPlay, PlayerChoiceContext choiceContext, int discardCount, int shotCount, int shotTimes = 1)
@@ -99,9 +110,15 @@ public class ShotSingleton : HookedSingletonModel
                     int damageValue = dynamicVar.IntValue;
                     if (shotCard.Owner.Creature.GetPower<CaliberUpgradePower>() is { } caliberUpgrade)
                         damageValue += caliberUpgrade.Amount;
+                    
                     bool hasAimShotPower = shotCard.Owner.Creature.HasPower<AimShotPower>();
                     if (hasAimShotPower)
                         damageValue *= 2;
+                    
+                    bool hasPreAimPower = shotCard.Owner.Creature.HasPower<PreAimPower>();
+                    if (hasPreAimPower && ((PreAimPower) shotCard.Owner.Creature.GetPower<PreAimPower>()).ShouldDouble)
+                        damageValue *= 2;
+                    
                     if (shotCard.TargetType == TargetType.AllEnemies)
                     {
                         await DamageCmd.Attack(damageValue).FromCard(shotCard)
@@ -154,11 +171,11 @@ public class ShotSingleton : HookedSingletonModel
                         await ApplyShotPower(choiceContext, shotCard, powerTarget, powerVar);
                 }
             }
+            await AfterTriggerShot(shotCard);
         }
     }
 
-    private static async Task ApplyShotPower(PlayerChoiceContext choiceContext, CardModel shotCard,
-        Creature target, IPowerVarFBBase powerVar)
+    private static async Task ApplyShotPower(PlayerChoiceContext choiceContext, CardModel shotCard, Creature target, IPowerVarFBBase powerVar)
     {
         PowerModel powerInstance = powerVar.GetPowerInstance().ToMutable();
         if (powerInstance is FightBackBasePower)
@@ -176,5 +193,17 @@ public class ShotSingleton : HookedSingletonModel
         }
         await PowerCmd.Apply(choiceContext, powerInstance, target, powerVar.IntValue,
             shotCard.Owner.Creature, shotCard);
+    }
+
+    private async Task AfterTriggerShot(CardModel shotCard)
+    {
+        if (shotCard is JackpotForHighwayMan)
+        {
+            await ((JackpotForHighwayMan)shotCard).OnShot();
+        }
+        if (shotCard is DeathBladeDance)
+        {
+            await ((DeathBladeDance)shotCard).OnShot();
+        }
     }
 }

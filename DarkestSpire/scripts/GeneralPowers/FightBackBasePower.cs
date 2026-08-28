@@ -6,8 +6,10 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Scaffolding.Content;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 
@@ -144,8 +146,7 @@ public class FightBackBasePower : ModPowerTemplate
                 
             }
         }
-        if (Owner.HasPower<PocketGunPower>() && Owner.Player is not null)
-            await QuickShot.CreateInHand(Owner.Player, 1, CombatState);
+        await AfterTriggerFightBack(choiceContext);
     }
 
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
@@ -160,5 +161,29 @@ public class FightBackBasePower : ModPowerTemplate
     {
         _fightBackEffects.Add(dynamicVar);
         return dynamicVar;
+    }
+
+    public async Task AfterTriggerFightBack(PlayerChoiceContext choiceContext)
+    {
+        if (Owner.HasPower<PocketGunPower>() && Owner.Player is not null)
+            await QuickShot.CreateInHand(Owner.Player, 1, CombatState);
+        
+        if (Owner.HasPower<OutlawFormPower>() && Owner.Player is not null)
+        {
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Owner.GetPower<OutlawFormPower>().Amount, Owner,
+                null);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, Owner.GetPower<OutlawFormPower>().Amount, Owner,
+                null);
+        }
+        
+        if (Owner.HasPower<OutlawFormLesserPower>() && Owner.Player is not null)
+        {
+            if (((IEnumerable<int>)[0, 1]).TakeRandom(1, Owner.Player.RunState.Rng.CombatPotionGeneration).FirstOrDefault() == 1)
+                await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Owner.GetPower<OutlawFormLesserPower>().Amount, Owner,
+                    null);
+            else
+                await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, Owner.GetPower<OutlawFormLesserPower>().Amount, Owner,
+                null);
+        }
     }
 }

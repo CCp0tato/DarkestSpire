@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -33,6 +34,11 @@ public class LetBulletFly : ModCardTemplate
         await CreatureCmd.GainBlock(this.Owner.Creature, this.DynamicVars.Block, cardPlay);
     }
 
+    public async Task AfterDiscardedByShot(CardModel card)
+    {
+        await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top);
+    }
+    
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(4);

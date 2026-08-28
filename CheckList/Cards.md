@@ -191,24 +191,24 @@
 ## 稀有卡牌
 
 - [x] Robbery - 抢劫
-- [ ] OutlawForm - 悍匪形态
-- [ ] Etched - 刻骨铭心
-- [ ] Jackpot - jackpot!
-- [ ] Finality - 命之句点
-- [ ] BulletStorm - 枪神·暴风雨
-- [ ] DeathBladeDance - 剑圣·死亡之舞
-- [ ] CantHitMe - 怎么，打不中吗？
+- [x] OutlawForm - 悍匪形态
+- [x] Etched - 刻骨铭心
+- [x] Jackpot - jackpot!
+- [x] Finality - 命之句点
+- [x] BulletStorm - 枪神·暴风雨
+- [x] DeathBladeDance - 剑圣·死亡之舞
+- [x] CantHitMe - 怎么，打不中吗？
 - [x] HighwaymanFaceTheDarkness - 直面黑暗
 - [x] DismasOldRoadRedemption - 老路的救赎
 - [x] IronLiver - 千杯不醉
-- [ ] SerratedBlade - 锯齿刀刃
-- [ ] OutlawLogic - 强盗逻辑
-- [ ] Brazen - 明目张胆
-- [ ] PreAim - 预瞄
-- [ ] GhostBullet - 幽魂子弹
-- [ ] LetBulletFly - 让子弹飞
-- [ ] Renegade - 法外狂徒
-- [ ] Flashbang - 闪光弹
+- [x] SerratedBlade - 锯齿刀刃
+- [x] OutlawLogic - 强盗逻辑
+- [x] Brazen - 明目张胆
+- [x] PreAim - 预瞄
+- [x] GhostBullet - 幽魂子弹
+- [x] LetBulletFly - 让子弹飞
+- [x] Renegade - 法外狂徒
+- [x] Flashbang - 闪光弹
 
 ## 衍生卡牌
 

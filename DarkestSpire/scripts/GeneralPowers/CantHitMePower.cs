@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
@@ -10,7 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.GeneralPowers;
 
 [RegisterPower]
-public class BleedingPower : ModPowerTemplate
+public class CantHitMePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -21,12 +22,15 @@ public class BleedingPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
 
-    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props,
-        Creature target, CardModel? cardSource)
+    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
     {
-        if (dealer != Owner)
+        if (target != this.Owner || dealer is null)
             return;
-        await CreatureCmd.Damage(choiceContext, Owner, (Decimal) Amount, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, (CardModel) null);
-        await PowerCmd.Decrement(this);
+        if (result.UnblockedDamage > 0)
+            this.Flash();
+        
+        await PowerCmd.Apply<DexterityPower>(choiceContext, this.Owner, (Decimal) (this.Amount * 2), this.Owner, (CardModel) null);
+
     }
 }

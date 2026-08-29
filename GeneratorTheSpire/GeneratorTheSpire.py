@@ -166,6 +166,65 @@ public class {card_name} : ModCardTemplate
         return output_path
 
 
+class PotionGenerator:
+    def __init__(self, character_name: str, potion_name: str,  rarity: str, targetType: str, usage: str):
+        self.character_name = character_name
+        self.potion_name = potion_name
+
+        self.rarity = rarity
+        self.targetType = targetType
+        self.usage = usage
+
+        if rarity not in {'Common', 'Uncommon', 'Rare', 'Event', 'Token', }:
+            self.rarity = 'None'
+
+        if targetType not in {'Self', 'AnyEnemy', 'AllEnemies', 'RandomEnemy', 'AnyPlayer', 'AnyAlly', 'AllAllies',
+                              'TargetedNoCreature', 'Osty'}:
+            self.targetType = 'None'
+
+        if usage not in {'CombatOnly', 'AnyTime', 'Automatic', }:
+            self.usage = 'None'
+
+        self.potion_string = f'''using DarkestSpire.Characters.{self.character_name};
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Potions;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+
+namespace DarkestSpire.Script.Characters.{self.character_name}.Potions;
+
+[RegisterPotion(typeof({self.character_name}PotionPool))]
+public class {self.potion_name} : ModPotionTemplate
+{{
+    public override PotionUsage Usage => PotionUsage.{self.usage};
+    public override PotionRarity Rarity => PotionRarity.{self.rarity};
+    public override TargetType TargetType => TargetType.{self.targetType};
+
+    public override PotionAssetProfile AssetProfile => new(
+        ImagePath: $"{{Entry.ResPath}}/images/potions/{{GetType().Name}}.png",
+        OutlinePath: $"{{Entry.ResPath}}/images/potions/{{GetType().Name}}.png"
+    );
+
+    protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
+    {{
+    }}
+}}'''
+
+    def output(self, output_dir: str = '.', stringForm=False):
+        if stringForm:
+            return self.potion_string
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, f'{self.potion_name}.cs')
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(self.potion_string)
+        return output_path
+
+
 class CharacterGenerator:
     def __init__(self, character_name: str, StartingHp: int, StartingGold: int):
         self.character_name = character_name
@@ -599,6 +658,10 @@ def generator_all_chars(index=-1):
     CharacterGenerator('Abomination', 80, 99).WithBasicStrikeAndDefend().WithBasicRelic().output()
 
 
+def custom_start():
+    pass
+
+
 if __name__ == '__main__':
-    generator_all_chars(0)
+    custom_start()
     cli()

@@ -1,10 +1,20 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Random;
 using STS2RitsuLib.Scaffolding.Content;
 
 namespace DarkestSpire.GeneralPowers;
+
+
+public enum DSPoolType
+{
+    None,
+    Buff,
+    Debuff
+}
 
 public class UniquenessControl
 {
@@ -64,6 +74,13 @@ public class UniquenessControl
         if (player.HasPower<AttentivenessPower>()) PowerCmd.Remove<AttentivenessPower>(player);
         if (player.HasPower<ValorPower>()) PowerCmd.Remove<ValorPower>(player);
         if (player.HasPower<RallyPower>()) PowerCmd.Remove<RallyPower>(player);
+    }
+
+    public static PowerModel GetRandom(DSPoolType poolType)
+    {
+        if (poolType == DSPoolType.Buff)
+            return DSUniqueBuff.TakeRandom(1, Rng.Chaotic).FirstOrDefault();
+        return DSUniqueDebuff.TakeRandom(1, Rng.Chaotic).FirstOrDefault();
     }
 }
 

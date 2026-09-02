@@ -1,4 +1,5 @@
 ﻿using DarkestSpire.DarkestSpire.CardTags;
+using DarkestSpire.GeneralPowers;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -38,17 +39,10 @@ public class FastBurningGunpowder : ModRelicTemplate
         return true;
     }
 
-    private bool _hurtLastTurn = true;
-
-    public override Task BeforeCombatStart()
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        foreach (CardModel card in Owner.Deck.Cards)
-        {
-            if (card.Tags.Contains(DSCardTag.Shot))
-            {
-                card.EnergyCost.SetUntilPlayed(0);
-            }
-        }
-        return Task.CompletedTask;
+        if (player.PlayerCombatState.TurnNumber > 1 || player == this.Owner)
+            return;
+        await PowerCmd.Apply<FreeShotPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
     }
 }

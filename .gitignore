@@ -8,3 +8,6 @@ export_presets.cfg
 *.import
 
 *test*
+
+# 本地导出产物
+/dist/

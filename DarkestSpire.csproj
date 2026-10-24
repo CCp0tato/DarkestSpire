@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <!-- 自动复制dll和json -->
-  <Target Name="Copy Mod" AfterTargets="PostBuildEvent">
+  <Target Name="Copy Mod" AfterTargets="PostBuildEvent" Condition="'$(SkipModCopy)' != 'true'">
     <Message Text="Copying mod to Slay the Spire 2 mods folder..." Importance="high" />
     <MakeDir Directories="$(Sts2Dir)\mods\" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Dir)\mods\$(MSBuildProjectName)\" />

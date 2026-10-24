@@ -7,7 +7,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.Crusader.Cards;
 
 [RegisterCard(typeof(CrusaderCardPool))]
-[RegisterCharacterStarterCard(typeof(CrusaderCardPool), 4)]
+[RegisterCharacterStarterCard(typeof(CrusaderCharacter), 4)]
 public class DefendCrusader : ModCardTemplate
 {
     public DefendCrusader() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self, true)

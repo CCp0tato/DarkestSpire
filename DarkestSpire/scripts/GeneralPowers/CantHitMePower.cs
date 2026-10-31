@@ -25,12 +25,13 @@ public class CantHitMePower : ModPowerTemplate
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        if (target != this.Owner || dealer is null)
+        if (target != this.Owner)
             return;
-        if (result.UnblockedDamage > 0)
-            this.Flash();
-        
-        await PowerCmd.Apply<DexterityPower>(choiceContext, this.Owner, (Decimal) (this.Amount * 2), this.Owner, (CardModel) null);
-
+        // 只在真正受到未被格挡的伤害时触发。
+        if (result.UnblockedDamage <= 0)
+            return;
+        this.Flash();
+        // 设计为“失去”敏捷，而不是获得。
+        await PowerCmd.Apply<DexterityPower>(choiceContext, this.Owner, -((Decimal) this.Amount * 2), this.Owner, (CardModel) null);
     }
 }

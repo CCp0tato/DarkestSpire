@@ -6,7 +6,7 @@ namespace DarkestSpire.Characters.HighwayMan;
 
 public class HighwayManCardPool : TypeListCardPoolModel
 {
-    private const string CharacterName = "HighwayMan";
+    private const string CharacterName = "Highwayman";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters/{CharacterName}";
 
     // 卡池的ID。必须唯一防撞车。

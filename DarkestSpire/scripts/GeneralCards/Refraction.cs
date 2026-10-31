@@ -12,13 +12,13 @@ namespace DarkestSpire.GeneralCards;
 [RegisterCard(typeof(DSEventCardPool))]
 public class Refraction : ModCardTemplate
 {
-    public Refraction() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self, true)
+    public Refraction() : base(0, CardType.Skill, CardRarity.Event, TargetType.Self, true)
     {
     }
     
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(
-        PortraitPath: $"{GeneralCardPool.getImageRoot()}/{GetType().Name}.png"
+        PortraitPath: $"{DSEventCardPool.getImageRoot()}/{GetType().Name}.png"
         // FramePath: "", // 卡牌背景
         // PortraitBorderPath: "", // 边框（状态牌感染使用的）
         // BannerTexturePath: "" // 横幅（不同类型）

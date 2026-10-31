@@ -1,4 +1,7 @@
+using DarkestSpire.GeneralPowers;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -19,6 +22,11 @@ public class GhostBullet : ModCardTemplate
         // PortraitBorderPath: "",
         // BannerTexturePath: "" 
     );
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await PowerCmd.Apply<GhostBulletPower>(choiceContext, Owner.Creature, 1, Owner.Creature, cardPlay.Card);
+    }
 
     protected override void OnUpgrade()
     {

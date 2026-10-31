@@ -28,7 +28,8 @@ public class Infighting : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        Creature target = cardPlay.Target!;
+        if (cardPlay.Target is not { } target)
+            return;
         await CardPileCmd.Draw(choiceContext, 1, target.Player!);
         await CardPileCmd.Draw(choiceContext, 1, Owner);
 

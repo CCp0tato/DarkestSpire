@@ -48,7 +48,7 @@ public class RingedKnightStraightSword : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!cardPlay.Target!.IsMonster || cardPlay.Target is null) { return; }
+        if (cardPlay.Target is null || !cardPlay.Target.IsMonster) { return; }
         int hitCount = (int)((CalculatedVar)DynamicVars[CalculatedHitsKey]).Calculate(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)

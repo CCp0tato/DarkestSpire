@@ -26,7 +26,9 @@ public class BankPower : ModPowerTemplate
     {
         if (player != Owner.Player)
             return;
-        CardModel RikkiAfterYou = player.RunState.CreateCard<Debt>(Owner.Player);
+        // 必须在 CombatState 作用域内创建，否则卡牌没有关联战斗状态，
+        // 后续被丢弃/消耗时会抛 "DEBT must be added to a CombatState before adding it to this pile"。
+        CardModel RikkiAfterYou = Owner.CombatState!.CreateCard<Debt>(Owner.Player);
         CardCmd.ApplyKeyword(RikkiAfterYou, CardKeyword.Ethereal);
         await CardPileCmd.AddGeneratedCardToCombat((CardModel) RikkiAfterYou, PileType.Hand, Owner.Player);
     }

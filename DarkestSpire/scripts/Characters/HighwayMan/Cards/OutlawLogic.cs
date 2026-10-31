@@ -26,7 +26,7 @@ public class OutlawLogic : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardSelectorPrefs prefs = new CardSelectorPrefs(this.SelectionScreenPrompt, 0, 999999999);
+        CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 0, 999999999);
         foreach (CardModel original in (await CardSelectCmd.FromHand(choiceContext, this.Owner, prefs, (Func<CardModel, bool>) null, (AbstractModel) this)).ToList<CardModel>())
         {
             CardModel card = (CardModel) this.CombatState.CreateCard<LogicalBullet>(this.Owner);

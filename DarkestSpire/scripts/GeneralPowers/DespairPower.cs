@@ -33,27 +33,31 @@ public class DespairPower : UniquePowerModel
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        _cardPlayedTurn++;
+        // 只统计持有者自己打出的牌，避免多人联机时全队共享计数。
+        if (cardPlay.Card.Owner == Owner.Player)
+            _cardPlayedTurn++;
         return Task.CompletedTask;
     }
 
-    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner.Player)
+            return;
+
         _cardPlayedTurn = 0;
 
-        CardPileCmd.Draw(choiceContext, (int) _cardsLeftTurn / 2, player);
-        PlayerCmd.GainEnergy(_energyLeftTurn, player);
+        await CardPileCmd.Draw(choiceContext, (int) _cardsLeftTurn / 2, player);
+        await PlayerCmd.GainEnergy(_energyLeftTurn, player);
         
         _energyLeftTurn = 0;
         _cardsLeftTurn = 0;
-        
-        return Task.CompletedTask;
     }
 
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    public override Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player)
             return Task.CompletedTask;
+        // 必须在回合结束清空能量/手牌之前记录；AfterSideTurnEnd 时能量已经被重置。
         _energyLeftTurn = Owner.Player!.GetEnergy();
         IReadOnlyList<CardModel> cards = PileType.Hand.GetPile(Owner.Player!).Cards;
         _cardsLeftTurn = cards.Count;
@@ -62,6 +66,6 @@ public class DespairPower : UniquePowerModel
 
     public override bool ShouldPlay(CardModel card, AutoPlayType autoPlayType)
     {
-        return _cardPlayedTurn <= 5;
+        return card.Owner != Owner.Player || _cardPlayedTurn <= 5;
     }
 }

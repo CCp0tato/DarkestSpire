@@ -11,9 +11,12 @@ namespace DarkestSpire.GeneralCards;
 [RegisterCard(typeof(GeneralCardPool))]
 public class Rally : ModCardTemplate
 {
-    public Rally() : base(0, CardType.Attack, CardRarity.Rare, TargetType.Self, true)
+    public Rally() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self, true)
     {
     }
+
+    // 设计上为多人模式专属卡牌，单人模式不应出现在卡池/奖励中。
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     
     public override CardAssetProfile AssetProfile => new(
         PortraitPath: $"{GeneralCardPool.getImageRoot()}/{GetType().Name}.png"

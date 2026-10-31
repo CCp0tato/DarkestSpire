@@ -8,7 +8,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.Crusader.Cards;
 
 [RegisterCard(typeof(CrusaderCardPool))]
-[RegisterCharacterStarterCard(typeof(CrusaderCardPool), 1)]
+[RegisterCharacterStarterCard(typeof(CrusaderCharacter), 1)]
 
 public class Radiance : ModCardTemplate
 {
@@ -28,7 +28,8 @@ public class Radiance : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Heal(Owner.Creature, this.DynamicVars.Heal.IntValue);
+        // AnyPlayer：多人时治疗卡牌目标，单人时目标为自身。
+        await CreatureCmd.Heal(cardPlay.Target ?? Owner.Creature, this.DynamicVars.Heal.IntValue);
     }
 
     protected override void OnUpgrade()

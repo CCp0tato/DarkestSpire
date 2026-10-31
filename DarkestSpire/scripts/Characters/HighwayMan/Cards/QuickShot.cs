@@ -31,6 +31,8 @@ public class QuickShot : ModCardTemplate
 
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override void OnUpgrade()
     {
         DynamicVars["ShotDamage"].UpgradeValueBy(2);

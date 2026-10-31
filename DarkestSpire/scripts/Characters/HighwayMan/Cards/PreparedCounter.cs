@@ -11,6 +11,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.HighwayMan.Cards;
 
 [RegisterCard(typeof(HighwayManCardPool))]
+[RegisterCharacterStarterCard(typeof(HighwayManCharacter), 1)]
 public class PreparedCounter : ModCardTemplate
 {
     public PreparedCounter() : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy, true)

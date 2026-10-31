@@ -109,12 +109,15 @@ public class FightBackBasePower : ModPowerTemplate
         {
             if (dynamicVar is DamageVar)
             {
+                // 反击伤害是“由能力造成的攻击伤害”，不携带卡牌来源。
+                // 若把技能牌作为 cardSource，会把 CurlUpPower 内部记录的 playedCard 污染成该技能牌，
+                // 导致之后攻击牌无法触发蜷身、而再次打出该技能牌反而触发蜷身。
                 if (FightBackTargetType == TargetType.AllEnemies)
-                    await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
-                        .TargetingAllOpponents(Owner.CombatState!).Execute(choiceContext);
+                    await CreatureCmd.Damage(choiceContext, Owner.CombatState!.Enemies, dynamicVar.IntValue,
+                        ValueProp.Move, Owner, (CardModel) null);
                 else if (FightBackTargetType == TargetType.AnyEnemy)
-                    await DamageCmd.Attack(dynamicVar.IntValue).FromCard(_fightBackCardSource)
-                        .Targeting(dealer).Execute(choiceContext);
+                    await CreatureCmd.Damage(choiceContext, dealer, dynamicVar.IntValue,
+                        ValueProp.Move, Owner, (CardModel) null);
             }
             else if (dynamicVar is EnergyVar)
             {

@@ -12,9 +12,9 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.HighwayMan.Cards;
 
 [RegisterCard(typeof(HighwayManCardPool))]
-public class Provoke : ModCardTemplate
+public class Incite : ModCardTemplate
 {
-    public Provoke() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy, true)
+    public Incite() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy, true)
     {
     }
 

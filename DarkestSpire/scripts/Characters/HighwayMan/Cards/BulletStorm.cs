@@ -28,7 +28,7 @@ public class BulletStorm : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<BulletStormPower>(choiceContext, Owner.Creature, DynamicVars["BulletStormPower"].IntValue, cardPlay.Target!, cardPlay.Card);
+        await PowerCmd.Apply<BulletStormPower>(choiceContext, Owner.Creature, DynamicVars["BulletStormPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

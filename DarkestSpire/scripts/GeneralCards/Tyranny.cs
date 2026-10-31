@@ -27,6 +27,9 @@ public class Tyranny : ModCardTemplate
         DSCardTag.Torture,
         DSCardTag.Unique,
     ];
+
+    // 设计上为多人模式专属卡牌，单人模式不应出现在卡池/奖励中。
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

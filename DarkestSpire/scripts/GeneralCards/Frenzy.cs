@@ -42,7 +42,7 @@ public class Frenzy : ModCardTemplate
             .Attack(DynamicVars.Damage.IntValue)
             .FromCard(cardPlay.Card)
             .WithHitCount(2)
-            .Targeting(cardPlay.Target!)
+            .TargetingRandomOpponents(CombatState!)
             .Execute(choiceContext);
         await PowerCmd.Apply<FrenzyPower>(choiceContext, Owner.Creature,
             1, Owner.Creature, cardPlay.Card);

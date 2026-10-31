@@ -2,6 +2,7 @@ using System.Reflection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -25,6 +26,15 @@ public class TyrannyPower : UniquePowerModel
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
 
+    private bool _energyDrawUsedThisTurn;
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player == Owner.Player)
+            _energyDrawUsedThisTurn = false;
+        return Task.CompletedTask;
+    }
+
     public override async Task BeforeAttack(AttackCommand command)
     {
         if (command.IsMultiTargeted || command.Attacker != Owner)
@@ -44,10 +54,21 @@ public class TyrannyPower : UniquePowerModel
             return;
         }
         
-        Creature creature = Owner.CombatState!.Allies.TakeRandom(1, Owner.Player!.RunState.Rng.CombatTargets).FirstOrDefault()!;
-        if  (creature == null)
+        // 只从“队友”中随机，排除自己（Allies 在部分实现里包含自身）。
+        List<Creature> allies = Owner.CombatState!.Allies
+            .Where(c => c != Owner && c.IsPlayer && c.IsAlive)
+            .ToList();
+        if (allies.Count == 0)
+            return;
+        Creature? creature = allies.TakeRandom(1, Owner.Player!.RunState.Rng.CombatTargets).FirstOrDefault();
+        if (creature == null)
             return;
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), creature, new DamageVar((Decimal) field.GetValue(command)!, ValueProp.Move), Owner);
+
+        // 获得能量 + 抽牌每回合仅触发一次；伤害仍按每次单体攻击触发。
+        if (_energyDrawUsedThisTurn)
+            return;
+        _energyDrawUsedThisTurn = true;
         await PlayerCmd.GainEnergy(2, Owner.Player);
         await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), 2, Owner.Player);
     }

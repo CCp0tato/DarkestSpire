@@ -26,9 +26,10 @@ public class BackToBack : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<BackToBackPower>(choiceContext, cardPlay.Target!, 1M, Owner.Creature, cardPlay.Card);
+        if (cardPlay.Target is not { } target)
+            return;
+        await PowerCmd.Apply<BackToBackPower>(choiceContext, target, 1M, Owner.Creature, cardPlay.Card);
         await PowerCmd.Apply<BackToBackPower>(choiceContext, Owner.Creature, 1M, Owner.Creature, cardPlay.Card);
-        
     }
 
     protected override void OnUpgrade()

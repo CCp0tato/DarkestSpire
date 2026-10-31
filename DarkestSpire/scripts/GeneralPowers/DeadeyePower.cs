@@ -1,7 +1,10 @@
 ﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -21,9 +24,16 @@ public class DeadeyePower : UniquePowerModel
 
     public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card)
     {
-        if (card.Owner != Owner.Player)
+        if (card.Owner != Owner.Player || Owner.Player is null)
+            return;
+        List<Creature> enemies = CombatState.Enemies.Where(c => c.IsAlive).ToList();
+        if (enemies.Count == 0)
+            return;
+        Creature? target = enemies.TakeRandom(1, Owner.Player.RunState.Rng.CombatTargets).FirstOrDefault();
+        if (target is null)
             return;
         this.Flash();
-        await DamageCmd.Attack(Amount).Unpowered().TargetingRandomOpponents(CombatState).Execute(choiceContext);
+        await CreatureCmd.Damage(choiceContext, target, Amount,
+            ValueProp.Unblockable | ValueProp.Unpowered, Owner.Player.Creature, (CardModel) null);
     }
 }

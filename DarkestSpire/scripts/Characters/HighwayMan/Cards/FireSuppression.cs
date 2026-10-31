@@ -13,7 +13,7 @@ namespace DarkestSpire.Characters.HighwayMan.Cards;
 [RegisterCard(typeof(HighwayManCardPool))]
 public class FireSuppression : ModCardTemplate
 {
-    public FireSuppression() : base(0, CardType.Attack, CardRarity.Basic, TargetType.AllEnemies, true)
+    public FireSuppression() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AllEnemies, true)
     {
     }
 
@@ -26,7 +26,7 @@ public class FireSuppression : ModCardTemplate
         // BannerTexturePath: "" 
     );
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(2), new DamageVar("ShotDamage", 10, ValueProp.Move), new CardsVar("Shot", -1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<VulnerablePower>(2), new DamageVar("ShotDamage", 8, ValueProp.Move), new CardsVar("Shot", -1)];
 
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.Shot];
 

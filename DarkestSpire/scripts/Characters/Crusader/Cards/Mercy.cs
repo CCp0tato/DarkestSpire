@@ -33,7 +33,7 @@ public class Mercy : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!cardPlay.Target!.IsMonster || cardPlay.Target is null) { return; }
+        if (cardPlay.Target is null || !cardPlay.Target.IsMonster) { return; }
         int TargetHealthPercentage = 100 * cardPlay.Target.CurrentHp / cardPlay.Target.MaxHp;
         if (TargetHealthPercentage >= 40) { return; }
         await PowerCmd.Apply<IntangiblePower>(choiceContext, cardPlay.Target!, 1, Owner.Creature, cardPlay.Card);

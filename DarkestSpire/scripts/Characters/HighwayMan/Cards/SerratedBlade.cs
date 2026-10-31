@@ -28,13 +28,12 @@ public class SerratedBlade : ModCardTemplate
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVarFB<BleedingPower>(7, TargetType.AnyEnemy)];
     protected override HashSet<CardTag> CanonicalTags => [DSCardTag.FightBack];
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        await PowerCmd.Apply<BleedingPower>(choiceContext, Owner.Creature, DynamicVars["BleedingPower"].IntValue, Owner.Creature, cardPlay.Card);
-    }
+    // 流血由 FightBackSingleton 在卡牌打出后创建的 FightBackBasePower 施加。
+    // 旧代码在 OnPlay 中把流血施加给了自己，并且引用了不存在的 "BleedingPower" 动态变量，
+    // 打出或升级这张牌时会抛 KeyNotFoundException。
 
     protected override void OnUpgrade()
     {
-        DynamicVars["BleedingPower"].UpgradeValueBy(3);
+        DynamicVars["FightBackPower"].UpgradeValueBy(3);
     }
 }

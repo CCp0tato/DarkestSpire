@@ -37,12 +37,14 @@ public class Confession : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        Creature target = cardPlay.Target!;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
-            .Targeting(target)
+            .TargetingAllOpponents(CombatState!)
             .Execute(choiceContext);
-        await PowerCmd.Apply<ShrinkPower>(choiceContext, target, DynamicVars["ShrinkPower"].IntValue, Owner.Creature, cardPlay.Card);
+        foreach (Creature enemy in CombatState!.Enemies.ToList())
+        {
+            await PowerCmd.Apply<ShrinkPower>(choiceContext, enemy, DynamicVars["ShrinkPower"].IntValue, Owner.Creature, cardPlay.Card);
+        }
     }
 
     // 升级后的效果逻辑

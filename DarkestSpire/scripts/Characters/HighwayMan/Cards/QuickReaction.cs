@@ -28,4 +28,9 @@ public class QuickReaction : ModCardTemplate
     {
         await QuickShot.CreateInHand(Owner, DynamicVars.Cards.IntValue, CombatState!);
     }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Cards.UpgradeValueBy(1);
+    }
 }

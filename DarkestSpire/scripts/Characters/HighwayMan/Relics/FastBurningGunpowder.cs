@@ -41,7 +41,7 @@ public class FastBurningGunpowder : ModRelicTemplate
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player.PlayerCombatState.TurnNumber > 1 || player == this.Owner)
+        if (player.PlayerCombatState.TurnNumber > 1 || player != this.Owner)
             return;
         await PowerCmd.Apply<FreeShotPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
     }

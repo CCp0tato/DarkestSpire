@@ -21,11 +21,10 @@ public class SweepingLegion : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Target is null) { return; }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars["HitCount"].IntValue)
             .FromCard(this)
-            .Targeting(cardPlay.Target!)
+            .TargetingRandomOpponents(CombatState!)
             .Execute(choiceContext);
     }
 

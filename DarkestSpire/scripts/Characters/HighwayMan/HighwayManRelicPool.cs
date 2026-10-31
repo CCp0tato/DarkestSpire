@@ -4,7 +4,7 @@ namespace DarkestSpire.Characters.HighwayMan;
 
 public class HighwayManRelicPool : TypeListRelicPoolModel
 {
-    private const string CharacterName = "HighwayMan";
+    private const string CharacterName = "Highwayman";
     private const string ImageRoot = $"{Entry.ResPath}/images/characters/{CharacterName}";
     
     // 描述中使用的能量图标。大小为24x24。

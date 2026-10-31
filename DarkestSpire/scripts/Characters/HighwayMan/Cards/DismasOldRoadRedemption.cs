@@ -27,7 +27,9 @@ public class DismasOldRoadRedemption : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, cardPlay.Target!, cardPlay.Card);
+        if (cardPlay.Target is not { } target)
+            return;
+        await PowerCmd.Apply<StrengthPower>(choiceContext, target, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
         await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 

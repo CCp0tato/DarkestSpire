@@ -36,11 +36,19 @@ public class Torch : ModCardTemplate
     
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1);
-        CardModel card = (await CardSelectCmd.FromHand(choiceContext, this.Owner, prefs, (Func<CardModel, bool>) null, (AbstractModel) this)).FirstOrDefault<CardModel>();
-        int cardCount = DynamicVars.Cards.IntValue;
-        IEnumerable<CardModel> cardModels = await CardPileCmd.Draw(choiceContext, cardCount, this.Owner);
+        // 消耗一张手牌。手牌为空时跳过选择，避免选择界面无法完成。
+        if (PileType.Hand.GetPile(this.Owner).Cards.Count > 0)
+        {
+            CardSelectorPrefs prefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1);
+            CardModel? card = (await CardSelectCmd.FromHand(choiceContext, this.Owner, prefs, (Func<CardModel, bool>) null, (AbstractModel) this)).FirstOrDefault<CardModel>();
+            // FromHand 只负责选择，不会移动卡牌，必须手动将其消耗。
+            if (card != null)
+                await CardCmd.Exhaust(choiceContext, card);
+        }
 
+        // 抽牌
+        int cardCount = DynamicVars.Cards.IntValue;
+        await CardPileCmd.Draw(choiceContext, cardCount, this.Owner);
     }
 
     // 升级后的效果逻辑

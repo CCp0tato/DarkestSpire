@@ -11,7 +11,7 @@ namespace DarkestSpire.GeneralCards;
 [RegisterCard(typeof(GeneralCardPool))]
 public class Selfish : ModCardTemplate
 {
-    public Selfish() : base(1, CardType.Power, CardRarity.Common, TargetType.Self, true)
+    public Selfish() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self, true)
     {
     }
 

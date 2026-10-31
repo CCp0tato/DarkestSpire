@@ -1,4 +1,4 @@
-﻿// 无畏：抽到状态牌时，抽 3 张牌。检测消耗堆，出现5张Mujica状态牌后向手牌中加入AveMujica，一场战斗一次
+﻿// 无畏：抽到状态牌时，抽 2 张牌。检测消耗堆，出现5张Mujica状态牌后向手牌中加入AveMujica，一场战斗一次
 
 using DarkestSpire.GeneralCards;
 using MegaCrit.Sts2.Core.Commands;
@@ -34,7 +34,7 @@ public class FearlessnessPower : UniquePowerModel
         if (card.Owner.Creature != Owner || card.Type != CardType.Status)
             return;
         Flash();
-        await CardPileCmd.Draw(choiceContext, (Decimal) 3, Owner.Player!);
+        await CardPileCmd.Draw(choiceContext, (Decimal) 2, Owner.Player!);
     }
 
     public override async Task AfterCardExhausted(

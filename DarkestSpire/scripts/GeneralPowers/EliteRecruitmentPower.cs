@@ -1,9 +1,6 @@
-﻿using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using DarkestSpire.GeneralCards;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Rooms;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -21,24 +18,15 @@ public class EliteRecruitmentPower : ModPowerTemplate
         BigIconPath: $"{Entry.ResPath}/images/powers/{GetType().Name}.png"
     );
 
-
-    public override bool TryModifyCardRewardOptions(
-        Player player,
-        List<CardCreationResult> cardRewards,
-        CardCreationOptions options)
+    public override Task AfterCombatEnd(CombatRoom room)
     {
-        if (player != Owner.Player || !options.Flags.HasFlag((Enum) CardCreationFlags.IsCardReward))
-            return false;
-        foreach (CardCreationResult cardReward in cardRewards)
+        // 卡牌奖励钩子只会派发给 run-state 监听者（卡组里的卡牌等），Power 收不到。
+        // 因此在战斗结束时给卡组中的 EliteRecruitment 卡牌打上标记，由卡牌自己的钩子完成升级。
+        if (Owner.Player is { } player)
         {
-            CardModel card1 = cardReward.Card;
-            if (card1.IsUpgradable)
-            {
-                CardModel card2 = Owner.Player.RunState.CloneCard(card1);
-                CardCmd.Upgrade(card2);
-                cardReward.ModifyCard(card2, (RelicModel) null);
-            }
+            foreach (EliteRecruitment card in player.Deck.Cards.OfType<EliteRecruitment>())
+                card.PendingRewardUpgrade = true;
         }
-        return true;
+        return Task.CompletedTask;
     }
 }

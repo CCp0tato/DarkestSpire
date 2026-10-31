@@ -26,7 +26,8 @@ public class BottledDarkSouls : ModPotionTemplate
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
         if (Owner == null) return;
-        CardModel particleWall = Owner.RunState.CreateCard<ParticleWall>(Owner);
+        // 在 CombatState 作用域内创建，保证卡牌与战斗状态关联，避免后续丢弃/消耗时报错。
+        CardModel particleWall = Owner.Creature.CombatState!.CreateCard<ParticleWall>(Owner);
         particleWall.SetStarCostThisTurn(0);
         particleWall.EnergyCost.SetThisTurn(0);
         CardCmd.ApplyKeyword(particleWall, CardKeyword.Ethereal);

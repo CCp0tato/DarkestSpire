@@ -37,7 +37,7 @@ public class UnshoneGlory : ModCardTemplate
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(3)
             .FromCard(this)
-            .Targeting(cardPlay.Target!)
+            .TargetingAllOpponents(CombatState!)
             .Execute(choiceContext);
         ;
     }

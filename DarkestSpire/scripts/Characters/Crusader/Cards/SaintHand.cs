@@ -31,7 +31,7 @@ public class SaintHand : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!cardPlay.Target!.IsMonster || cardPlay.Target is null) { return; }
+        if (cardPlay.Target is null || !cardPlay.Target.IsMonster) { return; }
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target!).Execute(choiceContext);
         await PowerCmd.Apply<SaintHandPower>(choiceContext, cardPlay.Target!, DynamicVars["SaintHandPower"].IntValue, Owner.Creature, cardPlay.Card);
     }

@@ -32,9 +32,9 @@ public class StashedCurio : ModCardTemplate
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         CardModel? card = (await CardSelectCmd.FromCombatPile(choiceContext, PileType.Draw.GetPile(Owner), Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1))).FirstOrDefault();
+            new CardSelectorPrefs(SelectionScreenPrompt, 1))).FirstOrDefault();
         if (card != null)
-            await CardPileCmd.Add(card, PileType.Draw);
+            await CardPileCmd.Add(card, PileType.Hand);
     }
 
     protected override void OnUpgrade()

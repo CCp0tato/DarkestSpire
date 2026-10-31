@@ -11,7 +11,7 @@ namespace DarkestSpire.Characters.Crusader.Cards;
 [RegisterCard(typeof(CrusaderCardPool))]
 public class HolyFire : ModCardTemplate
 {
-    public HolyFire() : base(1, CardType.Skill, CardRarity.Basic, TargetType.AnyPlayer, true)
+    public HolyFire() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.AnyPlayer, true)
     {
     }
 

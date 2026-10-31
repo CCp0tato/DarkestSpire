@@ -1,4 +1,4 @@
-// | 断罪 | Condemnation | 攻击 | 1 | 造成 7 点伤害，额外增加目标最大生命 10%/15% 的伤害，消耗 |
+// | 断罪 | Condemnation | 攻击 | 1 | 造成 7 点伤害，额外增加目标最大生命 6%/10% 的伤害，消耗 |
 
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -27,7 +27,7 @@ public class Condemnation : ModCardTemplate
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), new IntVar("MaxHpPercent", 10)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7, ValueProp.Move), new IntVar("MaxHpPercent", 6)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,6 +37,6 @@ public class Condemnation : ModCardTemplate
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MaxHpPercent"].UpgradeValueBy(5);
+        DynamicVars["MaxHpPercent"].UpgradeValueBy(4);
     }
 }

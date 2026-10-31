@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -27,7 +28,9 @@ public class BattleHeal : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Heal(cardPlay.Target!, DynamicVars.Heal.IntValue);
+        // AnyPlayer 在单人模式下不会进行目标选择，兜底为自己。
+        Creature target = cardPlay.Target ?? Owner.Creature;
+        await CreatureCmd.Heal(target, DynamicVars.Heal.IntValue);
     }
 
     protected override void OnUpgrade()

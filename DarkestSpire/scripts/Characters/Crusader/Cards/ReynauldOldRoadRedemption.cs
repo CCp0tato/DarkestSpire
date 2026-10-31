@@ -32,8 +32,10 @@ public class ReynauldOldRoadRedemption : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        if (cardPlay.Target is not { } target)
+            return;
         await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
-        await PowerCmd.Apply<DexterityPower>(choiceContext, cardPlay.Target!, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
+        await PowerCmd.Apply<DexterityPower>(choiceContext, target, DynamicVars["DexterityPower"].IntValue, Owner.Creature, cardPlay.Card);
     }
 
     protected override void OnUpgrade()

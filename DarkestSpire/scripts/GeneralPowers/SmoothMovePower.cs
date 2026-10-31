@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -26,7 +25,11 @@ public class SmoothMovePower : ModPowerTemplate
     {
         if (cardPlay.Card.Owner != Owner.Player)
             return;
-        await PowerCmd.Apply<TemporaryDexterityPower>(choiceContext, Owner, Amount, Owner, null);
+        // 必须使用本模组已注册的 TempDexterityPower。
+        // 原版 TemporaryDexterityPower 是抽象基类，不在 ModelDb 中注册，
+        // 直接 Apply 会在 ModelDb.Power<T>() 处抛出 KeyNotFoundException，
+        // 导致打出牌的动作异常中断，牌滞留在出牌结算区。
+        await PowerCmd.Apply<TempDexterityPower>(choiceContext, Owner, Amount, Owner, cardPlay.Card);
     }
     
     public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

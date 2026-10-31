@@ -42,8 +42,17 @@ public class NomanWagonPower : ModPowerTemplate
 
     public override Task AfterCombatEnd(CombatRoom room)
     {
-        for (int i = 0; i<Amount; i++)
-            room.AddExtraReward(this.Owner.Player, (Reward) new RelicReward(fakeRelics.TakeRandom(1, Owner.Player.RunState.Rng.TreasureRoomRelics).FirstOrDefault(), Owner.Player));
+        for (int i = 0; i < Amount; i++)
+        {
+            // ModelDb.Relic<T>() 返回的是 canonical（全局共享、只读）模型实例。
+            // RelicReward 构造函数会调用 AssertMutable()，直接传入 canonical 模型会抛
+            // CanonicalModelException；该异常发生在战斗结束流程中，会导致战斗结束卡死。
+            // 因此必须先克隆出可变实例，再作为奖励发放。
+            RelicModel? relic = fakeRelics.TakeRandom(1, Owner.Player.RunState.Rng.TreasureRoomRelics).FirstOrDefault();
+            if (relic == null)
+                continue;
+            room.AddExtraReward(this.Owner.Player, (Reward) new RelicReward(relic.ToMutable(), Owner.Player));
+        }
         return Task.CompletedTask;
     }
 }

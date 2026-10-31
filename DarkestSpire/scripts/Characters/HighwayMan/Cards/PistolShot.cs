@@ -12,6 +12,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.HighwayMan.Cards;
 
 [RegisterCard(typeof(HighwayManCardPool))]
+[RegisterCharacterStarterCard(typeof(HighwayManCharacter), 1)]
 public class PistolShot : ModCardTemplate
 {
     public PistolShot() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy, true)

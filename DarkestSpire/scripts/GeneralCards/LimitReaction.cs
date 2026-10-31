@@ -30,7 +30,8 @@ public class LimitReaction : ModCardTemplate
     {
         await CardPileCmd.Draw(choiceContext, 3, Owner);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
-        await PowerCmd.Apply<LoseEnergyNextTurnPower>(choiceContext, Owner.Creature, 1, Owner.Creature, cardPlay.Card);
+        // 本回合失去 2 点敏捷（回合结束恢复），而不是下回合失去能量。
+        await PowerCmd.Apply<TempDexterityPower>(choiceContext, Owner.Creature, -2, Owner.Creature, cardPlay.Card);
     }
 
     // 升级后的效果逻辑

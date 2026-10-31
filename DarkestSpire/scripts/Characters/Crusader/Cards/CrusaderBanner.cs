@@ -30,7 +30,10 @@ public class CrusaderBanner : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target!, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
+        foreach (var playerCreature in CombatState!.PlayerCreatures.Where(c => c.IsAlive).ToList())
+        {
+            await PowerCmd.Apply<StrengthPower>(choiceContext, playerCreature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, cardPlay.Card);
+        }
     }
 
     protected override void OnUpgrade()

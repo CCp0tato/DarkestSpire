@@ -9,6 +9,7 @@ using STS2RitsuLib.Scaffolding.Content;
 namespace DarkestSpire.Characters.HighwayMan.Cards;
 
 [RegisterCard(typeof(HighwayManCardPool))]
+[RegisterCharacterStarterCard(typeof(HighwayManCharacter), 5)]
 public class DefendHighwayMan : ModCardTemplate
 {
     public DefendHighwayMan() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self, true)

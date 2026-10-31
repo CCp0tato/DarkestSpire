@@ -27,7 +27,7 @@ public class FuckTheAssAssIn : ModCardTemplate
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (!cardPlay.Target!.IsMonster || cardPlay.Target is null)
+        if (cardPlay.Target is null || !cardPlay.Target.IsMonster)
         {
             return;
         }
